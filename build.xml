@@ -101,7 +101,7 @@
   </target>
 
 
-  <target name="prepare-for-publish" depends="prepare-ivy, jar, javadoc">
+  <target name="prepare-for-publish" depends="prepare-ivy, jar, test-no-reports,javadoc">
     <mkdir dir="${project.dist.dir}/${project.name}/pom"/>
     <mkdir dir="${project.dist.dir}/${project.name}/jar"/>
     <mkdir dir="${project.dist.dir}/${project.name}/javadoc"/>
