@@ -84,48 +84,20 @@
   </target>
 
   <target name="jar.resources" depends="init">
-    <!--manifest file="${build.dir}/Manifest.mf">
-      <attribute name="Manifest-Version" value="1.0"/>
-      <attribute name="Main-Class" value="com.adaptris.core.management.StandardBootstrap"/>
-      <attribute name="Build-Version" value="${ivy.publish.revision}"/>
-      <attribute name="Built-By" value="${user.name}"/>
-      <attribute name="Implementation-Vendor-Id" value="com.adaptris"/>
-      <attribute name="Implementation-Version" value="${ivy.publish.revision}"/>
-      <attribute name="Implementation-Title" value="${manifest.title}"/>
-      <attribute name="Implementation-Vendor" value="${manifest.vendor}"/>
-    </manifest>
-    <manifest file="${build.dir}/Component-Manifest.mf">
-      <attribute name="Manifest-Version" value="1.0"/>
-      <attribute name="Build-Version" value="${ivy.publish.revision}"/>
-      <attribute name="Built-By" value="${user.name}"/>
-      <attribute name="Implementation-Vendor-Id" value="com.adaptris"/>
-      <attribute name="Implementation-Version" value="${ivy.publish.revision}"/>
-      <attribute name="Implementation-Vendor" value="${manifest.vendor}"/>
-    </manifest-->
-    <!--copy todir="${classes.build.dir}" overwrite="true">
-      <fileset dir="${resources.dir}"/>
-    </copy-->
-    <propertyfile file="${classes.build.dir}/META-INF/adaptris-version">
-      <entry key="component.name" value="${manifest.title}"/>
-      <entry key="build.version" value="${ivy.publish.revision}"/>
-      <entry key="build.date" value="${today}"/>
-    </propertyfile>
+    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="${manifest.title}"/>
   </target>
 
   <target name="jar" depends="compile, jar.resources">
-    <adapter:create-version dir="${build.classes.dir}/META-INF" name="${manifest.title}"/>
-    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="${manifest.title}"/>
-    <jar jarfile="${project.dist.dir}/${project.jar.name}" manifest="${build.dir}/Manifest.mf">
-      <fileset dir="${build.classes.dir}"/>
-      <zipfileset dir="${basedir}/.." prefix="META-INF">
-        <include name="LICENSE"/>
-      </zipfileset>
-    </jar>
+    <mkdir dir="${project.dist.dir}"/>
+    <adapter:create-jar basedir="${build.classes.dir}" jarfile="${project.dist.dir}/${project.jar.name}" manifest="${build.dir}/Manifest.mf"  version-title="${manifest.title}"/>
   </target>
 
   <target name="javadoc" depends="prepare-ivy,macrodef.init" description="Create javadocs">
-    <adapter:create-javadocs sourcepath="${src.dir}" destdir="${api.doc.dir}" title="${manifest.title}">
-    </adapter:create-javadocs>
+    <adapter:ydoc-javadoc-creator sourcepath="${src.dir}" destdir="${api.doc.dir}">
+      <groups>
+        <group title="Interlok Service Tester" packages="com.adaptris.tester:com.adaptris.tester.*"/>
+      </groups>
+    </adapter:ydoc-javadoc-creator>
   </target>
 
 
