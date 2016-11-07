@@ -1,0 +1,8 @@
+<!--
+
+ Please refer to Javadocs for additional config information.
+
+-->
+<remove-node-preprocessor>
+ <xpath><![CDATA[/root/xml/id]]></xpath>
+</remove-node-preprocessor>

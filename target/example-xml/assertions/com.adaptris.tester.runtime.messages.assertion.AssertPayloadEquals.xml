@@ -1,0 +1,9 @@
+<!--
+
+ Please refer to Javadocs for additional config information.
+
+-->
+<assert-payload-equals>
+ <unique-id>94498473-2522-487a-86ce-977132ae6e34</unique-id>
+ <payload>hello</payload>
+</assert-payload-equals>

@@ -1,0 +1,13 @@
+<!--
+
+ Please refer to Javadocs for additional config information.
+
+-->
+<find-and-replace-preprocessor>
+ <replacement-keys>
+  <key-value-pair>
+   <key>foo</key>
+   <value>bar</value>
+  </key-value-pair>
+ </replacement-keys>
+</find-and-replace-preprocessor>

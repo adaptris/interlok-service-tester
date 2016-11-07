@@ -1,0 +1,14 @@
+<!--
+
+ Please refer to Javadocs for additional config information.
+
+-->
+<assert-metadata-equals>
+ <unique-id>e7421b97-8e6b-44cb-bdaa-bfbfb2e89766</unique-id>
+ <metadata>
+  <key-value-pair>
+   <key>key1</key>
+   <value>val1</value>
+  </key-value-pair>
+ </metadata>
+</assert-metadata-equals>
