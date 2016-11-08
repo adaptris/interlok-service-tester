@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,11 @@ public class Test implements TestComponent {
   @XStreamImplicit
   private List<TestCase> testCases;
   private ServiceToTest serviceToTest;
+
+  public Test(){
+    setTestCases(new ArrayList<TestCase>());
+    setServiceToTest(new ServiceToTest());
+  }
 
   public void setUniqueId(String uniqueId) {
     this.uniqueId = uniqueId;
@@ -55,15 +61,15 @@ public class Test implements TestComponent {
   }
 
   JUnitReportTestSuite execute(String parentName, TestClient client, Map<String, String> helperProperties) throws ServiceTestException {
-    String fqName = parentName + "." + uniqueId;
+    String fqName = parentName + "." + getUniqueId();
     log.info("Running [{}]", fqName);
     JUnitReportTestSuite result = new JUnitReportTestSuite(fqName);
     if (helperProperties.size() > 0) {
-      serviceToTest.addPreprocessor(new VarSubPropsPreprocessor(helperProperties));
+      getServiceToTest().addPreprocessor(new VarSubPropsPreprocessor(helperProperties));
     }
     long startTime = System.nanoTime();
-    for (TestCase testCase : testCases) {
-      result.addTestCase(testCase.execute(fqName, client, serviceToTest));
+    for (TestCase testCase : getTestCases()) {
+      result.addTestCase(testCase.execute(fqName, client, getServiceToTest()));
     }
     long endTime = System.nanoTime();
     long elapsedTime = endTime - startTime;

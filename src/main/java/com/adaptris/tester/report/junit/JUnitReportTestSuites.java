@@ -32,6 +32,14 @@ public class JUnitReportTestSuites {
     this.testSuites.add(JUnitReportTestSuite);
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public List<JUnitReportTestSuite> getTestSuites() {
+    return testSuites;
+  }
+
   public void writeReports(final File outputDirectory) throws ServiceTestException{
     try {
       for (JUnitReportTestSuite suite : testSuites) {

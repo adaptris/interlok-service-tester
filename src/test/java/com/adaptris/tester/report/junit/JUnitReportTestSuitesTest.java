@@ -11,6 +11,23 @@ import static org.junit.Assert.*;
 public class JUnitReportTestSuitesTest {
 
   @Test
+  public void testGetName() throws Exception {
+    JUnitReportTestSuites ss = new JUnitReportTestSuites("suitesname");
+    assertEquals("suitesname", ss.getName());
+  }
+
+  @Test
+  public void testGetTestSuites() throws Exception {
+    JUnitReportTestSuites ss = new JUnitReportTestSuites("suitesname");
+    JUnitReportTestSuite s = new JUnitReportTestSuite("suitename");
+    JUnitReportTestCase tc = new JUnitReportTestCase("testcase");
+    tc.setTestIssue(new JUnitReportFailure("message"));
+    s.addTestCase(tc);
+    ss.addTestSuite(s);
+    assertEquals(1, ss.getTestSuites().size());
+  }
+
+  @Test
   public void writeReports() throws Exception {
     GuidGenerator o = new GuidGenerator();
     File tempDir = TempFileUtils.createTrackedDir(o);

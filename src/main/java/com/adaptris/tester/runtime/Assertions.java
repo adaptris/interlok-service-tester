@@ -42,7 +42,11 @@ public class Assertions extends AbstractCollection<Assertion> {
   }
 
   public void addAssertion(Assertion assertion){
-    this.assertions.add(assertion);
+    this.add(assertion);
+  }
+
+  public boolean add(Assertion assertion){
+    return this.assertions.add(assertion);
   }
 
   public JUnitReportTestIssue execute(TestMessage returnMessage){

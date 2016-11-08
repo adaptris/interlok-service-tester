@@ -5,8 +5,6 @@ import com.adaptris.tester.report.junit.JUnitReportTestSuites;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -18,7 +16,7 @@ public class TestList extends AbstractCollection<Test> implements TestComponent 
   private List<Test> testCases;
 
   public TestList(){
-    testCases = new ArrayList<Test>();
+    setTests(new ArrayList<Test>());
   }
 
   public void setUniqueId(String uniqueId) {
@@ -30,16 +28,20 @@ public class TestList extends AbstractCollection<Test> implements TestComponent 
     return uniqueId;
   }
 
-  public void setTestCases(List<Test> testCases) {
+  public void setTests(List<Test> testCases) {
     this.testCases = testCases;
   }
 
-  public List<Test> getTestCases() {
+  public List<Test> getTests() {
     return testCases;
   }
 
-  public void addTestCase(Test testCase){
-    add(testCase);
+  public void addTest(Test test){
+    add(test);
+  }
+
+  public boolean add(Test test){
+    return this.testCases.add(test);
   }
 
   @Override
@@ -53,9 +55,9 @@ public class TestList extends AbstractCollection<Test> implements TestComponent 
   }
 
   JUnitReportTestSuites execute(TestClient client, Map<String, String> helperProperties) throws ServiceTestException {
-    JUnitReportTestSuites result = new JUnitReportTestSuites(uniqueId);
-    for (Test testCase : testCases) {
-      JUnitReportTestSuite suite = testCase.execute(uniqueId, client, helperProperties);
+    JUnitReportTestSuites result = new JUnitReportTestSuites(getUniqueId());
+    for (Test testCase : getTests()) {
+      JUnitReportTestSuite suite = testCase.execute(getUniqueId(), client, helperProperties);
       result.addTestSuite(suite);
     }
     return result;
