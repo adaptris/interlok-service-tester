@@ -115,4 +115,8 @@ public class JUnitReportTestSuite {
   public int getSkipped() {
     return skipped;
   }
+
+  public String getHostname() {
+    return hostname;
+  }
 }
