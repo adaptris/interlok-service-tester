@@ -1,10 +1,10 @@
 package com.adaptris.tester.runtime;
 
 import com.adaptris.tester.report.junit.JUnitReportFailure;
-import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.report.junit.JUnitReportTestIssue;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
+import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
@@ -41,7 +41,7 @@ public class Assertions extends AbstractCollection<Assertion> {
     return assertions;
   }
 
-  public void addMatcher(Assertion assertion){
+  public void addAssertion(Assertion assertion){
     this.assertions.add(assertion);
   }
 

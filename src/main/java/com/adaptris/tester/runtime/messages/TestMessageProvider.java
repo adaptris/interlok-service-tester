@@ -1,8 +1,8 @@
 package com.adaptris.tester.runtime.messages;
 
-import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
+import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.MetadataProvider;
-import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
+import com.adaptris.tester.runtime.messages.payload.EmptyPayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -14,8 +14,8 @@ public class TestMessageProvider {
   private PayloadProvider payloadProvider;
 
   public TestMessageProvider(){
-    setPayloadProvider(new InlinePayloadProvider());
-    setMetadataProvider(new InlineMetadataProvider());
+    setPayloadProvider(new EmptyPayloadProvider());
+    setMetadataProvider(new EmptyMetadataProvider());
   }
 
   public TestMessageProvider(MetadataProvider metadataProvider, PayloadProvider payloadProvider){

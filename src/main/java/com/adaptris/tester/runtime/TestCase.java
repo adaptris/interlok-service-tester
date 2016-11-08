@@ -7,12 +7,7 @@ import com.adaptris.tester.runtime.messages.TestMessageProvider;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.apache.commons.collections.bag.SynchronizedBag;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 @XStreamAlias("test-case")
 public class TestCase implements TestComponent {
@@ -22,7 +17,7 @@ public class TestCase implements TestComponent {
   private String uniqueId;
   @Deprecated
   private TestMessage inputMessage;
-  private TestMessageProvider messageProvider;
+  private TestMessageProvider inputMessageProvider;
   private Assertions assertions;
   private ExpectedException expectedException;
   @XStreamOmitField
@@ -31,14 +26,10 @@ public class TestCase implements TestComponent {
   public TestCase(){
     setAssertions(new Assertions());
     setExpectedException(null);
+    setInputMessageProvider(new TestMessageProvider());
     if (System.getProperties().containsKey(TEST_FILTER)) {
       setGlobFilter(System.getProperty(TEST_FILTER));
     }
-  }
-
-  public TestCase(final String globFilter){
-    this();
-    setGlobFilter(globFilter);
   }
 
   public void setUniqueId(String uniqueId) {
@@ -60,12 +51,12 @@ public class TestCase implements TestComponent {
     return inputMessage;
   }
 
-  public TestMessageProvider getMessageProvider() {
-    return messageProvider;
+  public TestMessageProvider getInputMessageProvider() {
+    return inputMessageProvider;
   }
 
-  public void setMessageProvider(TestMessageProvider messageProvider) {
-    this.messageProvider = messageProvider;
+  public void setInputMessageProvider(TestMessageProvider inputMessageProvider) {
+    this.inputMessageProvider = inputMessageProvider;
   }
 
   public void setAssertions(Assertions assertions) {
@@ -114,7 +105,7 @@ public class TestCase implements TestComponent {
     try {
       TestMessage input;
       if(getInputMessage() == null){
-        input = getMessageProvider().createTestMessage();
+        input = getInputMessageProvider().createTestMessage();
       } else {
         input = getInputMessage();
       }
@@ -144,16 +135,37 @@ public class TestCase implements TestComponent {
   private String createRegexFromGlob(String glob)
   {
     String out = "^";
+    boolean escaping = false;
     for(int i = 0; i < glob.length(); ++i)
     {
       final char c = glob.charAt(i);
       switch(c)
       {
-        case '*': out += ".*"; break;
-        case '?': out += '.'; break;
-        case '.': out += "\\."; break;
-        case '\\': out += "\\\\"; break;
-        default: out += c;
+        case '*':
+          if (escaping){
+            out += "*";
+          } else {
+            out += ".*";
+          }
+          escaping = false;
+          break;
+        case '?':
+          if (escaping){
+            out += "?";
+          } else {
+            out += '.';
+          }
+          escaping = false;
+          break;
+        case '.':
+          out += "\\.";
+          break;
+        case '\\':
+          out += "\\";
+          escaping = true;
+          break;
+        default:
+          out += c;
       }
     }
     out += '$';

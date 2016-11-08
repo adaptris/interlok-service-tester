@@ -1,9 +1,11 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.annotation.MarshallingCDATA;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
 public abstract class PayloadAssertion extends Assertion {
 
+  @MarshallingCDATA
   private String payload;
 
   public PayloadAssertion(){
