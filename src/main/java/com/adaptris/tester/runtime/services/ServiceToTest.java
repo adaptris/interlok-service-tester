@@ -14,7 +14,7 @@ public class ServiceToTest {
   private List<Preprocessor> preprocessors;
 
   public ServiceToTest(){
-    this.preprocessors = new ArrayList<>();
+    setPreprocessors(new ArrayList<Preprocessor>());
   }
 
   public void setSource(Source source) {
@@ -38,7 +38,7 @@ public class ServiceToTest {
   }
 
   public String getProcessedSource() throws PreprocessorException, SourceException {
-    String result = source.getSource();
+    String result = getSource().getSource();
     for (Preprocessor preprocessor : getPreprocessors()) {
       result = preprocessor.execute(result);
     }
