@@ -9,8 +9,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MetadataAssertion extends Assertion {
+public abstract class MetadataAssertion implements Assertion {
 
+  private String uniqueId;
   private KeyValuePairSet metadata;
 
   public MetadataAssertion(){
@@ -19,6 +20,16 @@ public abstract class MetadataAssertion extends Assertion {
 
   public MetadataAssertion(KeyValuePairSet metadata){
     setMetadata(metadata);
+  }
+
+  @Override
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
+  }
+
+  @Override
+  public String getUniqueId() {
+    return uniqueId;
   }
 
   public void setMetadata(KeyValuePairSet metadata) {

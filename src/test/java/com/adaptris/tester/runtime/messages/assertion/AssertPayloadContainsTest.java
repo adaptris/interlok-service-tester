@@ -28,7 +28,7 @@ public class AssertPayloadContainsTest extends AssertionCase {
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-payload-contains]", result.getMessage());
   }

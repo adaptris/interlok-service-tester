@@ -37,7 +37,7 @@ public class AssertMetadataContainsTest extends AssertionCase{
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-metadata-contains] metadata does not contain kvp: {key1=val1}", result.getMessage());
   }

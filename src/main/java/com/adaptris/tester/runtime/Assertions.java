@@ -49,7 +49,7 @@ public class Assertions extends AbstractCollection<Assertion> {
     return this.assertions.add(assertion);
   }
 
-  public JUnitReportTestIssue execute(TestMessage returnMessage){
+  public JUnitReportTestIssue execute(TestMessage returnMessage) throws ServiceTestException{
     JUnitReportTestIssue result = null;
     for(Assertion assertion : getAssertions()) {
       AssertionResult assertionResult = assertion.execute(returnMessage);

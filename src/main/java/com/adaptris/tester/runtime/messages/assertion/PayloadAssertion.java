@@ -3,8 +3,9 @@ package com.adaptris.tester.runtime.messages.assertion;
 import com.adaptris.annotation.MarshallingCDATA;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
-public abstract class PayloadAssertion extends Assertion {
+public abstract class PayloadAssertion implements Assertion {
 
+  private String uniqueId;
   @MarshallingCDATA
   private String payload;
 
@@ -14,6 +15,16 @@ public abstract class PayloadAssertion extends Assertion {
 
   public PayloadAssertion(String payload){
     setPayload(payload);
+  }
+
+  @Override
+  public void setUniqueId(String uniqueId) {
+    this.uniqueId = uniqueId;
+  }
+
+  @Override
+  public String getUniqueId() {
+    return uniqueId;
   }
 
   public void setPayload(String payload) {

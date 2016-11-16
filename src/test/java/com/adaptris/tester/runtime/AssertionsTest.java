@@ -85,13 +85,14 @@ public class AssertionsTest extends TCCase {
     return tc;
   }
 
-  private class StubAssertion extends Assertion{
+  private class StubAssertion implements Assertion{
 
+    private String uniqueId;
     private final AssertionResult result;
     private final String message;
 
     StubAssertion(String uniqueId, AssertionResult result, String message){
-      setUniqueId(uniqueId);
+      this.uniqueId = uniqueId;
       this.result = result;
       this.message = message;
     }
@@ -104,6 +105,16 @@ public class AssertionsTest extends TCCase {
     @Override
     public String expected() {
       return message;
+    }
+
+    @Override
+    public void setUniqueId(String uniqueId) {
+      this.uniqueId = uniqueId;
+    }
+
+    @Override
+    public String getUniqueId() {
+      return uniqueId;
     }
   }
 }
