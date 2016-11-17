@@ -1,8 +1,0 @@
-<!--
-
- Please refer to Javadocs for additional config information.
-
--->
-<variable-substitution-preprocessor>
- <string>file:///home/users/test.properties</string>
-</variable-substitution-preprocessor>
