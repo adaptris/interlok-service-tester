@@ -36,7 +36,7 @@ public class AssertXpathEqualsTest extends AssertionCase {
 
   public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), PAYLOAD));
-    assertEquals("Assertion Failure: [assert-xpath-equals]", result.getMessage());
+    assertEquals("Assertion Failure: [assert-xpath-equals] Expected [value] Returned [value]", result.getMessage());
   }
 
   @Override
