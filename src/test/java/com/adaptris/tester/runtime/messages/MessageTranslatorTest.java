@@ -11,6 +11,7 @@ public class MessageTranslatorTest extends TestCase {
   protected static final String METADATA_KEY = "key";
   protected static final String METADATA_VALUE = "value";
   protected static final String PAYLOAD = "payload";
+  private static final String NEXT_SERVICE_ID = "nextServiceId";
   protected Map<String, String> metadata;
 
   @Override
@@ -25,11 +26,13 @@ public class MessageTranslatorTest extends TestCase {
     SerializableAdaptrisMessage sm = new SerializableAdaptrisMessage();
     sm.setMessageHeaders(metadata);
     sm.setPayload(PAYLOAD, "UTF-8");
+    sm.setNextServiceId(NEXT_SERVICE_ID);
     TestMessage m = t.translate(sm);
     assertEquals(PAYLOAD, m.getPayload());
     assertEquals(1, m.getMessageHeaders().size());
     assertTrue(m.getMessageHeaders().containsKey(METADATA_KEY));
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));
+    assertEquals(NEXT_SERVICE_ID, m.getNextServiceId());
   }
 
   public void testTranslateTestMessage() throws Exception {

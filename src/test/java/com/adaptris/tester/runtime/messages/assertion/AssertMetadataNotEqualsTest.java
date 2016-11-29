@@ -41,6 +41,10 @@ public class AssertMetadataNotEqualsTest extends AssertionCase {
     assertEquals("Assertion Failure: [assert-metadata-not-equals]", result.getMessage());
   }
 
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
+  }
+
   @Override
   protected Assertion createAssertion() {
     Map<String, String> expected = new HashMap<>();

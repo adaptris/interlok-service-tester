@@ -42,6 +42,10 @@ public class AssertMetadataContainsTest extends AssertionCase{
     assertEquals("Assertion Failure: [assert-metadata-contains] metadata does not contain kvp: {key1=val1}", result.getMessage());
   }
 
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
+  }
+
   @Override
   protected Assertion createAssertion() {
     Map<String, String> expected = new HashMap<>();

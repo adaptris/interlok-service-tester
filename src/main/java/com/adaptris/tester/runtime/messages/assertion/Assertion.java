@@ -12,4 +12,6 @@ public interface Assertion extends TestComponent {
 
   String expected();
 
+  boolean showReturnedMessage();
+
 }

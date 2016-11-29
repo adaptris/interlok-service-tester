@@ -6,7 +6,9 @@ import com.adaptris.interlok.types.SerializableMessage;
 public class MessageTranslator {
 
   public TestMessage translate(SerializableMessage message){
-    return new TestMessage(message.getMessageHeaders(), message.getContent());
+    TestMessage tm = new TestMessage(message.getMessageHeaders(), message.getContent());
+    tm.setNextServiceId(message.getNextServiceId());
+    return tm;
   }
 
   public SerializableAdaptrisMessage translate(TestMessage input) {

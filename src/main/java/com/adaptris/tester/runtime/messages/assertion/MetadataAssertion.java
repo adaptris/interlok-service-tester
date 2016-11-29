@@ -63,4 +63,9 @@ public abstract class MetadataAssertion implements Assertion {
   public String expected() {
     return "Metadata: " + getMessageHeaders();
   }
+
+  @Override
+  public boolean showReturnedMessage() {
+    return true;
+  }
 }

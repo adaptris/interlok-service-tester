@@ -47,4 +47,9 @@ public class AssertXpathEquals extends XpathCommon implements Assertion {
     return "Value [" + getValue() + "] at Xpath [" + getXpath() + "]";
   }
 
+  @Override
+  public boolean showReturnedMessage() {
+    return true;
+  }
+
 }

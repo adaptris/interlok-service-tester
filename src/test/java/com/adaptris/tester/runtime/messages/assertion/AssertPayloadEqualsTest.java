@@ -32,6 +32,9 @@ public class AssertPayloadEqualsTest extends AssertionCase {
     assertEquals("Assertion Failure: [assert-payload-equals]", result.getMessage());
   }
 
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
+  }
 
   @Override
   protected Assertion createAssertion() {

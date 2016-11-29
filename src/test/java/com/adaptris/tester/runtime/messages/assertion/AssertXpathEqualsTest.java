@@ -39,6 +39,10 @@ public class AssertXpathEqualsTest extends AssertionCase {
     assertEquals("Assertion Failure: [assert-xpath-equals] Expected [value] Returned [value]", result.getMessage());
   }
 
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
+  }
+
   @Override
   protected AssertXpathEquals createAssertion() {
     AssertXpathEquals a= new AssertXpathEquals();

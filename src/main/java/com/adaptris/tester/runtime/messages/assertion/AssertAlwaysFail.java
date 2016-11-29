@@ -5,9 +5,10 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("assert-always-fail")
-public class AssertionAlwaysFail implements Assertion {
+public class AssertAlwaysFail implements Assertion {
 
   private String uniqueId;
+  private Boolean showReturnedMessage;
 
 
   @Override
@@ -17,7 +18,7 @@ public class AssertionAlwaysFail implements Assertion {
 
   @Override
   public String expected() {
-    return "Nothing expected... Will always fail";
+    return "This is expected... Will always fail";
   }
 
   @Override
@@ -28,5 +29,18 @@ public class AssertionAlwaysFail implements Assertion {
   @Override
   public String getUniqueId() {
     return this.uniqueId;
+  }
+
+  public void setShowReturnedMessage(Boolean showReturnedMessage) {
+    this.showReturnedMessage = showReturnedMessage;
+  }
+
+  public Boolean getShowReturnedMessage() {
+    return showReturnedMessage;
+  }
+
+  @Override
+  public boolean showReturnedMessage() {
+    return getShowReturnedMessage() == null ? true : getShowReturnedMessage();
   }
 }

@@ -108,6 +108,11 @@ public class AssertionsTest extends TCCase {
     }
 
     @Override
+    public boolean showReturnedMessage() {
+      return false;
+    }
+
+    @Override
     public void setUniqueId(String uniqueId) {
       this.uniqueId = uniqueId;
     }

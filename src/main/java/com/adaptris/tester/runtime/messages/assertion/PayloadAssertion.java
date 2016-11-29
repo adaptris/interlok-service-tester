@@ -46,4 +46,9 @@ public abstract class PayloadAssertion implements Assertion {
   public String expected() {
     return "Payload: " + getPayload();
   }
+
+  @Override
+  public boolean showReturnedMessage() {
+    return true;
+  }
 }

@@ -33,6 +33,10 @@ public class AssertPayloadContainsTest extends AssertionCase {
     assertEquals("Assertion Failure: [assert-payload-contains]", result.getMessage());
   }
 
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
+  }
+
   @Override
   protected Assertion createAssertion() {
     return new AssertPayloadContains("hello");
