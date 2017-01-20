@@ -2,6 +2,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.XpathCommonException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -19,7 +20,7 @@ public class RemoveNodePreprocessor extends XpathPreprocessor{
       Node node =  selectSingleNode(document, getXpath());
       node.getParentNode().removeChild(node);
       return nodeToString(document);
-    } catch (ParserConfigurationException | SAXException | IOException e) {
+    } catch (ParserConfigurationException | SAXException | IOException | XpathCommonException e) {
       throw new PreprocessorException("Failed to remove node", e);
     }
   }

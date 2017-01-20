@@ -36,9 +36,13 @@ public class AssertMetadataEqualsTest extends AssertionCase{
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-metadata-equals]", result.getMessage());
+  }
+
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
   }
 
   @Override

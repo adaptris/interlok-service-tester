@@ -1,21 +1,29 @@
 package com.adaptris.tester.runtime.messages;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class TestMessage{
 
+  @XStreamOmitField
   private Map<String, String> messageHeaders;
+  @XStreamOmitField
   private String payload;
+  @XStreamOmitField
+  private String nextServiceId;
 
   public TestMessage(){
-    this.messageHeaders = new HashMap<String, String>();
-    this.payload = "";
+    setMessageHeaders(new HashMap<String, String>());
+    setPayload("");
+    setNextServiceId("");
   }
 
   public TestMessage(Map<String, String> messageHeaders, String payload){
-    this.messageHeaders = messageHeaders;
-    this.payload = payload;
+    setMessageHeaders(messageHeaders);
+    setPayload(payload);
+    setNextServiceId("");
   }
 
   public Map<String, String> getMessageHeaders()  {
@@ -36,6 +44,14 @@ public class TestMessage{
 
   public void setPayload(String payload) {
     this.payload = payload;
+  }
+
+  public String getNextServiceId() {
+    return nextServiceId;
+  }
+
+  public void setNextServiceId(String nextServiceId) {
+    this.nextServiceId = nextServiceId;
   }
 
   @Override

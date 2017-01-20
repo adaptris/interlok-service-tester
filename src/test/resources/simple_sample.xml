@@ -1,0 +1,48 @@
+<service-test>
+    <unique-id>AdapterTest</unique-id>
+    <test-client class="stub-test-client" />
+    <test-list>
+        <unique-id>TestList</unique-id>
+        <test>
+            <unique-id>Test1</unique-id>
+            <service-to-test>
+                <source class="inline-source">
+                    <xml>
+                        <![CDATA[
+                            <add-metadata-service>
+                              <unique-id>Add1</unique-id>
+                              <metadata-element>
+                                <key>key1</key>
+                                <value>val1</value>
+                              </metadata-element>
+                            </add-metadata-service>
+                            <add-metadata-service>
+                              <unique-id>Add2</unique-id>
+                              <metadata-element>
+                                <key>key2</key>
+                                <value>val2</value>
+                              </metadata-element>
+                            </add-metadata-service>
+                        ]]>
+                    </xml>
+                </source>
+                <preprocessors>
+                    <preprocessor class="wrap-in-sc-preprocessor" />
+                </preprocessors>
+            </service-to-test>
+            <test-case>
+                <unique-id>TestCase1</unique-id>
+                <input-message class="inline-test-message">
+                    <payload>
+                        <![CDATA[<xml/>]]>
+                    </payload>
+                </input-message>
+                <assertions>
+                    <assert-payload-contains>
+                        <payload>xml</payload>
+                    </assert-payload-contains>
+                </assertions>
+            </test-case>
+        </test>
+    </test-list>
+</service-test>

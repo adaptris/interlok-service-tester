@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-@XStreamAlias("testsuites")
 public class JUnitReportTestSuites {
 
 
@@ -31,6 +30,14 @@ public class JUnitReportTestSuites {
 
   public void addTestSuite(JUnitReportTestSuite JUnitReportTestSuite){
     this.testSuites.add(JUnitReportTestSuite);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public List<JUnitReportTestSuite> getTestSuites() {
+    return testSuites;
   }
 
   public void writeReports(final File outputDirectory) throws ServiceTestException{

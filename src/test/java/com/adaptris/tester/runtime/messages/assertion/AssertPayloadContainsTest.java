@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-
 public class AssertPayloadContainsTest extends AssertionCase {
 
   public AssertPayloadContainsTest(String name) {
@@ -30,9 +28,13 @@ public class AssertPayloadContainsTest extends AssertionCase {
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-payload-contains]", result.getMessage());
+  }
+
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
   }
 
   @Override

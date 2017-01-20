@@ -1,10 +1,10 @@
 package com.adaptris.tester.runtime;
 
 import com.adaptris.tester.report.junit.JUnitReportFailure;
-import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.report.junit.JUnitReportTestIssue;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
+import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
@@ -41,19 +41,27 @@ public class Assertions extends AbstractCollection<Assertion> {
     return assertions;
   }
 
-  public void addMatcher(Assertion assertion){
-    this.assertions.add(assertion);
+  public void addAssertion(Assertion assertion){
+    this.add(assertion);
   }
 
-  public JUnitReportTestIssue execute(TestMessage returnMessage){
+  public boolean add(Assertion assertion){
+    return this.assertions.add(assertion);
+  }
+
+  public JUnitReportTestIssue execute(TestMessage returnMessage) throws ServiceTestException{
     JUnitReportTestIssue result = null;
     for(Assertion assertion : getAssertions()) {
       AssertionResult assertionResult = assertion.execute(returnMessage);
       if (!assertionResult.isPassed()) {
-        String message = "Returned\n"
-            + returnMessage.toString()
-            + "\n\n"
-            + "Expected\n"
+        String message = "";
+        if (assertion.showReturnedMessage()) {
+          message = "Returned\n"
+              + returnMessage.toString()
+              + "\n\n";
+        }
+        message = message +
+            "Expected\n"
             + assertion.expected();
         result = new JUnitReportFailure(assertionResult.getMessage(),message);
         break;

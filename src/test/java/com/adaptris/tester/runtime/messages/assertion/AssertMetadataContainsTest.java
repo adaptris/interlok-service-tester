@@ -7,9 +7,6 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 public class AssertMetadataContainsTest extends AssertionCase{
 
   public AssertMetadataContainsTest(String name) {
@@ -40,9 +37,13 @@ public class AssertMetadataContainsTest extends AssertionCase{
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-metadata-contains] metadata does not contain kvp: {key1=val1}", result.getMessage());
+  }
+
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
   }
 
   @Override

@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class AssertMetadataNotEqualsTest extends AssertionCase {
 
   public AssertMetadataNotEqualsTest(String name) {
@@ -38,9 +36,13 @@ public class AssertMetadataNotEqualsTest extends AssertionCase {
   }
 
   @Test
-  public void testGetMessage(){
+  public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage());
     assertEquals("Assertion Failure: [assert-metadata-not-equals]", result.getMessage());
+  }
+
+  public void testShowReturnedMessage(){
+    assertTrue(createAssertion().showReturnedMessage());
   }
 
   @Override

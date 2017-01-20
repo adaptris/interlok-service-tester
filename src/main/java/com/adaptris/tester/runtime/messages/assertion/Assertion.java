@@ -1,23 +1,17 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.TestComponent;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
-public abstract class Assertion implements TestComponent {
+public interface Assertion extends TestComponent {
 
-  private String uniqueId;
+  void setUniqueId(String uniqueId);
 
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
+  AssertionResult execute(TestMessage actual) throws ServiceTestException;
 
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
-  }
+  String expected();
 
-  public abstract AssertionResult execute(TestMessage actual);
-
-  public abstract String expected();
+  boolean showReturnedMessage();
 
 }

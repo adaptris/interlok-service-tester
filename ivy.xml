@@ -35,7 +35,7 @@
     <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
     <dependency org="com.adaptris" name="adp-stubs" rev="${ivy.publish.revision}" conf="test->default" changing="true"/>
     <dependency org="org.apache.ant" name="ant-testutil" rev="1.9.7" conf="test->default"/>
-
+    <dependency org="com.github.stefanbirkner" name="system-rules" rev="1.16.0" conf="test->default" />
     <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="ant->default" transitive="false"/>
     <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.7.201606060606" conf="ant->default"/>
     <dependency org="com.yworks"  name="yguard" rev="2.5.2" conf="ant->default" transitive="false"/>
