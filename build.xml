@@ -11,7 +11,7 @@
     <property name="project.name" value="interlok-service-tester"/>
     <property name="project.jar.name" value="${project.name}.jar"/>
     <property name="ivy.publish.bundle.type" value="jar"/>
-    <property name="ivy.publish.revision" value="3.5-SNAPSHOT"/>
+    <property name="ivy.publish.revision" value="3.6-SNAPSHOT"/>
     <property name="ivy.dir" value="${basedir}/ivy"/>
     <property name="ivy.xml.file" value="${basedir}/ivy.xml"/>
     <property name="ivy.artifact.publish.status" value="integration"/>
@@ -19,7 +19,8 @@
     <property name="manifest.title" value="Interlok Service Tester"/>
     <property name="manifest.vendor" value="Adaptris Ltd"/>
     <property name="manifest.section.name" value="com/adaptris/interlok"/>
-
+    <property name="project.pom.description" value="${manifest.title}"/>
+    
     <property name="src.dir"      value="${basedir}/src/main/java" />
     <property name="testsrc.dir"  value="${basedir}/src/test/java"/>
     <property name="build.dir" value="${basedir}/target" />
@@ -98,21 +99,6 @@
         <group title="Interlok Service Tester" packages="com.adaptris.tester:com.adaptris.tester.*"/>
       </groups>
     </adapter:ydoc-javadoc-creator>
-  </target>
-
-
-  <target name="prepare-for-publish" depends="prepare-ivy, jar, test-no-reports,javadoc">
-    <mkdir dir="${project.dist.dir}/${project.name}/pom"/>
-    <mkdir dir="${project.dist.dir}/${project.name}/jar"/>
-    <mkdir dir="${project.dist.dir}/${project.name}/javadoc"/>
-    <copy todir="${project.dist.dir}/${project.name}/jar" file="${project.dist.dir}/${project.jar.name}"/>
-    <zip destfile="${project.dist.dir}/${project.name}/javadoc/${project.name}-javadoc.zip" compress="true" level="9">
-      <zipfileset dir="${api.doc.dir}" prefix="docs/Interlok-Common"/>
-    </zip>
-    <jar jarfile="${project.dist.dir}/${project.name}/javadoc/${project.name}.jar">
-      <fileset dir="${api.doc.dir}"/>
-    </jar>
-    <ivy:makepom ivyfile="${ivy.xml.file}" pomfile="${project.dist.dir}/${project.name}/pom/${project.name}.pom" description="${project.pom.description}"  conf="default,master,compile,provided,runtime,test,system,sources,javadoc,optional"/>
   </target>
 
   <target name="publish" depends="prepare-for-publish">

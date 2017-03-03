@@ -3,7 +3,6 @@ package com.adaptris.tester.runtime;
 import com.adaptris.annotation.MarshallingCDATA;
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
-import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
 import com.adaptris.util.KeyValuePairSet;
 import com.adaptris.util.text.xml.SimpleNamespaceContext;
 import com.adaptris.util.text.xml.XPath;
@@ -18,7 +17,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -60,6 +62,20 @@ public abstract class XpathCommon {
       throw new XpathCommonException("Failed to convert node to string", e);
     }
     return sw.toString();
+  }
+
+  protected final boolean selectSingleBoolean(String input, String xpathExpression) throws XpathCommonException {
+    javax.xml.xpath.XPath xpath = XPathFactory.newInstance().newXPath();
+    NamespaceContext ctx = SimpleNamespaceContext.create(getNamespaceContext());
+    if(ctx != null) {
+      xpath.setNamespaceContext(ctx);
+    }
+    try {
+      XPathExpression xpr = xpath.compile(xpathExpression);
+      return (Boolean)xpr.evaluate(XmlHelper.createDocument(input, new DocumentBuilderFactoryBuilder()), XPathConstants.BOOLEAN);
+    } catch (XPathExpressionException | SAXException | ParserConfigurationException | IOException e) {
+      throw new XpathCommonException("Failed to execute xpath", e);
+    }
   }
 
   public String getXpath() {
