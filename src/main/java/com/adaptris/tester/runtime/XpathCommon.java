@@ -23,6 +23,7 @@ import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
 import com.adaptris.util.KeyValuePairSet;
 import com.adaptris.util.text.xml.SimpleNamespaceContext;
+import com.adaptris.util.text.xml.XPath;
 
 public abstract class XpathCommon {
 
