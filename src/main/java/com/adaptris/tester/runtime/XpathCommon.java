@@ -1,13 +1,7 @@
 package com.adaptris.tester.runtime;
 
-import com.adaptris.annotation.MarshallingCDATA;
-import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
-import com.adaptris.core.util.XmlHelper;
-import com.adaptris.util.KeyValuePairSet;
-import com.adaptris.util.text.xml.SimpleNamespaceContext;
-import com.adaptris.util.text.xml.XPath;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
+import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,9 +14,15 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.IOException;
-import java.io.StringWriter;
+
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import com.adaptris.annotation.MarshallingCDATA;
+import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
+import com.adaptris.core.util.XmlHelper;
+import com.adaptris.util.KeyValuePairSet;
+import com.adaptris.util.text.xml.SimpleNamespaceContext;
 
 public abstract class XpathCommon {
 
@@ -65,7 +65,7 @@ public abstract class XpathCommon {
   }
 
   protected final boolean selectSingleBoolean(String input, String xpathExpression) throws XpathCommonException {
-    javax.xml.xpath.XPath xpath = XPathFactory.newInstance().newXPath();
+    javax.xml.xpath.XPath xpath = com.adaptris.util.text.xml.XPath.newXPathFactory().newXPath();
     NamespaceContext ctx = SimpleNamespaceContext.create(getNamespaceContext());
     if(ctx != null) {
       xpath.setNamespaceContext(ctx);
