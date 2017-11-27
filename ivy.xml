@@ -25,8 +25,9 @@
      <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
   </publications>
   <dependencies>
-  	<dependency org="com.adaptris" name="adp-core" rev="${ivy.publish.revision}" conf="compile->default" changing="true"/>
-  	<dependency org="com.adaptris" name="adp-core-apt" rev="${ivy.publish.revision}" conf="compile->default;ant->default" changing="true"/>
+    <dependency org="com.adaptris" name="adp-core" rev="${ivy.publish.revision}" conf="compile->default;javadoc->javadoc" changing="true"/>
+    <dependency org="com.adaptris" name="interlok-common" rev="${ivy.publish.revision}" conf="compile->default;javadoc->javadoc" changing="true"/>
+    <dependency org="com.adaptris" name="adp-core-apt" rev="${ivy.publish.revision}" conf="compile->default;ant->default" changing="true"/>
     <dependency org="com.adaptris" name="adp-varsub" rev="${ivy.publish.revision}" conf="optional->default" changing="true"/>
     <dependency org="com.adaptris" name="adp-xinclude" rev="${ivy.publish.revision}" conf="optional->default" changing="true"/>
     <dependency org="com.adaptris" name="adp-stubs" rev="${ivy.publish.revision}" conf="optional->default" changing="true"/>
@@ -38,13 +39,14 @@
     <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
     <dependency org="com.adaptris" name="adp-stubs" rev="${ivy.publish.revision}" conf="test->default" changing="true"/>
     <dependency org="org.apache.ant" name="ant-testutil" rev="1.9.7" conf="test->default"/>
-    <dependency org="com.github.stefanbirkner" name="system-rules" rev="1.16.0" conf="test->default" />
+    <dependency org="com.github.stefanbirkner" name="system-rules" rev="1.16.0" conf="test->default"/>
     <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="ant->default" transitive="false"/>
     <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.7.201606060606" conf="ant->default"/>
     <dependency org="com.yworks"  name="yguard" rev="2.5.2" conf="ant->default" transitive="false"/>
-    <dependency org="com.adaptris" name="code-signing" rev="2017-RELEASE" conf="signing->default"/>
+    <dependency org="com.adaptris" name="code-signing" rev="2019-RELEASE" conf="signing->default"/>
 
     <exclude org="javax.mail" artifact="mail"/>
+    <exclude org="junit" artifact="junit-dep"/>
     <exclude org="c3p0"/>
     <exclude org="commons-logging"/>
     <exclude org="org.apache.geronimo"/>
