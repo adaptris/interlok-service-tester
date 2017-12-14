@@ -2,7 +2,6 @@ package com.adaptris.tester.runtime;
 
 import com.adaptris.core.BaseCase;
 import com.adaptris.tester.report.junit.*;
-import com.adaptris.tester.runtime.messages.InlineTestMessage;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.TestMessageProvider;
 import com.adaptris.tester.runtime.messages.assertion.AssertPayloadEquals;
@@ -25,13 +24,6 @@ public class TestCaseTest extends BaseCase {
     assertEquals("id", tc.getUniqueId());
   }
 
-  @Deprecated
-  public void testSetInputMessage() throws Exception {
-    TestCase tc = new TestCase();
-    tc.setInputMessage(new InlineTestMessage());
-    assertNotNull(tc.getInputMessage());
-    assertTrue(tc.getInputMessage() instanceof InlineTestMessage);
-  }
 
   public void testSetInputMessageProvider() throws Exception {
     TestCase tc = new TestCase();
