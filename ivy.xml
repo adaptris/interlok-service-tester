@@ -22,6 +22,7 @@
   <publications>
      <artifact name="interlok-service-tester" type="jar" ext="jar"/>
      <artifact name="interlok-service-tester" type="pom" ext="pom"/>
+     <artifact name="interlok-service-tester-examples" type="examples" ext="zip" conf="examples"/>
      <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
   </publications>
   <dependencies>
