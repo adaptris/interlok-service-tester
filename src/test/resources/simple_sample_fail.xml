@@ -32,11 +32,11 @@
             </service-to-test>
             <test-case>
                 <unique-id>TestCase1</unique-id>
-                <input-message class="inline-test-message">
-                    <payload>
-                        <![CDATA[<xml/>]]>
-                    </payload>
-                </input-message>
+                <input-message-provider class="test-message-provider">
+                    <payload-provider class="inline-payload-provider">
+                        <payload><![CDATA[<xml/>]]></payload>
+                    </payload-provider>
+                </input-message-provider>
                 <assertions>
                     <assert-payload-contains>
                         <payload>doesn't contain</payload>

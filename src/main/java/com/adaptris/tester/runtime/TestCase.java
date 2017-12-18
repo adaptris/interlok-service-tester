@@ -15,8 +15,6 @@ public class TestCase implements TestComponent {
   private static final String TEST_FILTER =  "test.glob.filter";
 
   private String uniqueId;
-  @Deprecated
-  private TestMessage inputMessage;
   private TestMessageProvider inputMessageProvider;
   private Assertions assertions;
   private ExpectedException expectedException;
@@ -39,16 +37,6 @@ public class TestCase implements TestComponent {
   @Override
   public String getUniqueId() {
     return uniqueId;
-  }
-
-  @Deprecated
-  public void setInputMessage(TestMessage inputMessage) {
-    this.inputMessage = inputMessage;
-  }
-
-  @Deprecated
-  public TestMessage getInputMessage() {
-    return inputMessage;
   }
 
   public TestMessageProvider getInputMessageProvider() {
@@ -104,11 +92,7 @@ public class TestCase implements TestComponent {
     long startTime = System.nanoTime();
     try {
       TestMessage input;
-      if(getInputMessage() == null){
-        input = getInputMessageProvider().createTestMessage();
-      } else {
-        input = getInputMessage();
-      }
+      input = getInputMessageProvider().createTestMessage();
       TestMessage returnMessage = client.applyService(serviceToTest.getProcessedSource(), input);
       if(getExpectedException() != null){
         //Exception should have been thrown

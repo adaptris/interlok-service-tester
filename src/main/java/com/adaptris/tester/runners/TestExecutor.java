@@ -4,6 +4,7 @@ import com.adaptris.core.AdaptrisMarshaller;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.DefaultMarshaller;
 import com.adaptris.core.config.PreProcessingXStreamMarshaller;
+import com.adaptris.core.management.ArgUtil;
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.ServiceTest;
 import com.adaptris.tester.runtime.ServiceTestException;
@@ -15,9 +16,17 @@ import java.nio.file.Files;
 
 public class TestExecutor {
 
+  private static final String[] ARG_INPUT = new String[]{"-serviceTest", "--serviceTest"};
+  private static final String[] ARG_OUPUT = new String[]{"-serviceTestOutput", "--serviceTestOutput"};
+  private static final String[] ARG_PREPROCESSORS = new String[]{"-serviceTestPreProcessors", "--serviceTestPreProcessors"};
+
   private String preProcessors;
   private String inputFilePath;
   private String outputFilePath;
+
+  public TestExecutor(){
+    setOutputFilePath("test-results");
+  }
 
   public static void main(String args[]) throws ServiceTestException {
     TestExecutor e = new TestExecutor();
@@ -29,15 +38,25 @@ public class TestExecutor {
     execute(new File(getInputFilePath()), new File(getOutputFilePath()));
   }
 
-  void checkAndSetArguments(String[] args) throws ServiceTestException{
-    if (args.length < 2){
-      throw new IllegalArgumentException("Missing arguments required [input-file] [output-file]");
+  void checkAndSetArguments(String[] args) throws ServiceTestException {
+    ArgUtil argUtil;
+    try {
+      argUtil = ArgUtil.getInstance(args);
+    } catch (Exception e) {
+      throw new ServiceTestException("Failed to parse arguments", e);
     }
-    setInputFilePath(args[0]);
-    setOutputFilePath(args[1]);
-    if (args.length > 2 ) {
-      setPreProcessors(args[2]);
+    if (argUtil.hasArgument(ARG_INPUT)) {
+      setInputFilePath(argUtil.getArgument(ARG_INPUT));
+    } else {
+      throw new IllegalArgumentException("Missing argument required [-serviceTest]");
     }
+    if (argUtil.hasArgument(ARG_OUPUT)) {
+      setOutputFilePath(argUtil.getArgument(ARG_OUPUT));
+    }
+    if (argUtil.hasArgument(ARG_PREPROCESSORS)) {
+      setPreProcessors(argUtil.getArgument(ARG_PREPROCESSORS));
+    }
+
   }
 
   private void execute(File input, File outputDirectory) throws ServiceTestException {

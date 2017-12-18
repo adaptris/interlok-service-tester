@@ -84,8 +84,17 @@
     <replace file="${testclasses.build.dir}/unit-tests.properties" token="junit." value=""/>
   </target>
 
-  <target name="jar.resources" depends="init">
-    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="${manifest.title}"/>
+  <target name="jar.resources" depends="init, prepare-ivy, macrodef.init">
+    <manifest file="${build.dir}/Manifest.mf">
+      <attribute name="Manifest-Version" value="1.0"/>
+      <attribute name="Main-Class" value="com.adaptris.tester.runners.TestExecutor"/>
+      <attribute name="Build-Version" value="${ivy.publish.revision}"/>
+      <attribute name="Built-By" value="${user.name}"/>
+      <attribute name="Implementation-Vendor-Id" value="com.adaptris"/>
+      <attribute name="Implementation-Version" value="${ivy.publish.revision}"/>
+      <attribute name="Implementation-Title" value="${manifest.title}"/>
+      <attribute name="Implementation-Vendor" value="Adaptris Ltd"/>
+    </manifest>
   </target>
 
   <target name="jar" depends="compile, jar.resources">
