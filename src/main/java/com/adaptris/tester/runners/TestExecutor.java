@@ -5,6 +5,7 @@ import com.adaptris.core.CoreException;
 import com.adaptris.core.DefaultMarshaller;
 import com.adaptris.core.config.PreProcessingXStreamMarshaller;
 import com.adaptris.core.management.ArgUtil;
+import com.adaptris.core.management.logging.LoggingConfigurator;
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.ServiceTest;
 import com.adaptris.tester.runtime.ServiceTestException;
@@ -29,8 +30,12 @@ public class TestExecutor {
   }
 
   public static void main(String args[]) throws ServiceTestException {
-    TestExecutor e = new TestExecutor();
-    e.execute(args);
+    try {
+      TestExecutor e = new TestExecutor();
+      e.execute(args);
+    } finally {
+      LoggingConfigurator.newConfigurator().requestShutdown();
+    }
   }
 
   void execute(String[] args) throws ServiceTestException {
