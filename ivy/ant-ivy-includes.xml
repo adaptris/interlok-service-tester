@@ -694,6 +694,9 @@
       <available file="${example-xml.build.dir}" type="dir"/>
       <then>
         <mkdir dir="${project.dist.dir}/${project.name}/examples"/>
+        <jar jarfile="${project.dist.dir}/${project.name}/examples/${project.name}.jar">
+          <fileset dir="${example-xml.build.dir}"/>
+        </jar>
         <zip destfile="${project.dist.dir}/${project.name}/examples/${project.name}-examples.zip">
           <zipfileset dir="${example-xml.build.dir}" prefix="example-xml/optional/${ant.project.name}"/>
         </zip>
