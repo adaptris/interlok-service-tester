@@ -4,6 +4,10 @@ import com.adaptris.core.PortManager;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+/**
+ *
+ * @service-test-config dynamic-port-provider
+ */
 @XStreamAlias("dynamic-port-provider")
 public class DynamicPortProvider implements PortProvider {
 

@@ -10,6 +10,10 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 
+/**
+ *
+ * @service-test-config external-jmx-test-client
+ */
 @XStreamAlias("external-jmx-test-client")
 public class ExternalJMXTestClient extends JMXTestClient {
 

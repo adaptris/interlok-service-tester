@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ *
+ * @service-test-config wire-mock-helper
+ */
 @XStreamAlias("wire-mock-helper")
 public class WireMockHelper extends Helper {
 

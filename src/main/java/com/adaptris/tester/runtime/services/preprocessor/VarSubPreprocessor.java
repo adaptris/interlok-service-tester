@@ -12,6 +12,10 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @service-test-config "variable-substitution-preprocessor
+ */
 @XStreamAlias("variable-substitution-preprocessor")
 public class VarSubPreprocessor implements Preprocessor {
 

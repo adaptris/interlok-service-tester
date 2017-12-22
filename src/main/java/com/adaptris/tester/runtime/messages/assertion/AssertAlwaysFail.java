@@ -4,6 +4,10 @@ import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config assert-always-fail
+ */
 @XStreamAlias("assert-always-fail")
 public class AssertAlwaysFail implements Assertion {
 

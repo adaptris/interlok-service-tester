@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ * @service-test-config test
+ */
 @XStreamAlias("test")
 public class Test implements TestComponent {
 

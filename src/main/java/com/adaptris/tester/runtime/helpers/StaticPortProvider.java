@@ -2,6 +2,10 @@ package com.adaptris.tester.runtime.helpers;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config static-port-provider
+ */
 @XStreamAlias("static-port-provider")
 public class StaticPortProvider implements PortProvider {
 

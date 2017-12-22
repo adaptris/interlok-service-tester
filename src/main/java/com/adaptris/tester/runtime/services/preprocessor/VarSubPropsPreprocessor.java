@@ -12,6 +12,10 @@ import java.util.Properties;
 import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_POSTFIX;
 import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
 
+/**
+ *
+ * @service-test-config "properties-variable-substitution-preprocessor
+ */
 @XStreamAlias("properties-variable-substitution-preprocessor")
 public class VarSubPropsPreprocessor implements Preprocessor {
 

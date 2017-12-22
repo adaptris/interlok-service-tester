@@ -3,6 +3,10 @@ package com.adaptris.tester.runtime.services.sources;
 import com.adaptris.annotation.MarshallingCDATA;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config inline-source
+ */
 @XStreamAlias("inline-source")
 public class InlineSource implements Source {
 

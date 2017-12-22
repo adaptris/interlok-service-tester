@@ -3,6 +3,10 @@ package com.adaptris.tester.runtime.services.preprocessor;
 import com.adaptris.util.GuidGenerator;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config wrap-in-sc-preprocessor
+ */
 @XStreamAlias("wrap-in-sc-preprocessor")
 public class WrapInServiceCollectionPreprocessor implements Preprocessor{
   @Override

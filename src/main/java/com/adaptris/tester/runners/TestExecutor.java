@@ -15,6 +15,16 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
+/**
+ * <p>Entry point into service tester via the commandline.</p>
+ *
+ * <table>
+ *   <tr><th>Argument</th><th>Description</th><th>Required</th></tr>
+ *   <tr><td><code>-serviceTest</code></td><td>Test configuration location</td><td>true</td></tr>
+ *   <tr><td><code>-serviceTestOutput</code></td><td>Output directory for test results (default: ./test-results)</td><td>false</td></tr>
+ *   <tr><td><code>-serviceTestPreProcessor</code></td><td>Pre-processors to execute against test configuration (ex: xinclude)</td><td>false</td></tr>
+ * </table>
+ */
 public class TestExecutor {
 
   private static final String[] ARG_INPUT = new String[]{"-serviceTest", "--serviceTest"};
@@ -29,6 +39,11 @@ public class TestExecutor {
     setOutputFilePath("test-results");
   }
 
+  /**
+   * Entry point into service tester via the commandline, executes {@link #execute(String[])}.
+   * @param args service tester arguments
+   * @throws ServiceTestException wrapping any exception
+   */
   public static void main(String args[]) throws ServiceTestException {
     try {
       TestExecutor e = new TestExecutor();
@@ -38,11 +53,23 @@ public class TestExecutor {
     }
   }
 
-  void execute(String[] args) throws ServiceTestException {
+  /**
+   * Passes arguments using {@link #checkAndSetArguments(String[])} and executes {@link #execute(File, File)}.
+   *
+   * @param args service tester arguments
+   * @throws ServiceTestException wrapping any exception
+   */
+  public void execute(String[] args) throws ServiceTestException {
     checkAndSetArguments(args);
     execute(new File(getInputFilePath()), new File(getOutputFilePath()));
   }
 
+  /**
+   * Check required arguments and sets then using there corresponding setters.
+   *
+   * @param args service tester arguments
+   * @throws ServiceTestException wrapping any exception
+   */
   void checkAndSetArguments(String[] args) throws ServiceTestException {
     ArgUtil argUtil;
     try {
@@ -64,7 +91,15 @@ public class TestExecutor {
 
   }
 
-  private void execute(File input, File outputDirectory) throws ServiceTestException {
+  /**
+   * Reads contents of input and executes {@link #execute(String)} using output directory with the returned results
+   * {@link JUnitReportTestResults#writeReports(File)}
+   *
+   * @param input {@linkplain File} location of service test configuration.
+   * @param outputDirectory {@linkplain File} location of output directory.
+   * @throws ServiceTestException wrapping any exception
+   */
+  public void execute(File input, File outputDirectory) throws ServiceTestException {
     try {
       final byte[] encoded = Files.readAllBytes(input.toPath());
       final String contents = new String(encoded, Charset.defaultCharset());
@@ -78,7 +113,15 @@ public class TestExecutor {
     }
   }
 
-  private JUnitReportTestResults execute(String text) throws ServiceTestException {
+  /**
+   * Unmarshalls input to {@link ServiceTest} using {@link AdaptrisMarshaller} executes {@link #execute(ServiceTest)}
+   * returning {@link JUnitReportTestResults}
+   *
+   * @param text Test configuration
+   * @return Test results in {@link JUnitReportTestResults}
+   * @throws ServiceTestException wrapping any exception
+   */
+  public JUnitReportTestResults execute(String text) throws ServiceTestException {
     try {
       ServiceTest serviceTest = (ServiceTest) createMarshaller().unmarshal(text);
       return execute(serviceTest);
@@ -87,30 +130,61 @@ public class TestExecutor {
     }
   }
 
-  private JUnitReportTestResults execute(ServiceTest serviceTest) throws ServiceTestException {
+  /**
+   * Executes {@link ServiceTest} configuration returning {@link JUnitReportTestResults}
+   *
+   * @param serviceTest Test configuration
+   * @return Test results in {@link JUnitReportTestResults}
+   * @throws ServiceTestException wrapping any exception
+   */
+  public JUnitReportTestResults execute(ServiceTest serviceTest) throws ServiceTestException {
     return serviceTest.execute();
   }
 
+  /**
+   * Sets Pre-Processors to be when service test configuration is unmarshalled.
+   * @param preProcessors Pre-processors for service test configuration
+   */
   public void setPreProcessors(String preProcessors) {
     this.preProcessors = preProcessors;
   }
 
+  /**
+   * Gets Pre-Processors to be when service test configuration is unmarshalled.
+   * @return Pre-processors for service test configuration
+   */
   public String getPreProcessors() {
     return preProcessors;
   }
 
+  /**
+   * Sets test configuration path
+   * @param inputFilePath Test configuration path
+   */
   public void setInputFilePath(String inputFilePath) {
     this.inputFilePath = inputFilePath;
   }
 
+  /**
+   * Gets test configuration path
+   * @return Test configuration path
+   */
   public String getInputFilePath() {
     return inputFilePath;
   }
 
+  /**
+   * Sets output directory for test results
+   * @param outputFilePath Output directory for test results
+   */
   public void setOutputFilePath(String outputFilePath) {
     this.outputFilePath = outputFilePath;
   }
 
+  /**
+   * Gets output directory for test results
+   * @return Output directory for test results (default: test-results)
+   */
   public String getOutputFilePath() {
     return outputFilePath;
   }

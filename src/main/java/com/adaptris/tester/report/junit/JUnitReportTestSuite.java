@@ -3,7 +3,6 @@ package com.adaptris.tester.report.junit;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -11,7 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Child of {@link JUnitReportTestSuites} for storing results.
+ *
+ * The intention of class and classes in the hierarchy is to produce JUnit style XML.
+ *
+ * <p>When tests are executed via {@link com.adaptris.tester.runtime.Test#execute(String, com.adaptris.tester.runtime.clients.TestClient, Map)}
+ * the results are produced as this corresponding class.</p>
+ *
+ * @junit-config testsuite
+ */
 @XStreamAlias("testsuite")
 public class JUnitReportTestSuite {
 
@@ -53,14 +63,26 @@ public class JUnitReportTestSuite {
     }
   }
 
+  /**
+   * Adds JUnit property to list
+   * @param property JUnit property
+   */
   public void addProperty(JUnitReportProperty property){
     properties.add(property);
   }
 
+  /**
+   * Returns list of JUnit properties
+   * @return list of JUnit properties
+   */
   public List<JUnitReportProperty> getProperties() {
     return properties;
   }
 
+  /**
+   * Adds JUnit test case to list, also increments test count and conditionality increments failure, error and skipped counts.
+   * @param testCase JUnit test case
+   */
   public void addTestCase(JUnitReportTestCase testCase){
     this.testCases.add(testCase);
     this.tests++;
@@ -75,10 +97,18 @@ public class JUnitReportTestSuite {
     }
   }
 
+  /**
+   * Returns list of test cases
+   * @return list of test cases
+   */
   public List<JUnitReportTestCase> getTestCases() {
     return testCases;
   }
 
+  /**
+   * Checks whether any of the stored test cases have a failure or error.
+   * @return true if any test case has failure or error.
+   */
   boolean hasFailures(){
     for(JUnitReportTestCase testCase : this.testCases) {
       if (testCase.isFailure() || testCase.isError()){
@@ -88,35 +118,75 @@ public class JUnitReportTestSuite {
     return false;
   }
 
+  /**
+   * Returns test suite name
+   * @return Test suite name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Set test suite time
+   * @param time Test suite time
+   */
   public void setTime(double time) {
     this.time = time;
   }
 
+  /**
+   * Returns test suite time
+   * @return Test suite time
+   */
   public double getTime() {
     return time;
   }
 
+  /**
+   * Returns number of tests in suite
+   * @return Number of tests in suite
+   */
   public int getTests() {
     return tests;
   }
 
+  /**
+   * Returns number of tests with an failure in suite
+   * @return Number of tests with an failure in suite
+   */
   public int getFailures() {
     return failures;
   }
 
+  /**
+   * Returns number of tests with an error in suite
+   * @return Number of tests with an error in suite
+   */
   public int getErrors() {
     return errors;
   }
 
+  /**
+   * Returns number of tests with an skipped in suite
+   * @return Number of tests with an skipped in suite
+   */
   public int getSkipped() {
     return skipped;
   }
 
+  /**
+   * Returns hostname test suite executed on
+   * @return Hostname test suite executed on
+   */
   public String getHostname() {
     return hostname;
+  }
+
+  /**
+   * Returns timestamp test suite started on, format: yyyy-MM-dd'T'hh:mm:ss
+   * @return Timestamp test suite started on
+   */
+  public String getTimestamp() {
+    return timestamp;
   }
 }

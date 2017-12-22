@@ -6,6 +6,10 @@ import com.adaptris.tester.runtime.XpathCommonException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config assert-xpath-boolean
+ */
 @XStreamAlias("assert-xpath-boolean")
 public class AssertXpathBoolean extends XpathCommon implements Assertion {
 

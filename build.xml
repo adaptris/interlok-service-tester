@@ -102,10 +102,13 @@
     <adapter:create-jar basedir="${build.classes.dir}" jarfile="${project.dist.dir}/${project.jar.name}" manifest="${build.dir}/Manifest.mf"  version-title="${manifest.title}"/>
   </target>
 
-  <target name="javadoc" depends="prepare-ivy,macrodef.init" description="Create javadocs">
+  <target name="javadoc" depends="prepare-ivy,macrodef.init,compile" description="Create javadocs">
     <adapter:ydoc-javadoc-creator sourcepath="${src.dir}" destdir="${api.doc.dir}">
       <groups>
-        <group title="Interlok Service Tester" packages="com.adaptris.tester:com.adaptris.tester.*"/>
+        <group title="Service Tester - Entry Point" packages="com.adaptris.tester.runners.*:com.adaptris.tester.runners"/>
+        <group title="Service Tester - Report Configuration and Creation" packages="com.adaptris.tester.report.junit.*:com.adaptris.tester.report.junit"/>
+        <group title="Service Tester - Runtime Configuration and Execution" packages="com.adaptris.tester.runtime.*:com.adaptris.tester.runtime"/>
+        <group title="Service Tester - Utilities" packages="com.adaptris.tester.utils.*:com.adaptris.tester.utils"/>
       </groups>
     </adapter:ydoc-javadoc-creator>
   </target>

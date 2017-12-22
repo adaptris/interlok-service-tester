@@ -2,6 +2,10 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config assert-payload-equals
+ */
 @XStreamAlias("assert-payload-equals")
 public class AssertPayloadEquals extends PayloadAssertion {
 

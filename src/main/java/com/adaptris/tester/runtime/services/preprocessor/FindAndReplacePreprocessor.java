@@ -4,6 +4,10 @@ import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config "find-and-replace-preprocessor
+ */
 @XStreamAlias("find-and-replace-preprocessor")
 public class FindAndReplacePreprocessor implements Preprocessor {
   private KeyValuePairSet replacementKeys;

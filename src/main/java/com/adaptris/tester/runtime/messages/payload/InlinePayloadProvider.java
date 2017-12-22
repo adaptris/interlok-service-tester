@@ -3,6 +3,10 @@ package com.adaptris.tester.runtime.messages.payload;
 import com.adaptris.annotation.MarshallingCDATA;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config inline-payload-provider
+ */
 @XStreamAlias("inline-payload-provider")
 public class InlinePayloadProvider extends PayloadProvider {
 

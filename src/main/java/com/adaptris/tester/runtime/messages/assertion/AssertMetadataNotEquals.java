@@ -5,6 +5,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.Map;
 
+/**
+ *
+ * @service-test-config assert-metadata-not-equals
+ */
 @XStreamAlias("assert-metadata-not-equals")
 public class AssertMetadataNotEquals extends MetadataAssertion {
 

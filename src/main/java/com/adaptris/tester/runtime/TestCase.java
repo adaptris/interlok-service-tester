@@ -9,6 +9,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
+/**
+ *
+ * @service-test-config test-case
+ */
 @XStreamAlias("test-case")
 public class TestCase implements TestComponent {
 

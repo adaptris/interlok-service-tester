@@ -6,6 +6,10 @@ import com.adaptris.tester.runtime.XpathCommonException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config assert-xpath-equals
+ */
 @XStreamAlias("assert-xpath-equals")
 public class AssertXpathEquals extends XpathCommon implements Assertion {
 

@@ -14,6 +14,10 @@ import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import java.io.IOException;
 
+/**
+ *
+ * @service-test-config embedded-jmx-test-client
+ */
 @XStreamAlias("embedded-jmx-test-client")
 public class EmbeddedTestClient extends JMXTestClient {
 

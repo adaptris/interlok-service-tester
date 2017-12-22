@@ -4,6 +4,10 @@ import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config assert-next-service-id
+ */
 @XStreamAlias("assert-next-service-id")
 public class AssertNextServiceId implements Assertion {
 
