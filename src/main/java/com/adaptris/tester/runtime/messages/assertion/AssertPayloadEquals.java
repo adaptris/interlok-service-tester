@@ -3,6 +3,7 @@ package com.adaptris.tester.runtime.messages.assertion;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
+ * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getPayload()}
  *
  * @service-test-config assert-payload-equals
  */

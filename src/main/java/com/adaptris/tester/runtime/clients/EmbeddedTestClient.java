@@ -15,6 +15,7 @@ import javax.management.MalformedObjectNameException;
 import java.io.IOException;
 
 /**
+ * Implementation of {@link JMXTestClient} that creates an embedded version of the {@link Adapter} to be used during testing.
  *
  * @service-test-config embedded-jmx-test-client
  */
@@ -30,6 +31,12 @@ public class EmbeddedTestClient extends JMXTestClient {
     setSharedComponents(new SharedComponentList());
   }
 
+  /**
+   * Initialises an {@link Adapter} using the {@link AdapterManager}, shared components can be added using {@link #setSharedComponents(SharedComponentList)}.
+   *
+   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @throws ServiceTestException wrapping any thrown exception
+   */
   @Override
   public MBeanServerConnection initMBeanServerConnection() throws ServiceTestException {
     try {
@@ -47,6 +54,10 @@ public class EmbeddedTestClient extends JMXTestClient {
   }
 
 
+  /**
+   * Closes the {@link Adapter} using the {@link AdapterManager},
+   * @throws IOException wrapping any thrown exception (dictated by {@link java.io.Closeable#close()}
+   */
   @Override
   public void close() throws IOException {
     try {
@@ -57,10 +68,19 @@ public class EmbeddedTestClient extends JMXTestClient {
     }
   }
 
+  /**
+   * Set {@link SharedComponentList} which is added to the {@link Adapter} during initialisation.
+   *
+   * @param sharedComponentList {@link SharedComponentList} which is added to the {@link Adapter}
+   */
   public void setSharedComponents(SharedComponentList sharedComponentList) {
     this.sharedComponents = sharedComponentList;
   }
 
+  /**
+   * Returns {@link SharedComponentList} which is added to the {@link Adapter} during initialisation.
+   * @return {@link SharedComponentList} that has been set.
+   */
   public SharedComponentList getSharedComponents() {
     return sharedComponents;
   }

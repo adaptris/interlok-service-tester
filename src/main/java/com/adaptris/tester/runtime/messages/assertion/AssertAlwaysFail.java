@@ -5,6 +5,9 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
+ * Assertion that will always fail.
+ *
+ * <p>Sometimes useful when you'd like to see a returned message, by causing the test to fail.</p>
  *
  * @service-test-config assert-always-fail
  */
@@ -35,10 +38,18 @@ public class AssertAlwaysFail implements Assertion {
     return this.uniqueId;
   }
 
+  /**
+   * Set value to used in {@link #showReturnedMessage()}.
+   * @param showReturnedMessage value to used in {@link #showReturnedMessage()}
+   */
   public void setShowReturnedMessage(Boolean showReturnedMessage) {
     this.showReturnedMessage = showReturnedMessage;
   }
 
+  /**
+   * Set value to used in {@link #showReturnedMessage()}.
+   * @return value to used in {@link #showReturnedMessage()}, default: true
+   */
   public Boolean getShowReturnedMessage() {
     return showReturnedMessage;
   }

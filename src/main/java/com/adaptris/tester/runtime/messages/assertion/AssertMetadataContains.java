@@ -6,6 +6,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Map;
 
 /**
+ * Checks if all keys and corresponding values set in {@link #getMessageHeaders()} are present in
+ * {@link com.adaptris.tester.runtime.messages.TestMessage#getMessageHeaders()}.
  *
  * @service-test-config assert-metadata-contains
  */

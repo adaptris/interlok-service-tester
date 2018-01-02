@@ -7,6 +7,15 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
+ * Checks boolean result of {@link #getXpath()} against {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()}
+ *
+ * <p><b>Example:</b></p>
+ * <p>Payload:<br />
+ * {@code <root><key>value</key></root> }
+ * </p>
+ * <p>Xpath:<br />
+ * {@code count(/root/key) = 1}
+ * </p>
  *
  * @service-test-config assert-xpath-boolean
  */
