@@ -58,7 +58,7 @@ public class AssertXpathEquals extends XpathCommon implements Assertion {
   public AssertionResult execute(TestMessage actual) throws ServiceTestException {
     try {
       final String type = "assert-xpath-equals";
-      final String xpathResult = nodeToString(selectSingleNode(actual.getPayload(), getXpath()));
+      final String xpathResult = nodeToString(selectSingleNode(actual.getPayload()));
       String message = String.format("Assertion Failure: [%s] Expected [%s] Returned [%s]", type, getValue(), xpathResult);
       return new AssertionResult(getUniqueId(), type, getValue().equals(xpathResult), message);
     } catch (XpathCommonException e) {

@@ -14,7 +14,7 @@ public class XpathPreprocessor extends XpathCommon implements Preprocessor {
   @Override
   public String execute(String input) throws PreprocessorException {
     try {
-      return nodeToString(selectSingleNode(input, getXpath()));
+      return nodeToString(selectSingleNode(input));
     } catch (XpathCommonException e) {
       throw new PreprocessorException(e.getMessage(), e);
     }
