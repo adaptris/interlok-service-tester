@@ -7,7 +7,7 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Checks boolean result of {@link #getXpath()} against {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()}
+ * Checks boolean result of {@link #getXpath()} against {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()}.
  *
  * <p><b>Example:</b></p>
  * <p>Payload:<br />

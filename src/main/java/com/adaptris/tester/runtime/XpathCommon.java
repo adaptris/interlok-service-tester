@@ -35,10 +35,21 @@ public abstract class XpathCommon {
   private KeyValuePairSet namespaceContext;
 
   /**
+   * Returns result of {@link #getXpath()} from input parameter.
    *
-   * @param document
-   * @return
-   * @throws XpathCommonException
+   * <p><b>Example:</b></p>
+   * <p>Payload:<br />
+   * {@code <root><key>value</key></root> }
+   * </p>
+   * <p>Xpath:<br />
+   * {@code /root/key}
+   * </p>
+   * <p>Node:<br />
+   * {@code value}
+   * </p>
+   * @param document Xml to run xpath against
+   * @return resulting node from xpath query
+   * @throws XpathCommonException wraps thrown exceptions
    */
   protected final Node selectSingleNode(Node document) throws XpathCommonException {
     try {
@@ -55,10 +66,11 @@ public abstract class XpathCommon {
   }
 
   /**
+   * Convenience method that calls {@link #selectSingleNode(Node)} after turning string into node.
    *
-   * @param input
-   * @return
-   * @throws XpathCommonException
+   * @param input Xml to run xpath against
+   * @return resulting node from xpath query
+   * @throws XpathCommonException wraps thrown exceptions
    */
   protected final Node selectSingleNode(String input) throws XpathCommonException {
     try {
@@ -86,6 +98,21 @@ public abstract class XpathCommon {
     return sw.toString();
   }
 
+  /**
+   * Returns boolean result of {@link #getXpath()} against input param.
+   *
+   * <p><b>Example:</b></p>
+   * <p>Payload:<br />
+   * {@code <root><key>value</key></root> }
+   * </p>
+   * <p>Xpath:<br />
+   * {@code count(/root/key) = 1}
+   * </p>
+   *
+   * @param input Xml to run xpath against
+   * @return Boolean result of xpath
+   * @throws XpathCommonException wraps thrown exceptions
+   */
   protected final boolean selectSingleBoolean(String input) throws XpathCommonException {
     javax.xml.xpath.XPath xpath = com.adaptris.util.text.xml.XPath.newXPathFactory().newXPath();
     NamespaceContext ctx = SimpleNamespaceContext.create(getNamespaceContext());

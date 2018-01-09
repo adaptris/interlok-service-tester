@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  *
- * @service-test-config "remove-node-preprocessor
+ * @service-test-config remove-node-preprocessor
  */
 @XStreamAlias("remove-node-preprocessor")
 public class RemoveNodePreprocessor extends XpathCommon implements Preprocessor {
