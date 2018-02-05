@@ -256,12 +256,16 @@
       <element name="packageset-filter" optional="true"/>
       <sequential>
         <adapter:get-offline-javadocs/>
+        <path id="javadoc.taglet.path">
+          <pathelement path="${classes.build.dir}"/>
+          <path refid="classpath.ant-tools"/>
+        </path>
         <javadoc author="false" destdir="@{destdir}" windowtitle="Interlok Adapter Framework API" bottom="Copyright Adaptris"
                  access="protected" breakiterator="yes" verbose="no" charset="ISO-8859-1" >
           <arg value="-quiet"/>
           <arg value="-Xdoclint:none"/>
           <packageset dir="@{sourcepath}" defaultexcludes="yes">
-            <packageset-filter/>
+            <exclude name="com/adaptris/taglet/**"/>
           </packageset>
           <classpath>
             <path refid="main.classpath"/>
@@ -272,10 +276,16 @@
           <link offline="${offline.javadocs.available}" href="${interlok-api.javadoc.url}" packagelistLoc="${build.dir}/offline-javadocs/adp-core"/>
           <link offline="${offline.javadocs.available}" href="${interlok-common.javadoc.url}" packagelistLoc="${build.dir}/offline-javadocs/interlok-common"/>
           <taglet name="com.adaptris.taglet.ConfigTaglet">
-            <path refid="classpath.ant-tools"/>
+            <path refid="javadoc.taglet.path"/>
           </taglet>
           <taglet name="com.adaptris.taglet.LicenseTaglet">
-            <path refid="classpath.ant-tools"/>
+            <path refid="javadoc.taglet.path"/>
+          </taglet>
+          <taglet name="com.adaptris.taglet.JUnitTaglet">
+            <path refid="javadoc.taglet.path"/>
+          </taglet>
+          <taglet name="com.adaptris.taglet.ServiceTestTaglet">
+            <path refid="javadoc.taglet.path"/>
           </taglet>
         </javadoc>
       </sequential>
@@ -489,7 +499,7 @@
         <delete file="${coverage.metadata.file}" />
         <jacoco:coverage  destfile="${coverage.metadata.file}">
           <junit printsummary="@{printsummary}" fork="@{fork}" forkmode="@{forkmode}" showoutput="@{showoutput}" failureproperty="junit.failed">
-            <jvmarg value="-XX:-UseSplitVerifier"/>
+            <jvmarg value="-noverify"/>
             <jvmarg value="-XX:+CMSClassUnloadingEnabled"/>
             <jvmarg value="-XX:+UseConcMarkSweepGC"/>
             <jvmarg value="-XX:+UseParNewGC"/>
@@ -524,7 +534,7 @@
       <element name="junit-execution-filter" optional="true"/>
       <sequential>
         <junit printsummary="@{printsummary}" fork="@{fork}" forkmode="@{forkmode}" showoutput="@{showoutput}" failureproperty="junit.failed">
-          <jvmarg value="-XX:-UseSplitVerifier"/>
+          <jvmarg value="-noverify"/>
           <jvmarg value="-XX:+CMSClassUnloadingEnabled"/>
           <jvmarg value="-XX:+UseConcMarkSweepGC"/>
           <jvmarg value="-XX:+UseParNewGC"/>
@@ -694,6 +704,9 @@
       <available file="${example-xml.build.dir}" type="dir"/>
       <then>
         <mkdir dir="${project.dist.dir}/${project.name}/examples"/>
+        <jar jarfile="${project.dist.dir}/${project.name}/examples/${project.name}.jar">
+          <fileset dir="${example-xml.build.dir}"/>
+        </jar>
         <zip destfile="${project.dist.dir}/${project.name}/examples/${project.name}-examples.zip">
           <zipfileset dir="${example-xml.build.dir}" prefix="example-xml/optional/${ant.project.name}"/>
         </zip>

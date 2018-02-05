@@ -8,6 +8,10 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.*;
 
+/**
+ *
+ * @service-test-config test-list
+ */
 @XStreamAlias("test-list")
 public class TestList extends AbstractCollection<Test> implements TestComponent {
 

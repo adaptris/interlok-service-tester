@@ -11,7 +11,7 @@
     <property name="project.name" value="interlok-service-tester"/>
     <property name="project.jar.name" value="${project.name}.jar"/>
     <property name="ivy.publish.bundle.type" value="jar"/>
-    <property name="ivy.publish.revision" value="3.6-SNAPSHOT"/>
+    <property name="ivy.publish.revision" value="3.7-SNAPSHOT"/>
     <property name="ivy.dir" value="${basedir}/ivy"/>
     <property name="ivy.xml.file" value="${basedir}/ivy.xml"/>
     <property name="ivy.artifact.publish.status" value="integration"/>
@@ -84,8 +84,17 @@
     <replace file="${testclasses.build.dir}/unit-tests.properties" token="junit." value=""/>
   </target>
 
-  <target name="jar.resources" depends="init">
-    <adapter:create-manifest file="${build.dir}/Manifest.mf" title="${manifest.title}"/>
+  <target name="jar.resources" depends="init, prepare-ivy, macrodef.init">
+    <manifest file="${build.dir}/Manifest.mf">
+      <attribute name="Manifest-Version" value="1.0"/>
+      <attribute name="Main-Class" value="com.adaptris.tester.runners.TestExecutor"/>
+      <attribute name="Build-Version" value="${ivy.publish.revision}"/>
+      <attribute name="Built-By" value="${user.name}"/>
+      <attribute name="Implementation-Vendor-Id" value="com.adaptris"/>
+      <attribute name="Implementation-Version" value="${ivy.publish.revision}"/>
+      <attribute name="Implementation-Title" value="${manifest.title}"/>
+      <attribute name="Implementation-Vendor" value="Adaptris Ltd"/>
+    </manifest>
   </target>
 
   <target name="jar" depends="compile, jar.resources">
@@ -93,10 +102,13 @@
     <adapter:create-jar basedir="${build.classes.dir}" jarfile="${project.dist.dir}/${project.jar.name}" manifest="${build.dir}/Manifest.mf"  version-title="${manifest.title}"/>
   </target>
 
-  <target name="javadoc" depends="prepare-ivy,macrodef.init" description="Create javadocs">
+  <target name="javadoc" depends="prepare-ivy,macrodef.init,compile" description="Create javadocs">
     <adapter:ydoc-javadoc-creator sourcepath="${src.dir}" destdir="${api.doc.dir}">
       <groups>
-        <group title="Interlok Service Tester" packages="com.adaptris.tester:com.adaptris.tester.*"/>
+        <group title="Service Tester - Entry Point" packages="com.adaptris.tester.runners.*:com.adaptris.tester.runners"/>
+        <group title="Service Tester - Report Configuration and Creation" packages="com.adaptris.tester.report.junit.*:com.adaptris.tester.report.junit"/>
+        <group title="Service Tester - Runtime Configuration and Execution" packages="com.adaptris.tester.runtime.*:com.adaptris.tester.runtime"/>
+        <group title="Service Tester - Utilities" packages="com.adaptris.tester.utils.*:com.adaptris.tester.utils"/>
       </groups>
     </adapter:ydoc-javadoc-creator>
   </target>

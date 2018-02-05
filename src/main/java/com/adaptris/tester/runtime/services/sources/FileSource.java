@@ -8,6 +8,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.net.URL;
 
+/**
+ *
+ * @service-test-config file-source
+ */
 @XStreamAlias("file-source")
 public class FileSource implements Source {
 

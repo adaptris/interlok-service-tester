@@ -6,6 +6,10 @@ import com.adaptris.tester.runtime.messages.payload.EmptyPayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config test-message-provider
+ */
 @XStreamAlias("test-message-provider")
 public class TestMessageProvider {
 

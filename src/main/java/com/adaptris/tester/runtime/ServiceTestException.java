@@ -6,6 +6,10 @@ public class ServiceTestException extends Exception {
     super();
   }
 
+  public ServiceTestException(String message, Exception e) {
+    super(message, e);
+  }
+
   public ServiceTestException(Exception e) {
     super(e);
   }

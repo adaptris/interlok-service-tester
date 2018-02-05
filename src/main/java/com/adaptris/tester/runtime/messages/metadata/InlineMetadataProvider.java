@@ -9,6 +9,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @service-test-config inline-metadata-provider
+ */
 @XStreamAlias("inline-metadata-provider")
 public class InlineMetadataProvider extends MetadataProvider {
 

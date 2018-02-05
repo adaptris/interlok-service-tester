@@ -10,6 +10,11 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 
+/**
+ * Implementation of {@link JMXTestClient} that connects to external JMX URL to be used during testing.
+ *
+ * @service-test-config external-jmx-test-client
+ */
 @XStreamAlias("external-jmx-test-client")
 public class ExternalJMXTestClient extends JMXTestClient {
 
@@ -18,15 +23,11 @@ public class ExternalJMXTestClient extends JMXTestClient {
   @XStreamOmitField
   private JMXConnector jmxConnector;
 
-  public void setJmxUrl(String jmxUrl) {
-    this.jmxUrl = jmxUrl;
-  }
-
-  public String getJmxUrl() {
-    return jmxUrl;
-  }
-
-
+  /**
+   * Initialises connection to external JMX client using {@link #getJmxUrl()}.
+   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @throws ServiceTestException wrapping any thrown exception
+   */
   @Override
   public MBeanServerConnection initMBeanServerConnection() throws ServiceTestException{
     try {
@@ -37,8 +38,30 @@ public class ExternalJMXTestClient extends JMXTestClient {
     }
   }
 
+  /**
+   * Close JMX connection initialised in {@link #init()}.
+   *
+   * @throws IOException wrapping any thrown exception (dictated by {@link java.io.Closeable#close()}
+   */
   @Override
   public void close() throws IOException {
     jmxConnector.close();
+  }
+
+  /**
+   * Set JMX URL to be used during initialisation.
+   *
+   * @param jmxUrl JMX URL to be used during initialisation
+   */
+  public void setJmxUrl(String jmxUrl) {
+    this.jmxUrl = jmxUrl;
+  }
+
+  /**
+   * Get JMX URL to be used during initialisation.
+   * @return JMX URL to be used during initialisation
+   */
+  public String getJmxUrl() {
+    return jmxUrl;
   }
 }

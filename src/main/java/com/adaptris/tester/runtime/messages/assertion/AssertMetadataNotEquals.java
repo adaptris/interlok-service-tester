@@ -5,6 +5,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.Map;
 
+/**
+ * Checks if all keys and corresponding values set in {@link #getMessageHeaders()} are not present in
+ * {@link com.adaptris.tester.runtime.messages.TestMessage#getMessageHeaders()}.
+ *
+ * @service-test-config assert-metadata-not-equals
+ */
 @XStreamAlias("assert-metadata-not-equals")
 public class AssertMetadataNotEquals extends MetadataAssertion {
 

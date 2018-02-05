@@ -6,6 +6,10 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @service-test-config empty-metadata-provider
+ */
 @XStreamAlias("empty-metadata-provider")
 public class EmptyMetadataProvider extends MetadataProvider {
 

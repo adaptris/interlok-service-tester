@@ -5,6 +5,10 @@ import com.adaptris.core.xinclude.XincludePreProcessor;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ *
+ * @service-test-config xinclude-preprocessor
+ */
 @XStreamAlias("xinclude-preprocessor")
 public class XincludePreprocessor implements Preprocessor {
   @Override

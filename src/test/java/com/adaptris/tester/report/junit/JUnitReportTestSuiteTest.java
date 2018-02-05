@@ -132,4 +132,10 @@ public class JUnitReportTestSuiteTest {
     assertEquals(hostname, s.getHostname());
   }
 
+  @Test
+  public void getTimestamp() throws Exception{
+    JUnitReportTestSuite s = new JUnitReportTestSuite(NAME);
+    assertNotNull(s.getTimestamp());
+  }
+
 }

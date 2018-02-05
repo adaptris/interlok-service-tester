@@ -56,7 +56,7 @@ public class TestExecutorTest  {
     File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
     GuidGenerator o = new GuidGenerator();
     File tempDir = TempFileUtils.createTrackedDir(o);
-    TestExecutor.main(new String[]{testFile.getAbsolutePath(), tempDir.getAbsolutePath()});
+    TestExecutor.main(new String[]{"-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath()});
     File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
     assertTrue(expectedFile.exists());
   }
@@ -68,7 +68,7 @@ public class TestExecutorTest  {
     File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
     GuidGenerator o = new GuidGenerator();
     File tempDir = TempFileUtils.createTrackedDir(o);
-    TestExecutor.main(new String[]{testFile.getAbsolutePath(), tempDir.getAbsolutePath()});
+    TestExecutor.main(new String[]{"-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath()});
     File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
     assertTrue(expectedFile.exists());
   }
@@ -81,22 +81,35 @@ public class TestExecutorTest  {
       e.checkAndSetArguments(new String[]{});
       fail();
     } catch (IllegalArgumentException ex){
-      assertEquals("Missing arguments required [input-file] [output-file]", ex.getMessage());
+      assertEquals("Missing argument required [-serviceTest]", ex.getMessage());
     }
     e = new TestExecutor();
-    try {
-      e.checkAndSetArguments(new String[]{"input"});
-      fail();
-    } catch (IllegalArgumentException ex){
-      assertEquals("Missing arguments required [input-file] [output-file]", ex.getMessage());
-    }
+    e.checkAndSetArguments(new String[]{"-serviceTest", "input"});
+    assertEquals("input", e.getInputFilePath());
+    assertEquals("test-results", e.getOutputFilePath());
+    assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"input", "output"});
+    e.checkAndSetArguments(new String[]{"--serviceTest", "input"});
+    assertEquals("input", e.getInputFilePath());
+    assertEquals("test-results", e.getOutputFilePath());
+    assertNull(e.getPreProcessors());
+    e = new TestExecutor();
+    e.checkAndSetArguments(new String[]{"-serviceTest", "input", "-serviceTestOutput", "output"});
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"input", "output", "xinclude"});
+    e.checkAndSetArguments(new String[]{"--serviceTest", "input", "--serviceTestOutput", "output"});
+    assertEquals("input", e.getInputFilePath());
+    assertEquals("output", e.getOutputFilePath());
+    assertNull(e.getPreProcessors());
+    e = new TestExecutor();
+    e.checkAndSetArguments(new String[]{"-serviceTest", "input", "-serviceTestOutput", "output", "-serviceTestPreProcessors", "xinclude"});
+    assertEquals("input", e.getInputFilePath());
+    assertEquals("output", e.getOutputFilePath());
+    assertEquals("xinclude", e.getPreProcessors());
+    e = new TestExecutor();
+    e.checkAndSetArguments(new String[]{"--serviceTest", "input", "--serviceTestOutput", "output", "--serviceTestPreProcessors", "xinclude"});
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertEquals("xinclude", e.getPreProcessors());

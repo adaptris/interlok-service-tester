@@ -2,6 +2,11 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} contains {@link #getPayload()}
+ *
+ * @service-test-config assert-payload-contains
+ */
 @XStreamAlias("assert-payload-contains")
 public class AssertPayloadContains extends PayloadAssertion {
 

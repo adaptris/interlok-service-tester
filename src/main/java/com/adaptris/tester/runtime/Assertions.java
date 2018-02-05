@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ * @service-test-config assertions
+ */
 @XStreamAlias("assertions")
 public class Assertions extends AbstractCollection<Assertion> {
 

@@ -2,15 +2,11 @@ package com.adaptris.tester.runtime;
 
 import com.adaptris.core.BaseCase;
 import com.adaptris.tester.report.junit.*;
-import com.adaptris.tester.runtime.messages.InlineTestMessage;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.TestMessageProvider;
-import com.adaptris.tester.runtime.messages.assertion.AssertPayloadEquals;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
 import com.adaptris.tester.stubs.StubClient;
-
-import java.util.HashMap;
 
 public class TestCaseTest extends BaseCase {
 
@@ -25,13 +21,6 @@ public class TestCaseTest extends BaseCase {
     assertEquals("id", tc.getUniqueId());
   }
 
-  @Deprecated
-  public void testSetInputMessage() throws Exception {
-    TestCase tc = new TestCase();
-    tc.setInputMessage(new InlineTestMessage());
-    assertNotNull(tc.getInputMessage());
-    assertTrue(tc.getInputMessage() instanceof InlineTestMessage);
-  }
 
   public void testSetInputMessageProvider() throws Exception {
     TestCase tc = new TestCase();
@@ -67,21 +56,6 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
     assertTrue(result.getIssue().get(0) instanceof JUnitReportSkipped);
-    assertNotNull(result.getTime());
-  }
-
-  @Deprecated
-  public void testExecuteInputMessage() throws Exception {
-    TestCase tc = new TestCase();
-    tc.setUniqueId("testcase");
-    Assertions assertions = new Assertions();
-    //set valid assertion to make sure the getInputMessage is used.
-    assertions.addAssertion(new AssertPayloadEquals("hello"));
-    tc.setAssertions(assertions);
-    tc.setInputMessage(new TestMessage(new HashMap<String, String>(), "hello"));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest());
-    assertNotNull(result);
-    assertNull(result.getIssue());
     assertNotNull(result.getTime());
   }
 

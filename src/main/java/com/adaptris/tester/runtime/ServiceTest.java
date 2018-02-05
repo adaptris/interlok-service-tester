@@ -15,6 +15,12 @@ import java.util.Map;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+/**
+ * Main class for service tester. Use other components from <code>tester</code> package to define tests execution.
+ * The client class {@link com.adaptris.tester.runners.TestExecutor} create and manage instances of this class.
+ *
+ * @service-test-config service-test
+ */
 @XStreamAlias("service-test")
 public class ServiceTest implements TestComponent {
 

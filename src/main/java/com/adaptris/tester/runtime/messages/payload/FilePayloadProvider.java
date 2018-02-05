@@ -10,6 +10,10 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.File;
 import java.net.URL;
 
+/**
+ *
+ * @service-test-config file-payload-provider
+ */
 @XStreamAlias("file-payload-provider")
 public class FilePayloadProvider extends PayloadProvider {
 
