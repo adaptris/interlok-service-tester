@@ -1,5 +1,6 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -10,10 +11,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 @XStreamAlias("find-and-replace-preprocessor")
 public class FindAndReplacePreprocessor implements Preprocessor {
+
+  @AutoPopulated
   private KeyValuePairSet replacementKeys;
 
   public FindAndReplacePreprocessor(){
-    this.replacementKeys = new KeyValuePairSet();
+    replacementKeys = new KeyValuePairSet();
   }
 
   public void setReplacementKeys(KeyValuePairSet replacementKeys) {

@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.annotation.MarshallingCDATA;
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
@@ -32,7 +33,12 @@ public abstract class XpathCommon {
 
   @MarshallingCDATA
   private String xpath;
+  @AutoPopulated
   private KeyValuePairSet namespaceContext;
+
+  public XpathCommon() {
+    setNamespaceContext(new KeyValuePairSet());
+  }
 
   /**
    * Returns result of {@link #getXpath()} from input parameter.
@@ -161,6 +167,6 @@ public abstract class XpathCommon {
    * @see SimpleNamespaceContext#create(KeyValuePairSet)
    */
   public void setNamespaceContext(KeyValuePairSet kvps) {
-    this.namespaceContext = kvps;
+    namespaceContext = kvps;
   }
 }
