@@ -64,10 +64,14 @@ public class AssertPayloadEqualsFile implements Assertion {
       URL url = FsHelper.createUrlFromString(file, true);
       File fileToRead = FsHelper.createFileReference(url);
       final byte[] fileContents = fsWorker.get(fileToRead);
-      return new AssertionResult(getUniqueId(), "assert-payload-equals-file", new String(fileContents).equals(actual.getPayload()));
+      return checkResults(actual.getPayload(), new String(fileContents));
     } catch (IOException | URISyntaxException | FsException e) {
       throw new ServiceTestException(e);
     }
+  }
+
+  public AssertionResult checkResults(String actual, String expected) throws ServiceTestException {
+    return new AssertionResult(getUniqueId(), "assert-payload-equals-file", expected.equals(actual));
   }
 
   @Override
