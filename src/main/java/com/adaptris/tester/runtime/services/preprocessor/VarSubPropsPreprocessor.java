@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  *
- * @service-test-config "properties-variable-substitution-preprocessor
+ * @service-test-config properties-variable-substitution-preprocessor
  */
 @XStreamAlias("properties-variable-substitution-preprocessor")
 public class VarSubPropsPreprocessor implements Preprocessor {
@@ -31,6 +31,9 @@ public class VarSubPropsPreprocessor implements Preprocessor {
     setProperties(new KeyValuePairSet(properties));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     SimpleStringSubstitution substitution = new SimpleStringSubstitution();

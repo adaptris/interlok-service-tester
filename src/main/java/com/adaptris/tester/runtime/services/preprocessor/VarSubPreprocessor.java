@@ -14,18 +14,21 @@ import java.util.List;
 
 /**
  *
- * @service-test-config "variable-substitution-preprocessor
+ * @service-test-config variable-substitution-preprocessor
  */
 @XStreamAlias("variable-substitution-preprocessor")
 public class VarSubPreprocessor implements Preprocessor {
 
-  @XStreamImplicit
+  @XStreamImplicit(itemFieldName = "property-file")
   private List<String> propertyFile;
 
   public VarSubPreprocessor(){
     setPropertyFile(new ArrayList<String>());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     try {

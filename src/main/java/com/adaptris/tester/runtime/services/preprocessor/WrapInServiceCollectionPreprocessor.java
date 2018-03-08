@@ -9,6 +9,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 @XStreamAlias("wrap-in-sc-preprocessor")
 public class WrapInServiceCollectionPreprocessor implements Preprocessor{
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     GuidGenerator guidGenerator = new GuidGenerator();

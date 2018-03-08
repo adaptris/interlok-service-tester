@@ -7,7 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  *
- * @service-test-config "find-and-replace-preprocessor
+ * @service-test-config find-and-replace-preprocessor
  */
 @XStreamAlias("find-and-replace-preprocessor")
 public class FindAndReplacePreprocessor implements Preprocessor {
@@ -27,6 +27,9 @@ public class FindAndReplacePreprocessor implements Preprocessor {
     return replacementKeys;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
 
