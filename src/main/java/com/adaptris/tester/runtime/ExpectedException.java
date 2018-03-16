@@ -1,11 +1,17 @@
 package com.adaptris.tester.runtime;
 
-import com.adaptris.tester.report.junit.JUnitReportError;
-import com.adaptris.tester.report.junit.JUnitReportFailure;
-import com.adaptris.tester.report.junit.JUnitReportTestIssue;
-import com.adaptris.tester.report.junit.JUnitReportTestIssueTyped;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
+import com.adaptris.tester.report.junit.JUnitReportError;
+import com.adaptris.tester.report.junit.JUnitReportFailure;
+import com.adaptris.tester.report.junit.JUnitReportTestIssueTyped;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+/**
+ *
+ * @service-test-config expected-exception
+ */
+@XStreamAlias("expected-exception")
 public class ExpectedException {
 
   private String className;

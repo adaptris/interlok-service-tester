@@ -1,16 +1,17 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_POSTFIX;
+import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
+
+import java.util.Map;
+import java.util.Properties;
+
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.tester.utils.SimpleStringSubstitution;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.util.Map;
-import java.util.Properties;
-
-import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_POSTFIX;
-import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
 
 /**
  *
@@ -19,6 +20,7 @@ import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
 @XStreamAlias("properties-variable-substitution-preprocessor")
 public class VarSubPropsPreprocessor implements Preprocessor {
 
+  @AutoPopulated
   private KeyValuePairSet properties;
 
   public VarSubPropsPreprocessor(){

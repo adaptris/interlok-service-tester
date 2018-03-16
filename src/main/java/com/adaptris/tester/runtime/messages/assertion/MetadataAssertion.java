@@ -1,13 +1,14 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
 import com.adaptris.util.KeyValuePairSet;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Abstract implementations for assertions that work on metadata.
@@ -17,6 +18,7 @@ import java.util.Map;
 public abstract class MetadataAssertion implements Assertion {
 
   private String uniqueId;
+  @AutoPopulated
   private KeyValuePairSet metadata;
 
   public MetadataAssertion(){

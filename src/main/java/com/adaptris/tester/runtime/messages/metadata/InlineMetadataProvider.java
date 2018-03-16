@@ -1,13 +1,14 @@
 package com.adaptris.tester.runtime.messages.metadata;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.Map;
 @XStreamAlias("inline-metadata-provider")
 public class InlineMetadataProvider extends MetadataProvider {
 
+  @AutoPopulated
   private KeyValuePairSet metadata;
 
   public InlineMetadataProvider(){

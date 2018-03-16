@@ -1,13 +1,19 @@
 package com.adaptris.tester.runtime.services;
 
-import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
-import com.adaptris.tester.runtime.services.preprocessor.Preprocessor;
-import com.adaptris.tester.runtime.services.sources.Source;
-import com.adaptris.tester.runtime.services.sources.SourceException;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adaptris.tester.runtime.services.preprocessor.Preprocessor;
+import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
+import com.adaptris.tester.runtime.services.sources.Source;
+import com.adaptris.tester.runtime.services.sources.SourceException;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+/**
+ *
+ * @service-test-config service-to-test
+ */
+@XStreamAlias("service-to-test")
 public class ServiceToTest {
 
   private Source source;
@@ -34,7 +40,7 @@ public class ServiceToTest {
   }
 
   public void addPreprocessor(Preprocessor preprocessor){
-    this.preprocessors.add(preprocessor);
+    preprocessors.add(preprocessor);
   }
 
   public String getProcessedSource() throws PreprocessorException, SourceException {

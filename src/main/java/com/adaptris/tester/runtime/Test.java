@@ -1,20 +1,20 @@
 package com.adaptris.tester.runtime;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.adaptris.tester.report.junit.JUnitReportTestSuite;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.preprocessor.VarSubPropsPreprocessor;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -41,7 +41,7 @@ public class Test implements TestComponent {
 
   @Override
   public String getUniqueId() {
-    return this.uniqueId;
+    return uniqueId;
   }
 
   public void setServiceToTest(ServiceToTest serviceToTest) {
@@ -77,7 +77,7 @@ public class Test implements TestComponent {
     }
     long endTime = System.nanoTime();
     long elapsedTime = endTime - startTime;
-    result.setTime((double)elapsedTime / 1000000000.0);
+    result.setTime(elapsedTime / 1000000000.0);
     DecimalFormat df = new DecimalFormat("0.000");
     df.setRoundingMode(RoundingMode.CEILING);
     log.info("Tests run: {}, Failures: {}, Errors: {}, Skipped: {}, Time elapsed: {} sec",

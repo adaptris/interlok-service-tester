@@ -7,6 +7,8 @@ package com.adaptris.tester.runtime;
  */
 public class XpathCommonException extends Exception {
 
+  private static final long serialVersionUID = 5672347902807738427L;
+
   /**
    * Creates a new instance with a description of the Exception.
    * @param message description of the Exception
