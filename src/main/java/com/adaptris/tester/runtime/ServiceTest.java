@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.io.IOUtils;
 
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
@@ -28,7 +26,6 @@ public class ServiceTest implements TestComponent {
 
   private String uniqueId;
 
-  @NotNull
   private TestClient testClient;
   private List<Helper> helpers;
   @XStreamImplicit
