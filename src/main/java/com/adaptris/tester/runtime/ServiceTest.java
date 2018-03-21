@@ -1,19 +1,21 @@
 package com.adaptris.tester.runtime;
 
-import com.adaptris.tester.report.junit.JUnitReportTestResults;
-import com.adaptris.tester.runtime.clients.TestClient;
-import com.adaptris.tester.runtime.helpers.Helper;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.apache.commons.io.IOUtils;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.apache.commons.io.IOUtils;
+
+import com.adaptris.tester.report.junit.JUnitReportTestResults;
+import com.adaptris.tester.runtime.clients.TestClient;
+import com.adaptris.tester.runtime.helpers.Helper;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * Main class for service tester. Use other components from <code>tester</code> package to define tests execution.
@@ -26,6 +28,7 @@ public class ServiceTest implements TestComponent {
 
   private String uniqueId;
 
+  @NotNull
   private TestClient testClient;
   private List<Helper> helpers;
   @XStreamImplicit
@@ -85,7 +88,7 @@ public class ServiceTest implements TestComponent {
   }
 
   public void setTestLists(List<TestList> adapterTestLists) {
-    this.testLists = adapterTestLists;
+    testLists = adapterTestLists;
   }
 
   public List<TestList> getTestLists() {
@@ -93,7 +96,7 @@ public class ServiceTest implements TestComponent {
   }
 
   public void addTestList(TestList adapterTestList){
-    this.testLists.add(adapterTestList);
+    testLists.add(adapterTestList);
   }
 
   public JUnitReportTestResults execute() throws ServiceTestException {
