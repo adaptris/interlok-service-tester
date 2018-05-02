@@ -647,7 +647,7 @@
 
   <target name="ivy-report" depends="macrodef.init,taskdef.init" description="Generate an ivy dependency report">
     <mkdir dir="${ivy.report.dir}"/>
-    <ivy:report todir="${ivy.report.dir}" conf="compile,runtime" graph="false"/>
+    <ivy:report todir="${ivy.report.dir}" conf="compile,runtime,test,optional" graph="false"/>
   </target>
 
   <target name="pom2ivy" depends="install-ivy" description="Convert a pom file into an ivy.xml">
