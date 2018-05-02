@@ -3,16 +3,10 @@ package com.adaptris.tester.runtime.messages.assertion;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.custommonkey.xmlunit.DetailedDiff;
-import org.custommonkey.xmlunit.XMLUnit;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONCompare;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.JSONCompareResult;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Checks if {@link TestMessage#getPayload()} equals file contents.
