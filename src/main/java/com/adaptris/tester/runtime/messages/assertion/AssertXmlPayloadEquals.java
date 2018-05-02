@@ -12,7 +12,9 @@ import java.util.List;
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getPayload()}
  *
- * @service-test-config assert-payload-equals
+ * <p>Assertions are used to validate the returned message is expected.</p>
+ *
+ * @service-test-config assert-xml-payload-equals
  */
 @XStreamAlias("assert-xml-payload-equals")
 public class AssertXmlPayloadEquals extends PayloadAssertion {

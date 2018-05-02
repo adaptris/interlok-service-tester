@@ -15,7 +15,7 @@ import java.util.List;
  *
  * <p>Assertions are used to validate the returned message is expected.</p>
  *
- * @service-test-config assert-payload-equals
+ * @service-test-config assert-xml-payload-equals-file
  */
 @XStreamAlias("assert-xml-payload-equals-file")
 public class AssertXmlPayloadEqualsFile extends AssertPayloadEqualsFile {

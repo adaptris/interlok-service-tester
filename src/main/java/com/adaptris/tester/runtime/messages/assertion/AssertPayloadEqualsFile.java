@@ -18,7 +18,7 @@ import java.net.URL;
  *
  * <p>Assertions are used to validate the returned message is expected.</p>
  *
- * @service-test-config assert-payload-equals
+ * @service-test-config assert-payload-equals-file
  */
 @XStreamAlias("assert-payload-equals-file")
 public class AssertPayloadEqualsFile implements Assertion {
