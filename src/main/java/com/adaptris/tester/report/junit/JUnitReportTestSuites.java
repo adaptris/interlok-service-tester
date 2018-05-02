@@ -1,16 +1,19 @@
 package com.adaptris.tester.report.junit;
 
 
-import com.adaptris.core.CoreException;
-import com.adaptris.core.DefaultMarshaller;
-import com.adaptris.tester.runtime.ServiceTestException;
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+
+import com.adaptris.core.CoreException;
+import com.adaptris.core.DefaultMarshaller;
+import com.adaptris.tester.runtime.ServiceTestException;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * Child of {@link JUnitReportTestResults} for storing results.
@@ -20,14 +23,16 @@ import java.util.List;
  * <p>When tests are executed via {@link com.adaptris.tester.runtime.TestList#execute(com.adaptris.tester.runtime.clients.TestClient, java.util.Map)}
  * the results are produced as this corresponding class.</p>
  */
+@XStreamAlias("testsuites")
 public class JUnitReportTestSuites {
 
-  private String name;
+  private final String name;
+  @XStreamImplicit
   private final List<JUnitReportTestSuite> testSuites;
 
   public JUnitReportTestSuites(String name){
     this.name = name;
-    this.testSuites = new ArrayList<>();
+    testSuites = new ArrayList<>();
   }
 
   /**
@@ -44,11 +49,12 @@ public class JUnitReportTestSuites {
    * @param testSuite {@link JUnitReportTestSuite} to be added to list.
    */
   public void addTestSuite(JUnitReportTestSuite testSuite){
-    this.testSuites.add(testSuite);
+    testSuites.add(testSuite);
   }
 
   /**
    * Returns list of {@link JUnitReportTestSuite}.
+   *
    * @return list of {@link JUnitReportTestSuite}
    */
   public List<JUnitReportTestSuite> getTestSuites() {
@@ -89,4 +95,5 @@ public class JUnitReportTestSuites {
     }
     return false;
   }
+
 }
