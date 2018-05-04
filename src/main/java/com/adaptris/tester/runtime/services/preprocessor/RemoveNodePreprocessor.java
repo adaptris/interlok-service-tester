@@ -12,12 +12,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
+ * Removes node from XML at {@link #getXpath()}.
  *
  * @service-test-config remove-node-preprocessor
  */
 @XStreamAlias("remove-node-preprocessor")
 public class RemoveNodePreprocessor extends XpathCommon implements Preprocessor {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     try {

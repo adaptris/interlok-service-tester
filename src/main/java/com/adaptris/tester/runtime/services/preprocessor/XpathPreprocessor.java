@@ -11,6 +11,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("xpath-preprocessor")
 public class XpathPreprocessor extends XpathCommon implements Preprocessor {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     try {

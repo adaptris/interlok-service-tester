@@ -1,6 +1,7 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.annotation.MarshallingCDATA;
+import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
 /**
@@ -53,7 +54,7 @@ public abstract class PayloadAssertion implements Assertion {
    * @param actual Metadata
    * @return Return result of assertion using {@link AssertionResult}
    */
-  protected abstract AssertionResult execute(String actual);
+  protected abstract AssertionResult execute(String actual) throws ServiceTestException;
 
   /**
    * Executes {@link #execute(String)} with result of {@link TestMessage#getPayload()}.
@@ -61,7 +62,7 @@ public abstract class PayloadAssertion implements Assertion {
    * @return Return result of assertion using {@link AssertionResult}
    */
   @Override
-  public final AssertionResult execute(TestMessage actual){
+  public final AssertionResult execute(TestMessage actual) throws ServiceTestException {
     return execute(actual.getPayload());
   }
 

@@ -69,7 +69,7 @@ public abstract class JMXTestClient implements TestClient {
   @Override
   public final TestMessage applyService(String xml, TestMessage message) throws CoreException {
     MessageTranslator messageTranslator = new MessageTranslator();
-    return messageTranslator.translate(manager.applyService(xml, messageTranslator.translate(message)));
+    return messageTranslator.translate(manager.applyService(xml, messageTranslator.translate(message), true));
   }
 
   private ObjectName createComponentCheckerObjectName(MBeanServerConnection mBeanServer) throws MalformedObjectNameException, IOException, InstanceNotFoundException {

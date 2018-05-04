@@ -11,6 +11,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 @XStreamAlias("xinclude-preprocessor")
 public class XincludePreprocessor implements Preprocessor {
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(String input) throws PreprocessorException {
     try {
