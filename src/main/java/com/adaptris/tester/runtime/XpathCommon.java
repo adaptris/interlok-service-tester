@@ -29,7 +29,7 @@ import com.adaptris.util.text.xml.XPath;
 /**
  * Abstract class providing common functionality and configuration to its extenders.
  */
-public abstract class XpathCommon {
+public class XpathCommon {
 
   @MarshallingCDATA
   private String xpath;
@@ -78,7 +78,7 @@ public abstract class XpathCommon {
    * @return resulting node from xpath query
    * @throws XpathCommonException wraps thrown exceptions
    */
-  protected final Node selectSingleNode(String input) throws XpathCommonException {
+  public final Node selectSingleNode(String input) throws XpathCommonException {
     try {
       return selectSingleNode(XmlHelper.createDocument(input, new DocumentBuilderFactoryBuilder()));
     } catch (ParserConfigurationException | IOException | SAXException e) {
@@ -92,7 +92,7 @@ public abstract class XpathCommon {
    * @return string of node
    * @throws XpathCommonException wraps thrown exceptions
    */
-  protected final String nodeToString(Node node) throws XpathCommonException {
+  public final String nodeToString(Node node) throws XpathCommonException {
     StringWriter sw = new StringWriter();
     try {
       Transformer t = TransformerFactory.newInstance().newTransformer();
