@@ -1,0 +1,218 @@
+ext {
+  adpCoreVersion = project.hasProperty('adpCoreVersion') ? project.getProperty('adpCoreVersion') : '3.7-SNAPSHOT'
+  releaseVersion = project.hasProperty('releaseVersion') ? project.getProperty('releaseVersion') : '3.7-SNAPSHOT'
+  mavenPublishUrl = project.hasProperty('mavenPublishUrl') ? project.getProperty('mavenPublishUrl') : 'https://development.adaptris.net/nexus/content/repositories/snapshots'
+  repoUsername = project.hasProperty('repoUsername') ? project.getProperty('repoUsername') : 'unknown'
+  repoPassword = project.hasProperty('repoPassword') ? project.getProperty('repoPassword') : 'unknown'
+  defaultNexusRepo = project.hasProperty('defaultNexusRepo') ? project.getProperty('defaultNexusRepo') : 'https://repo1.maven.org/maven2/'
+  interlokJavadocs= project.hasProperty('interlokJavadocs') ? project.getProperty('interlokJavadocs') : 'https://development.adaptris.net/javadocs/latest/Interlok-API/'
+  interlokCommonJavadocs= project.hasProperty('interlokJavadocs') ? project.getProperty('interlokJavadocs') : 'https://development.adaptris.net/javadocs/latest/Interlok-Common/'
+  componentName='Interlok Service Tester'
+  organizationName = "Adaptris Ltd"
+  organizationUrl = "http://interlok.adaptris.net"
+  slf4jVersion = '1.7.25'
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: "jacoco"
+
+sourceCompatibility = 1.8
+group   = 'com.adaptris'
+version = releaseVersion
+def versionDir = "$buildDir/version"
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+  maven { url "$defaultNexusRepo" }
+  maven { url "https://development.adaptris.net/nexus/content/groups/public" }
+  maven {
+    credentials {
+      username repoUsername
+      password repoPassword
+    }
+    url "https://development.adaptris.net/nexus/content/groups/private"
+  }
+  maven { url "https://development.adaptris.net/nexus/content/repositories/snapshots" }
+  maven { url "https://development.adaptris.net/nexus/content/repositories/releases" }
+}
+
+
+configurations {
+  javadoc {}
+  optional {}
+  compile.extendsFrom optional
+  all*.exclude group: 'c3p0'
+  all*.exclude group: 'commons-logging'
+  all*.exclude group: 'javamail'
+  all*.exclude group: 'javax.mail', module: 'mail'
+  all*.exclude group: 'org.glassfish.hk2.external'
+  all*.exclude group: 'xalan', module: 'xalan'
+  all*.exclude group: 'net.sf.saxon', module: 'saxon'
+  all*.exclude group: 'org.codehaus.woodstox'
+  all*.exclude group: 'org.eclipse.jetty.orbit', module: 'javax.mail.glassfish'
+}
+
+configurations.all {
+  resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}
+
+dependencies {
+  compile ("com.adaptris:adp-core:$adpCoreVersion") {changing= true}
+  compile ("com.adaptris:interlok-common:$adpCoreVersion") {changing= true}
+  compile ("org.slf4j:slf4j-api:$slf4jVersion")
+  compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+  
+  annotationProcessor ("com.adaptris:interlok-common:$adpCoreVersion") {changing= true}
+  
+  optional("com.adaptris:adp-varsub:$adpCoreVersion") {changing= true}
+  optional("com.adaptris:adp-xinclude:$adpCoreVersion") {changing= true}
+  optional("com.adaptris:adp-stubs:$adpCoreVersion") {changing= true}
+   
+  optional("com.github.tomakehurst:wiremock:1.58")
+  optional("org.skyscreamer:jsonassert:1.5.0")
+  optional("xmlunit:xmlunit:1.6")
+
+  testCompile ("junit:junit:4.12")
+  testCompile ("com.adaptris:adp-stubs:$adpCoreVersion") { changing= true}
+  testCompile ("org.mockito:mockito-all:1.9.5")
+  testCompile ("org.apache.logging.log4j:log4j-core:2.8.1")
+  testCompile ("org.apache.logging.log4j:log4j-1.2-api:2.8.1")
+  testCompile ("org.apache.logging.log4j:log4j-slf4j-impl:2.8.1")
+  testCompile ("org.apache.logging.log4j:log4j-api:2.8.1")
+  testCompile ("com.github.stefanbirkner:system-rules:1.16.0")
+
+  javadoc("com.adaptris:adp-core-apt:$adpCoreVersion") { changing= true}
+
+}
+
+
+jar {
+  manifest {
+    attributes("Built-By": System.getProperty('user.name'),
+               "Build-Jdk": System.getProperty('java.version'),
+               "Implementation-Title": componentName,
+               "Implementation-Version": project.version,
+               "Implementation-Vendor-Id": project.group,
+               "Implementation-Vendor": organizationName)
+  }
+}
+
+
+sourceSets {
+  main {
+    output.dir(versionDir, builtBy: 'generateVersion')
+  }
+}
+// Generate the META-INF/adaptris-version file
+task generateVersion {
+  doLast {
+    def versionFile = new File(new File(versionDir, 'META-INF'), 'adaptris-version')
+    versionFile.getParentFile().mkdirs()
+    ant.propertyfile(file: versionFile) {
+      entry(key: 'component.name', value: componentName)
+      entry(key: 'build.version', value: releaseVersion)
+      entry(key: 'build.date', value: new Date().format('yyyy-MM-dd'))
+    }
+  }
+}
+
+javadoc {
+  configure(options) {
+      links = [
+        interlokJavadocs,
+        interlokCommonJavadocs,
+      ]
+    taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
+    options.addStringOption "tagletpath", sourceSets.main.output.classesDirs.asPath + System.getProperty("path.separator") + configurations.javadoc.asPath
+    options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
+      group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
+      group ("Service Tester - Runtime Configuration and Execution", ["com.adaptris.tester.runtime.*" , "com.adaptris.tester.runtime"]).
+      group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
+    exclude "com/adaptris/taglet/**"
+  }
+}
+
+jacoco {
+  toolVersion="0.7.9"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+task examplesJar(type: Jar, dependsOn: test) {
+  classifier = 'examples'
+  from new File(buildDir, '/examples')
+}
+
+artifacts {
+  archives javadocJar
+  archives examplesJar
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact javadocJar { classifier "javadoc" }
+      artifact examplesJar { classifier "examples" }
+
+      pom.withXml {
+        asNode().appendNode("description", "Interlok Service Tester")
+        def properties = asNode().appendNode("properties")
+        asNode().dependencies.dependency.findAll { xmlDep ->
+          // mark optional dependencies
+          if ( project.configurations.optional.allDependencies.findAll { dep ->
+            xmlDep.groupId.text() == dep.group && xmlDep.artifactId.text() == dep.name
+          } ) {
+            def xmlOptional = xmlDep.optional[ 0 ];
+            if ( !xmlOptional ) {
+              xmlOptional = xmlDep.appendNode( 'optional' )
+            }
+            xmlOptional.value = 'true';
+          }
+          // fix maven-publish issue when all maven dependencies are placed into runtime scope
+          if ( project.configurations.compile.allDependencies.findAll { dep ->
+            xmlDep.groupId.text() == dep.group && xmlDep.artifactId.text() == dep.name
+          } ) {
+            def xmlScope = xmlDep.scope[ 0 ];
+            if ( !xmlScope ) {
+              xmlScope = xmlDep.appendNode( 'scope' )
+            }
+            xmlScope.value = 'compile';
+          }
+        }
+      }
+    }
+  }
+  repositories {
+    maven {
+      credentials {
+        username repoUsername
+        password repoPassword
+      }
+      url mavenPublishUrl
+    }
+  }
+}
