@@ -1,2 +1,2 @@
-# interlok-service-tester [![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-service-tester.svg)](https://github.com/adaptris/interlok-service-tester/tags)
+# interlok-service-tester [![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-service-tester.svg)](https://github.com/adaptris/interlok-service-tester/tags) [![Build Status](https://travis-ci.org/adaptris/interlok-service-tester.svg?branch=develop)](https://travis-ci.org/adaptris/interlok-service-tester) [![codecov](https://codecov.io/gh/adaptris/interlok-service-tester/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-service-tester)
 The suggested name was `probable-telegram`
