@@ -71,13 +71,13 @@ dependencies {
   compile ("com.adaptris:interlok-common:$adpCoreVersion") {changing= true}
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
   compile files("${System.getProperty('java.home')}/../lib/tools.jar")
-  
+
   annotationProcessor ("com.adaptris:interlok-common:$adpCoreVersion") {changing= true}
-  
+
   optional("com.adaptris:adp-varsub:$adpCoreVersion") {changing= true}
   optional("com.adaptris:adp-xinclude:$adpCoreVersion") {changing= true}
   optional("com.adaptris:adp-stubs:$adpCoreVersion") {changing= true}
-   
+
   optional("com.github.tomakehurst:wiremock:1.58")
   optional("org.skyscreamer:jsonassert:1.5.0")
   optional("xmlunit:xmlunit:1.6")
@@ -121,6 +121,8 @@ task generateVersion {
     ant.propertyfile(file: versionFile) {
       entry(key: 'component.name', value: componentName)
       entry(key: 'build.version', value: releaseVersion)
+      entry(key: 'groupId', value: "com.adaptris")
+      entry(key: 'artifactId', value: project.name)
       entry(key: 'build.date', value: new Date().format('yyyy-MM-dd'))
     }
   }
@@ -181,6 +183,8 @@ publishing {
       pom.withXml {
         asNode().appendNode("description", "Interlok Service Tester")
         def properties = asNode().appendNode("properties")
+        properties.appendNode("tags", "testing,services")
+        properties.appendNode("license", "false")
         asNode().dependencies.dependency.findAll { xmlDep ->
           // mark optional dependencies
           if ( project.configurations.optional.allDependencies.findAll { dep ->
