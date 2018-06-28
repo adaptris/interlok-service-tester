@@ -1,3 +1,19 @@
+/*
+    Copyright 2018 Adaptris Ltd.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
 package com.adaptris.tester.runtime;
 
 import java.io.IOException;
@@ -29,7 +45,7 @@ import com.adaptris.util.text.xml.XPath;
 /**
  * Abstract class providing common functionality and configuration to its extenders.
  */
-public abstract class XpathCommon {
+public class XpathCommon {
 
   @MarshallingCDATA
   private String xpath;
@@ -78,7 +94,7 @@ public abstract class XpathCommon {
    * @return resulting node from xpath query
    * @throws XpathCommonException wraps thrown exceptions
    */
-  protected final Node selectSingleNode(String input) throws XpathCommonException {
+  public final Node selectSingleNode(String input) throws XpathCommonException {
     try {
       return selectSingleNode(XmlHelper.createDocument(input, new DocumentBuilderFactoryBuilder()));
     } catch (ParserConfigurationException | IOException | SAXException e) {
@@ -92,7 +108,7 @@ public abstract class XpathCommon {
    * @return string of node
    * @throws XpathCommonException wraps thrown exceptions
    */
-  protected final String nodeToString(Node node) throws XpathCommonException {
+  public final String nodeToString(Node node) throws XpathCommonException {
     StringWriter sw = new StringWriter();
     try {
       Transformer t = TransformerFactory.newInstance().newTransformer();
