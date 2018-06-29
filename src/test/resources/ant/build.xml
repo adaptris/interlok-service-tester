@@ -1,4 +1,4 @@
-<project basedir="." default="execute-test" name="adp-test" >
+<project basedir="." default="execute-test" name="interlok-test" >
   <target name="execute-test">
     <delete dir="report" />
     <mkdir dir="report"/>
