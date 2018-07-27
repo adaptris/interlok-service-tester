@@ -1,12 +1,17 @@
 package com.adaptris.tester.plugin;
 
 import com.adaptris.core.util.Args;
+import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runners.TestExecutor;
 import com.adaptris.tester.runtime.ServiceTestException;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.tasks.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 
 public class ServiceTesterTask extends DefaultTask {
 
@@ -30,9 +35,15 @@ public class ServiceTesterTask extends DefaultTask {
 
 
   @TaskAction
-  public void serviceTester() throws ServiceTestException {
+  public void serviceTester() throws ServiceTestException, IOException {
     TestExecutor executor = new TestExecutor();
-    executor.execute(getServiceTest(), getServiceTestOutput());
+    final byte[] encoded = Files.readAllBytes(getServiceTest().toPath());
+    final String contents = new String(encoded, Charset.defaultCharset());
+    final JUnitReportTestResults result = executor.execute(contents);
+    result.writeReports(getServiceTestOutput());
+    if (result.hasFailures()){
+      throw new GradleException("Test failures");
+    }
   }
 
   public File getServiceTest() {

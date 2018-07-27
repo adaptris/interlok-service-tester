@@ -2,6 +2,7 @@ package com.adaptris.tester.plugin;
 
 import com.adaptris.core.stubs.TempFileUtils;
 import com.adaptris.util.GuidGenerator;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.specs.Spec;
 import org.gradle.testfixtures.ProjectBuilder;
@@ -11,6 +12,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ServiceTesterTaskTest {
 
@@ -25,6 +27,26 @@ public class ServiceTesterTaskTest {
     task.setServiceTest(testFile);
     task.setServiceTestOutput(tempDir);
     task.serviceTester();
+    File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
+    assertTrue(expectedFile.exists());
+  }
+
+  @Test
+  public void serviceTesterFailed() throws Exception{
+    final String serviceFile = "simple_sample_fail.xml";
+    File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
+    GuidGenerator o = new GuidGenerator();
+    File tempDir = TempFileUtils.createTrackedDir(o);
+    Project project = ProjectBuilder.builder().build();
+    ServiceTesterTask task = project.getTasks().create("interlokServiceTester", ServiceTesterTask.class);
+    task.setServiceTest(testFile);
+    task.setServiceTestOutput(tempDir);
+    try {
+      task.serviceTester();
+      fail();
+    } catch (GradleException expected){
+
+    }
     File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
     assertTrue(expectedFile.exists());
   }
