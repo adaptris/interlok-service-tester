@@ -68,6 +68,9 @@ configurations.all {
 }
 
 dependencies {
+  compile gradleApi()
+  compile localGroovy()
+
   compile ("com.adaptris:interlok-core:$interlokCoreVersion") {changing= true}
   compile ("com.adaptris:interlok-common:$interlokCoreVersion") {changing= true}
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
@@ -78,6 +81,8 @@ dependencies {
   optional("com.adaptris:interlok-varsub:$interlokCoreVersion") {changing= true}
   optional("com.adaptris:interlok-xinclude:$interlokCoreVersion") {changing= true}
   optional("com.adaptris:interlok-stubs:$interlokCoreVersion") {changing= true}
+
+  optional("org.apache.ant:ant-junit:1.10.5")
 
   optional("com.github.tomakehurst:wiremock:1.58")
   optional("org.skyscreamer:jsonassert:1.5.0")
