@@ -95,7 +95,7 @@ dependencies {
   testCompile ("org.apache.logging.log4j:log4j-1.2-api:2.8.1")
   testCompile ("org.apache.logging.log4j:log4j-slf4j-impl:2.8.1")
   testCompile ("org.apache.logging.log4j:log4j-api:2.8.1")
-  testCompile ("com.github.stefanbirkner:system-rules:1.16.0")
+  testCompile ("com.github.stefanbirkner:system-rules:1.18.0")
 
   javadoc("com.adaptris:interlok-core-apt:$interlokCoreVersion") { changing= true}
 
