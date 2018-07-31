@@ -10,5 +10,6 @@ public class ServiceTesterPlugin implements Plugin<Project> {
     Task tester = project.getTasks().create("interlokServiceTester", ServiceTesterTask.class);
     Task reporter = project.getTasks().create("interlokServiceTesterReport", ServiceTesterReportTask.class);
     tester.finalizedBy(reporter);
+    reporter.onlyIf(task -> tester.getDidWork());
   }
 }
