@@ -5,6 +5,7 @@ import org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer;
 import org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator;
 import org.apache.tools.ant.types.FileSet;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
@@ -18,6 +19,8 @@ public class ServiceTesterReportTask extends DefaultTask {
   private File serviceTestOutput;
   @OutputDirectory
   private File serviceTestReportOutput;
+  @Input
+  private File antStyleDir;
 
   public ServiceTesterReportTask(){
     setServiceTestOutput(new File(getProject().getBuildDir(), "test-results"));
@@ -34,6 +37,9 @@ public class ServiceTesterReportTask extends DefaultTask {
     fileSet.setIncludes("TEST-*.xml");
     aggregator.addFileSet(fileSet);
     AggregateTransformer transformer = aggregator.createReport();
+    if(getAntStyleDir() != null){
+      transformer.setStyledir(getAntStyleDir());
+    }
     XSLTProcess.Factory factory = transformer.createFactory();
     factory.setName("net.sf.saxon.TransformerFactoryImpl");
     transformer.setTodir(getServiceTestReportOutput());
@@ -57,5 +63,13 @@ public class ServiceTesterReportTask extends DefaultTask {
 
   public File getServiceTestReportOutput() {
     return serviceTestReportOutput;
+  }
+
+  public void setAntStyleDir(File antStyleDir) {
+    this.antStyleDir = antStyleDir;
+  }
+
+  public File getAntStyleDir() {
+    return antStyleDir;
   }
 }
