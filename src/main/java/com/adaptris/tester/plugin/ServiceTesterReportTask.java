@@ -5,10 +5,7 @@ import org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer;
 import org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator;
 import org.apache.tools.ant.types.FileSet;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.*;
 
 import java.io.File;
 
@@ -20,6 +17,7 @@ public class ServiceTesterReportTask extends DefaultTask {
   @OutputDirectory
   private File serviceTestReportOutput;
   @Input
+  @Optional
   private File antStyleDir;
 
   public ServiceTesterReportTask(){
