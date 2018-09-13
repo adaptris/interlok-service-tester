@@ -84,7 +84,7 @@ dependencies {
 
   optional("org.apache.ant:ant-junit:1.10.5")
 
-  optional("com.github.tomakehurst:wiremock:1.58")
+  optional("com.github.tomakehurst:wiremock:2.18.0")
   optional("org.skyscreamer:jsonassert:1.5.0")
   optional("xmlunit:xmlunit:1.6")
 
