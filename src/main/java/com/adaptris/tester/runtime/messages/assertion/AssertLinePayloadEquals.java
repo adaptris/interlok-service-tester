@@ -23,7 +23,7 @@ public class AssertLinePayloadEquals implements Assertion {
 
   private String uniqueId;
 
-  @XStreamImplicit(keyFieldName = "line")
+  @XStreamImplicit(itemFieldName = "line")
   private List<String> expectedLines;
 
   public AssertLinePayloadEquals(){

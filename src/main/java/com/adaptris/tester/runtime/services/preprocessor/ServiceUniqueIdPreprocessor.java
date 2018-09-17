@@ -50,7 +50,7 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
 
   private String channel;
   private String workflow;
-  @XStreamImplicit
+  @XStreamImplicit(itemFieldName = "service")
   private List<String> services;
 
   public ServiceUniqueIdPreprocessor(){
