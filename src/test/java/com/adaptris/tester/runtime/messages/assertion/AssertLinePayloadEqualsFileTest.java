@@ -42,7 +42,7 @@ public class AssertLinePayloadEqualsFileTest extends AssertionCase {
   }
 
   public void testShowReturnedMessage(){
-    assertFalse(createAssertion().showReturnedMessage());
+    assertTrue(createAssertion().showReturnedMessage());
   }
 
   @Override
