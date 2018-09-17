@@ -35,9 +35,4 @@ public class AssertLinePayloadEqualsFile extends AssertPayloadEqualsFile {
       throw new ServiceTestException(e);
     }
   }
-
-  @Override
-  public boolean showReturnedMessage() {
-    return false;
-  }
 }

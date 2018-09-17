@@ -73,6 +73,6 @@ public class AssertLinePayloadEquals implements Assertion {
 
   @Override
   public boolean showReturnedMessage() {
-    return false;
+    return true;
   }
 }
