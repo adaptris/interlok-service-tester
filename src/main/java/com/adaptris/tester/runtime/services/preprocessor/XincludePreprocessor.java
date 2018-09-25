@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.CoreException;
 import com.adaptris.core.xinclude.XincludePreProcessor;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -32,7 +33,7 @@ public class XincludePreprocessor implements Preprocessor {
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     try {
       XincludePreProcessor processor = new XincludePreProcessor(new KeyValuePairSet());
       return processor.process(input);

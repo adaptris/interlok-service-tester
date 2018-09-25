@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -30,7 +31,7 @@ public class NullPreprocessor implements Preprocessor{
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     return input;
   }
 }

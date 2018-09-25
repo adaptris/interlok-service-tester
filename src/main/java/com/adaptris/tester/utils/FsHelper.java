@@ -20,13 +20,17 @@ public class FsHelper {
 
   }
 
-  public static byte[] getFileBytes(String path, ServiceTestConfig config) throws IOException, URISyntaxException, FsException {
-    FsWorker fsWorker = new NioWorker();
+  public static File createFile(String path, ServiceTestConfig config) throws IOException, URISyntaxException {
     URL url = com.adaptris.core.fs.FsHelper.createUrlFromString(path, true);
     File fileToRead = com.adaptris.core.fs.FsHelper.createFileReference(url);
     if(!fileToRead.isAbsolute() && config.workingDirectory != null){
       fileToRead = Paths.get(config.workingDirectory.getPath(), fileToRead.getPath()).toFile();
     }
-    return fsWorker.get(fileToRead);
+    return fileToRead;
+  }
+
+  public static byte[] getFileBytes(String path, ServiceTestConfig config) throws IOException, URISyntaxException, FsException {
+    FsWorker fsWorker = new NioWorker();
+    return fsWorker.get(createFile(path, config));
   }
 }

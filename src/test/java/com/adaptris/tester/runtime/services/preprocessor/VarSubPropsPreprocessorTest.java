@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class VarSubPropsPreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
-    String result = createPreprocessor().execute("Hello ${foo}");
+    String result = createPreprocessor().execute("Hello ${foo}", new ServiceTestConfig());
     assertEquals("Hello bar", result);
   }
 

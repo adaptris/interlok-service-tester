@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.annotation.AutoPopulated;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -47,7 +48,7 @@ public class FindAndReplacePreprocessor implements Preprocessor {
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
 
     for(KeyValuePair kvp :  replacementKeys.getKeyValuePairs()){
       input = input.replaceAll(kvp.getKey(), kvp.getValue());

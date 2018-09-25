@@ -20,11 +20,16 @@ package com.adaptris.tester.runtime.services.preprocessor;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.varsub.Constants;
 import com.adaptris.core.varsub.VariableSubstitutionPreProcessor;
+import com.adaptris.tester.runtime.ServiceTestConfig;
+import com.adaptris.tester.utils.FsHelper;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +51,9 @@ public class VarSubPreprocessor implements Preprocessor {
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     try {
-      VariableSubstitutionPreProcessor processor = new VariableSubstitutionPreProcessor(createPropertyFileSet());
+      VariableSubstitutionPreProcessor processor = new VariableSubstitutionPreProcessor(createPropertyFileSet(config));
       return processor.process(input);
     } catch (CoreException e) {
       throw new PreprocessorException("Failed to substitute variables", e);
@@ -67,14 +72,19 @@ public class VarSubPreprocessor implements Preprocessor {
     this.propertyFile.add(propertyFile);
   }
 
-  private KeyValuePairSet createPropertyFileSet() throws PreprocessorException{
+  private KeyValuePairSet createPropertyFileSet(ServiceTestConfig config) throws PreprocessorException{
     if (propertyFile.size() == 0){
       throw new PreprocessorException("At least one properties file must be set");
     }
-    KeyValuePairSet kvp = new KeyValuePairSet();
-    for (int i = 0; i < propertyFile.size(); i++){
-      kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + "." + i, propertyFile.get(i)));
+    try {
+      KeyValuePairSet kvp = new KeyValuePairSet();
+      for (int i = 0; i < propertyFile.size(); i++) {
+        File file = FsHelper.createFile(propertyFile.get(i), config);
+        kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + "." + i, "file:///" + file.getAbsolutePath()));
+      }
+      return kvp;
+    } catch (IOException | URISyntaxException e) {
+      throw new PreprocessorException("Failed to create varsub path", e);
     }
-    return kvp;
   }
 }

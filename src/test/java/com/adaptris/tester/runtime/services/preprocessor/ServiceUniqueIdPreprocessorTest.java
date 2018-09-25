@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -48,44 +49,44 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   public void testExecute() throws Exception{
     ServiceUniqueIdPreprocessor preprocessor;
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Collections.singletonList("service-1"));
-    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor("workflow-1", Collections.singletonList("service-1"));
-    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor(Collections.singletonList("service-1"));
-    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
 
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Arrays.asList("service-1", "add-metadata"));
-    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor("workflow-1", Arrays.asList("service-1", "add-metadata"));
-    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor(Arrays.asList("service-1", "add-metadata"));
-    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
 
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Arrays.asList("service-1", "service-2"));
-    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor("workflow-1", Arrays.asList("service-1", "service-2"));
-    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor(Arrays.asList("service-1", "service-2"));
-    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
 
 
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Arrays.asList("service-1", "service-2", "add-metadata"));
-    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor( "workflow-1", Arrays.asList("service-1", "service-2", "add-metadata"));
-    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
     preprocessor = new ServiceUniqueIdPreprocessor(Arrays.asList("service-1", "service-2", "add-metadata"));
-    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_MULTI_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
 
     //Shows it works and returns first
     preprocessor = new ServiceUniqueIdPreprocessor(Collections.singletonList("add-metadata"));
-    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML));
+    assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
   }
 
   @Test
   public void testExecuteNoMatch() throws Exception {
     try {
       ServiceUniqueIdPreprocessor preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Collections.singletonList("service-no-match"));
-      preprocessor.execute(ADAPTER_XML);
+      preprocessor.execute(ADAPTER_XML, new ServiceTestConfig());
       fail();
     } catch (PreprocessorException e) {
       assertEquals("Failed to find service: channel: [channel-1] workflow: [workflow-1] services: [[service-no-match]] xpath [//channel-list/*[unique-id = 'channel-1']/workflow-list/*[unique-id = 'workflow-1']/service-collection/services/*[unique-id = 'service-no-match']]", e.getMessage());

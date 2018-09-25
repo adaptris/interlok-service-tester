@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
+
 public interface Preprocessor {
 
   /**
@@ -25,5 +27,5 @@ public interface Preprocessor {
    * @return Processed service
    * @throws PreprocessorException wraps any thrown Exception
    */
-  String execute(String input) throws PreprocessorException;
+  String execute(String input, ServiceTestConfig config) throws PreprocessorException;
 }

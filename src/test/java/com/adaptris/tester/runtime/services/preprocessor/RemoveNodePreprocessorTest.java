@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -32,7 +33,7 @@ public class RemoveNodePreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
-    String result  = createPreprocessor().execute(XML);
+    String result  = createPreprocessor().execute(XML, new ServiceTestConfig());
     Document document = XmlHelper.createDocument(result, new DocumentBuilderFactoryBuilder());
     assertEquals("root", document.getDocumentElement().getNodeName());
     assertEquals(0, document.getElementsByTagName("id").getLength());

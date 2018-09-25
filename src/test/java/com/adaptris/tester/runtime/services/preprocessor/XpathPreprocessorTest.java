@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -35,7 +36,7 @@ public class XpathPreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
-    String result  = createPreprocessor().execute(XML);
+    String result  = createPreprocessor().execute(XML, new ServiceTestConfig());
     Document document = XmlHelper.createDocument(result, new DocumentBuilderFactoryBuilder());
     assertEquals("xml", document.getDocumentElement().getNodeName());
   }
@@ -45,7 +46,7 @@ public class XpathPreprocessorTest extends PreprocessorCase {
     try {
       XpathPreprocessor preprocessor = new XpathPreprocessor();
       preprocessor.setXpath("//nomatch");
-      preprocessor.execute(XML);
+      preprocessor.execute(XML, new ServiceTestConfig());
       fail();
     } catch (PreprocessorException e) {
       assertEquals("xpath [//nomatch] didn't return a match", e.getMessage());

@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.XpathCommon;
 import com.adaptris.tester.runtime.XpathCommonException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -39,7 +40,7 @@ public class RemoveNodePreprocessor extends XpathCommon implements Preprocessor 
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     try {
       Node document = XmlHelper.createDocument(input, new DocumentBuilderFactoryBuilder());
       Node node =  selectSingleNode(document);

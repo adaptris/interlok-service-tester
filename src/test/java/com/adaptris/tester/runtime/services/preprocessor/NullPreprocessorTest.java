@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
+
 public class NullPreprocessorTest extends PreprocessorCase {
   public NullPreprocessorTest(String name) {
     super(name);
@@ -23,7 +25,7 @@ public class NullPreprocessorTest extends PreprocessorCase {
 
   public void testExecute() throws Exception {
     String value  = "value";
-    String result = createPreprocessor().execute(value);
+    String result = createPreprocessor().execute(value, new ServiceTestConfig());
     assertEquals(value, result);
   }
 

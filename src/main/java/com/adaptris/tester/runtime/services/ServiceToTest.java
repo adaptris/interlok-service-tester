@@ -63,7 +63,7 @@ public class ServiceToTest {
   public String getProcessedSource(ServiceTestConfig config) throws PreprocessorException, SourceException {
     String result = getSource().getSource(config);
     for (Preprocessor preprocessor : getPreprocessors()) {
-      result = preprocessor.execute(result);
+      result = preprocessor.execute(result, config);
     }
     return result;
   }

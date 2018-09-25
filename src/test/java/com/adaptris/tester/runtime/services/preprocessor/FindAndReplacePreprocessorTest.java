@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class FindAndReplacePreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
-    String result = createPreprocessor().execute("Hello foo");
+    String result = createPreprocessor().execute("Hello foo", new ServiceTestConfig());
     assertEquals("Hello bar", result);
 
   }
