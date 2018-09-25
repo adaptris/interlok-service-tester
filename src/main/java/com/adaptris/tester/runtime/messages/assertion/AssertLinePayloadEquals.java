@@ -1,5 +1,6 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -35,7 +36,7 @@ public class AssertLinePayloadEquals implements Assertion {
   }
 
   @Override
-  public AssertionResult execute(TestMessage actual) throws ServiceTestException {
+  public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {
       List<String> actualLines = IOUtils.readLines(new StringReader(actual.getPayload()));
       return new AssertionResult(getUniqueId(), "assert-lines-payload-equals", expectedLines.equals(actualLines));

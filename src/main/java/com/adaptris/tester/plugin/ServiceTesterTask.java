@@ -39,7 +39,7 @@ public class ServiceTesterTask extends DefaultTask {
     TestExecutor executor = new TestExecutor();
     final byte[] encoded = Files.readAllBytes(getServiceTest().toPath());
     final String contents = new String(encoded, Charset.defaultCharset());
-    final JUnitReportTestResults result = executor.execute(contents);
+    final JUnitReportTestResults result = executor.execute(contents, getProject().getProjectDir());
     result.writeReports(getServiceTestOutput());
     if (result.hasFailures()){
       throw new GradleException("Test failures");

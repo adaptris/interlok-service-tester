@@ -16,18 +16,17 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
-import com.adaptris.core.fs.FsHelper;
 import com.adaptris.fs.FsException;
 import com.adaptris.fs.FsWorker;
 import com.adaptris.fs.NioWorker;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
+import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals file contents.
@@ -41,8 +40,6 @@ public class AssertPayloadEqualsFile implements Assertion {
 
   private String uniqueId;
   private String file;
-
-  private transient FsWorker fsWorker = new NioWorker();
 
   public AssertPayloadEqualsFile(){
   }
@@ -75,11 +72,9 @@ public class AssertPayloadEqualsFile implements Assertion {
    * @return Return result of assertion using {@link AssertionResult}
    */
   @Override
-  public final AssertionResult execute(TestMessage actual) throws ServiceTestException {
+  public final AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {
-      URL url = FsHelper.createUrlFromString(file, true);
-      File fileToRead = FsHelper.createFileReference(url);
-      final byte[] fileContents = fsWorker.get(fileToRead);
+      final byte[] fileContents = FsHelper.getFileBytes(file, config);
       return checkResults(actual.getPayload(), new String(fileContents));
     } catch (IOException | URISyntaxException | FsException e) {
       throw new ServiceTestException(e);

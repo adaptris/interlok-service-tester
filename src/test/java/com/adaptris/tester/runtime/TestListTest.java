@@ -42,7 +42,7 @@ public class TestListTest extends TestCase {
     TestList tl = new TestList();
     tl.setUniqueId("id");
     tl.addTest(new Test());
-    JUnitReportTestSuites s = tl.execute(new StubClient(), new HashMap<String, String>());
+    JUnitReportTestSuites s = tl.execute(new StubClient(), new ServiceTestConfig());
     assertNotNull(s);
     assertEquals(1, s.getTestSuites().size());
     assertEquals("id", s.getName());

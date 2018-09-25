@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,8 +33,8 @@ public class AssertLinePayloadEqualsFileTest extends AssertionCase {
   public void testExecute() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("test.csv").getFile());
     Assertion matcher = new AssertLinePayloadEqualsFile("file:///" + file.getAbsolutePath());
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"header1,header2,header3\nvalue1,value2,value3")).isPassed());
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"header1,header2\nvalue1,value2")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"header1,header2,header3\nvalue1,value2,value3"), new ServiceTestConfig()).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"header1,header2\nvalue1,value2"), new ServiceTestConfig()).isPassed());
   }
 
   @Test

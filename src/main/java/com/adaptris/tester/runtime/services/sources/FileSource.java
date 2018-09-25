@@ -16,13 +16,9 @@
 
 package com.adaptris.tester.runtime.services.sources;
 
-import com.adaptris.core.fs.FsHelper;
-import com.adaptris.fs.FsWorker;
-import com.adaptris.fs.NioWorker;
+import com.adaptris.tester.runtime.ServiceTestConfig;
+import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.io.File;
-import java.net.URL;
 
 /**
  *
@@ -31,7 +27,6 @@ import java.net.URL;
 @XStreamAlias("file-source")
 public class FileSource implements Source {
 
-  private transient FsWorker fsWorker = new NioWorker();
 
   private String file;
 
@@ -44,11 +39,9 @@ public class FileSource implements Source {
   }
 
   @Override
-  public String getSource() throws SourceException {
+  public String getSource(ServiceTestConfig config) throws SourceException {
     try {
-      URL url = FsHelper.createUrlFromString(file, true);
-      File fileToRead = FsHelper.createFileReference(url);
-      final byte[] fileContents = fsWorker.get(fileToRead);
+      final byte[] fileContents = FsHelper.getFileBytes(file, config);
       return new String(fileContents);
     } catch (Exception e) {
       throw new SourceException("Failed to read file", e);

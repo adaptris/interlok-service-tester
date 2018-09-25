@@ -16,10 +16,13 @@
 
 package com.adaptris.tester.runtime.messages.payload;
 
-import com.adaptris.core.fs.FsHelper;
+
 import com.adaptris.fs.FsWorker;
 import com.adaptris.fs.NioWorker;
+import com.adaptris.tester.runtime.ServiceTest;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.MessageException;
+import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -36,9 +39,6 @@ public class FilePayloadProvider extends PayloadProvider {
   @XStreamOmitField
   private String payload;
 
-  @XStreamOmitField
-  private transient FsWorker fsWorker = new NioWorker();
-
   private String file;
 
   public FilePayloadProvider(){
@@ -49,11 +49,9 @@ public class FilePayloadProvider extends PayloadProvider {
     setFile(file);
   }
 
-  public void init() throws MessageException{
+  public void init(ServiceTestConfig config) throws MessageException{
     try {
-      URL url = FsHelper.createUrlFromString(file, true);
-      File fileToRead = FsHelper.createFileReference(url);
-      final byte[] fileContents = fsWorker.get(fileToRead);
+      final byte[] fileContents = FsHelper.getFileBytes(file, config);
       setPayload(new String(fileContents));
     } catch (Exception e) {
       throw new MessageException("Failed to read file", e);

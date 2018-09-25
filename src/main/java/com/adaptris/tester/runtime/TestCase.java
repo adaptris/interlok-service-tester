@@ -100,7 +100,7 @@ public class TestCase implements TestComponent {
     return fqName.matches(regexFilter);
   }
 
-  JUnitReportTestCase execute(String parentId, TestClient client, ServiceToTest serviceToTest) throws ServiceTestException {
+  JUnitReportTestCase execute(String parentId, TestClient client, ServiceToTest serviceToTest, ServiceTestConfig config) throws ServiceTestException {
     final String fqName = parentId + "." + getUniqueId();
 
     JUnitReportTestCase result = new JUnitReportTestCase(getUniqueId());
@@ -112,13 +112,13 @@ public class TestCase implements TestComponent {
     long startTime = System.nanoTime();
     try {
       TestMessage input;
-      input = getInputMessageProvider().createTestMessage();
-      TestMessage returnMessage = client.applyService(serviceToTest.getProcessedSource(), input);
+      input = getInputMessageProvider().createTestMessage(config);
+      TestMessage returnMessage = client.applyService(serviceToTest.getProcessedSource(config), input);
       if(getExpectedException() != null){
         //Exception should have been thrown
         result.setTestIssue(new JUnitReportFailure("Assertion Failure: Expected Exception [" + getExpectedException().getClassName() + "]", "No Exception thrown"));
       } else {
-        result.setTestIssue(getAssertions().execute(returnMessage));
+        result.setTestIssue(getAssertions().execute(returnMessage, config));
       }
     } catch (Exception e){
       if(getExpectedException() == null){

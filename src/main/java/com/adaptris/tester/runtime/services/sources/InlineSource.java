@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.services.sources;
 
 import com.adaptris.annotation.MarshallingCDATA;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -30,7 +31,7 @@ public class InlineSource implements Source {
   public String xml;
 
   @Override
-  public String getSource() {
+  public String getSource(ServiceTestConfig config) {
     return getXml();
   }
 

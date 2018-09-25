@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,8 @@ public class ServiceTest implements TestComponent {
   private List<Helper> helpers;
   @XStreamImplicit
   private List<TestList> testLists;
+
+  private transient File workingDirectory = null;
 
   public ServiceTest(){
     setHelpers(new ArrayList<Helper>());
@@ -78,6 +81,14 @@ public class ServiceTest implements TestComponent {
 
   public List<Helper> getHelpers() {
     return helpers;
+  }
+
+  public File getWorkingDirectory() {
+    return workingDirectory;
+  }
+
+  public void setWorkingDirectory(File workingDirectory) {
+    this.workingDirectory = workingDirectory;
   }
 
   private void initHelpers() throws ServiceTestException {
@@ -115,10 +126,11 @@ public class ServiceTest implements TestComponent {
   public JUnitReportTestResults execute() throws ServiceTestException {
     initHelpers();
     testClient.init();
+    ServiceTestConfig config = new ServiceTestConfig().withHelperProperties(getHelperProperties()).withWorkingDirectory(getWorkingDirectory());
     try {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
       for(TestList tests : getTestLists()){
-        results.addTestSuites(tests.execute(testClient, getHelperProperties()));
+        results.addTestSuites(tests.execute(testClient, config));
       }
       return results;
     } finally {

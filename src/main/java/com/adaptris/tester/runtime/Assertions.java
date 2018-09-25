@@ -69,10 +69,10 @@ public class Assertions extends AbstractCollection<Assertion> {
     return this.assertions.add(assertion);
   }
 
-  public JUnitReportTestIssue execute(TestMessage returnMessage) throws ServiceTestException{
+  public JUnitReportTestIssue execute(TestMessage returnMessage, ServiceTestConfig config) throws ServiceTestException{
     JUnitReportTestIssue result = null;
     for(Assertion assertion : getAssertions()) {
-      AssertionResult assertionResult = assertion.execute(returnMessage);
+      AssertionResult assertionResult = assertion.execute(returnMessage, config);
       if (!assertionResult.isPassed()) {
         String message = "";
         if (assertion.showReturnedMessage()) {

@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -34,9 +35,9 @@ public class AssertJsonPayloadEqualsTest extends AssertionCase  {
     String actual = "{ \"key\" : \"value\" }";
     PayloadAssertion matcher = new AssertJsonPayloadEquals();
     matcher.setPayload("{ \"key\" : \"value\" }");
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
     matcher.setPayload("{ \"key\" : \"value\",  \"key1\" : \"value2\"}");
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -46,7 +47,7 @@ public class AssertJsonPayloadEqualsTest extends AssertionCase  {
 
   @Test
   public void testGetMessage() throws Exception{
-    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "{ \"key\" : \"value\",  \"key1\" : \"value2\"}"));
+    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "{ \"key\" : \"value\",  \"key1\" : \"value2\"}"), new ServiceTestConfig());
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-json-payload-equals]"));
   }
 

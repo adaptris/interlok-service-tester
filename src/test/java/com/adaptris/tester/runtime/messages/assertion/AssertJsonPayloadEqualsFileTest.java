@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,8 +33,8 @@ public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
   public void testExecute() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("test.json").getFile());
     Assertion matcher = new AssertJsonPayloadEqualsFile("file:///" + file.getAbsolutePath());
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\" }")).isPassed());
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\",  \"key1\" : \"value2\"}")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\" }"), new ServiceTestConfig()).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\",  \"key1\" : \"value2\"}"), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -44,7 +45,7 @@ public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
   @Test
   public void testGetMessage() throws Exception{
     File file = new File(this.getClass().getClassLoader().getResource("test.json").getFile());
-    AssertionResult result  = new AssertJsonPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\",  \"key1\" : \"value2\"}"));
+    AssertionResult result  = new AssertJsonPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage(new HashMap<String, String>(),"{ \"key\" : \"value\",  \"key1\" : \"value2\"}"), new ServiceTestConfig());
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-json-payload-equals-file]"));
   }
 

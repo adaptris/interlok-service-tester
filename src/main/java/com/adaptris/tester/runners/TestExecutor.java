@@ -147,6 +147,25 @@ public class TestExecutor {
   }
 
   /**
+   * Unmarshalls input to {@link ServiceTest} using {@link AdaptrisMarshaller} executes {@link #execute(ServiceTest)}
+   * returning {@link JUnitReportTestResults}
+   *
+   * @param text Test configuration
+   * @param workingDirectory The working directory
+   * @return Test results in {@link JUnitReportTestResults}
+   * @throws ServiceTestException wrapping any exception
+   */
+  public JUnitReportTestResults execute(String text, File workingDirectory) throws ServiceTestException {
+    try {
+      ServiceTest serviceTest = (ServiceTest) createMarshaller().unmarshal(text);
+      serviceTest.setWorkingDirectory(workingDirectory);
+      return execute(serviceTest);
+    } catch (CoreException e) {
+      throw new ServiceTestException(e);
+    }
+  }
+
+  /**
    * Executes {@link ServiceTest} configuration returning {@link JUnitReportTestResults}
    *
    * @param serviceTest Test configuration

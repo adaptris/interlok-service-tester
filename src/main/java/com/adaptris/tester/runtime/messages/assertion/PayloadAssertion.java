@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.annotation.MarshallingCDATA;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
@@ -78,7 +79,7 @@ public abstract class PayloadAssertion implements Assertion {
    * @return Return result of assertion using {@link AssertionResult}
    */
   @Override
-  public final AssertionResult execute(TestMessage actual) throws ServiceTestException {
+  public final AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     return execute(actual.getPayload());
   }
 

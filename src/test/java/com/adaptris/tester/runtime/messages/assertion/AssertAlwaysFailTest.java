@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
 public class AssertAlwaysFailTest extends AssertionCase {
@@ -26,7 +27,7 @@ public class AssertAlwaysFailTest extends AssertionCase {
 
   public void testExecute() throws Exception {
     Assertion a = createAssertion();
-    AssertionResult result = a.execute(new TestMessage());
+    AssertionResult result = a.execute(new TestMessage(), new ServiceTestConfig());
     assertFalse(result.isPassed());
   }
 

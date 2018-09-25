@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 
@@ -43,7 +44,7 @@ public class AssertXpathEqualsTest extends AssertionCase {
 
   public void testExecute() throws Exception {
     AssertXpathEquals a  = createAssertion();
-    assertTrue(a.execute(new TestMessage(new HashMap<String, String>(),PAYLOAD)).isPassed());
+    assertTrue(a.execute(new TestMessage(new HashMap<String, String>(),PAYLOAD), new ServiceTestConfig()).isPassed());
   }
 
   public void testExpected(){
@@ -51,7 +52,7 @@ public class AssertXpathEqualsTest extends AssertionCase {
   }
 
   public void testGetMessage() throws Exception {
-    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), PAYLOAD));
+    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), PAYLOAD), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-xpath-equals] Expected [value] Returned [value]", result.getMessage());
   }
 

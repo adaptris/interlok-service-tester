@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,9 +33,9 @@ public class AssertPayloadEqualsTest extends AssertionCase {
     String actual = "1234hello1234";
     PayloadAssertion matcher = new AssertPayloadEquals();
     matcher.setPayload("1234hello1234");
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
     matcher.setPayload("notthis");
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -44,7 +45,7 @@ public class AssertPayloadEqualsTest extends AssertionCase {
 
   @Test
   public void testGetMessage() throws Exception{
-    AssertionResult result  = createAssertion().execute(new TestMessage());
+    AssertionResult result  = createAssertion().execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-payload-equals]", result.getMessage());
   }
 

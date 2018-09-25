@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -35,7 +36,7 @@ public class AssertAlwaysFail implements Assertion {
 
 
   @Override
-  public AssertionResult execute(TestMessage actual) throws ServiceTestException {
+  public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     return new AssertionResult(getUniqueId(), "assert-always-fail", false);
   }
 

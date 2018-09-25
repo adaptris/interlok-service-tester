@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime.messages;
 
+import com.adaptris.tester.runtime.ServiceTest;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.MetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.EmptyPayloadProvider;
@@ -60,9 +62,9 @@ public class TestMessageProvider {
     return payloadProvider;
   }
 
-  public TestMessage createTestMessage() throws MessageException {
-    getMetadataProvider().init();
-    getPayloadProvider().init();
+  public TestMessage createTestMessage(ServiceTestConfig config) throws MessageException {
+    getMetadataProvider().init(config);
+    getPayloadProvider().init(config);
     return new TestMessage(getMetadataProvider().getMessageHeaders(), getPayloadProvider().getPayload());
   }
 }

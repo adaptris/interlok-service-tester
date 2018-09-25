@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
@@ -37,15 +38,15 @@ public class AssertMetadataMatchesRegexTest extends AssertionCase{
     Map<String, String> actual = new HashMap<>();
     MetadataAssertion matcher = new AssertMetadataMatchesRegex();
     matcher.setMetadata(new KeyValuePairSet(expected));
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key2", "val2");
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "val1");
-    assertTrue(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "valother");
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "val3");
-    assertTrue(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -55,9 +56,9 @@ public class AssertMetadataMatchesRegexTest extends AssertionCase{
 
   @Test
   public void testGetMessage() throws Exception {
-    AssertionResult result  = createAssertion().execute(new TestMessage());
+    AssertionResult result  = createAssertion().execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-metadata-matches-regex] message doesn't contain: [key1]", result.getMessage());
-    result  = createAssertion().execute(new TestMessage(Collections.singletonMap("key1", "valother"), ""));
+    result  = createAssertion().execute(new TestMessage(Collections.singletonMap("key1", "valother"), ""), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-metadata-matches-regex] metadata contains [key1] but does not match [^val[0-9]$]", result.getMessage());
   }
 

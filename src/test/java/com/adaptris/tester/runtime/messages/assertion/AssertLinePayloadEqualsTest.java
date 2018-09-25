@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -35,9 +36,9 @@ public class AssertLinePayloadEqualsTest extends AssertionCase  {
     String actual = "header1,header2,header3\nvalue1,value2,value3";
     AssertLinePayloadEquals matcher = new AssertLinePayloadEquals();
     matcher.setExpectedLines(Arrays.asList("header1,header2,header3", "value1,value2,value3"));
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
     matcher.setExpectedLines(Arrays.asList("header1,header2", "value1,value2"));
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
   }
 
   @Test

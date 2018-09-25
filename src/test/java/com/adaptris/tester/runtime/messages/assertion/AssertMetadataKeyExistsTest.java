@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
@@ -32,8 +33,8 @@ public class AssertMetadataKeyExistsTest extends AssertionCase{
 
   @Test
   public void testExecute() throws Exception {
-    assertTrue(createAssertion().execute(new TestMessage(Collections.singletonMap("key1", "value1"), "payload")).isPassed());
-    assertFalse(createAssertion().execute(new TestMessage(Collections.singletonMap("key2", "value1"), "payload")).isPassed());
+    assertTrue(createAssertion().execute(new TestMessage(Collections.singletonMap("key1", "value1"), "payload"), new ServiceTestConfig()).isPassed());
+    assertFalse(createAssertion().execute(new TestMessage(Collections.singletonMap("key2", "value1"), "payload"), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -43,7 +44,7 @@ public class AssertMetadataKeyExistsTest extends AssertionCase{
 
   @Test
   public void testGetMessage() throws Exception {
-    AssertionResult result  = createAssertion().execute(new TestMessage());
+    AssertionResult result  = createAssertion().execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-metadata-key-exists] metadata does not contain key: [key1]", result.getMessage());
   }
 
