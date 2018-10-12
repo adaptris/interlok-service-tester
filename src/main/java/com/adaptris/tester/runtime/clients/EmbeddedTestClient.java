@@ -52,6 +52,7 @@ public class EmbeddedTestClient extends JMXTestClient {
 
   public EmbeddedTestClient(){
     setSharedComponents(new SharedComponentList());
+    setSharedComponentsProvider(new SharedComponentProvider());
   }
 
   /**
