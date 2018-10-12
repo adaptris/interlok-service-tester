@@ -19,6 +19,7 @@ package com.adaptris.tester.runtime.clients;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.runtime.AdapterComponentChecker;
 import com.adaptris.core.runtime.AdapterComponentCheckerMBean;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.MessageTranslator;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -42,15 +43,15 @@ public abstract class JMXTestClient implements TestClient {
 
   /**
    * Initialises the JMX test client. Test client initialisation includes configuring and connecting to client needed in
-   * {@link #applyService(String, TestMessage)}. Method makes a call to {@link #initMBeanServerConnection()} which is
+   * {@link #applyService(String, TestMessage)}. Method makes a call to {@link #initMBeanServerConnection(ServiceTestConfig config)} which is
    * abstract method.
    *
    * @throws ServiceTestException wrapping any thrown exception
    */
   @Override
-  public final void init() throws ServiceTestException {
+  public final void init(ServiceTestConfig config) throws ServiceTestException {
     try {
-      MBeanServerConnection mBeanServer = initMBeanServerConnection();
+      MBeanServerConnection mBeanServer = initMBeanServerConnection(config);
       manager = JMX.newMBeanProxy(mBeanServer, createComponentCheckerObjectName(mBeanServer), AdapterComponentCheckerMBean.class);
     } catch (MalformedObjectNameException | IOException | InstanceNotFoundException e) {
       throw new ServiceTestException(e);
@@ -59,15 +60,15 @@ public abstract class JMXTestClient implements TestClient {
   }
 
   /**
-   * Implementations should initialise and return the {@link MBeanServerConnection} to be used in {@link #init()}
+   * Implementations should initialise and return the {@link MBeanServerConnection} to be used in {@link #init(ServiceTestConfig config)}
    *
-   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @return {@link MBeanServerConnection} to be used in {@link #init(ServiceTestConfig config)}
    * @throws ServiceTestException wrapping any thrown exception
    */
-  public abstract MBeanServerConnection initMBeanServerConnection() throws ServiceTestException;
+  public abstract MBeanServerConnection initMBeanServerConnection(ServiceTestConfig config) throws ServiceTestException;
 
   /**
-   * Close connection initialised in {@link #init()}.
+   * Close connection initialised in {@link #init(ServiceTestConfig config)}.
    *
    * @throws IOException wrapping any thrown exception (dictated by {@link java.io.Closeable#close()}
    */

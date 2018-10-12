@@ -16,12 +16,14 @@
 
 package com.adaptris.tester.runtime.clients;
 
-import com.adaptris.core.Adapter;
-import com.adaptris.core.CoreException;
-import com.adaptris.core.SharedComponentList;
+import com.adaptris.core.*;
 import com.adaptris.core.runtime.AdapterManager;
 import com.adaptris.core.util.JmxHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
+import com.adaptris.tester.runtime.services.ServiceToTest;
+import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
+import com.adaptris.tester.runtime.services.sources.SourceException;
 import com.adaptris.util.GuidGenerator;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -39,9 +41,14 @@ import java.io.IOException;
 public class EmbeddedTestClient extends JMXTestClient {
 
   @XStreamOmitField
+  private transient AdaptrisMarshaller adaptrisMarshaller;
+
+  @XStreamOmitField
   private transient AdapterManager adapterManager;
 
   private SharedComponentList sharedComponents;
+
+  private SharedComponentProvider sharedComponentsProvider;
 
   public EmbeddedTestClient(){
     setSharedComponents(new SharedComponentList());
@@ -50,21 +57,29 @@ public class EmbeddedTestClient extends JMXTestClient {
   /**
    * Initialises an {@link Adapter} using the {@link AdapterManager}, shared components can be added using {@link #setSharedComponents(SharedComponentList)}.
    *
-   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @return {@link MBeanServerConnection} to be used in {@link #init(ServiceTestConfig config)}
    * @throws ServiceTestException wrapping any thrown exception
    */
   @Override
-  public MBeanServerConnection initMBeanServerConnection() throws ServiceTestException {
+  public MBeanServerConnection initMBeanServerConnection(ServiceTestConfig config) throws ServiceTestException {
     try {
       Adapter adapter = new Adapter();
-      adapter.setSharedComponents(getSharedComponents());
+      SharedComponentList sharedComponentList = getSharedComponents();
+      for(ServiceToTest service : getSharedComponentsProvider().getServices()){
+        Object o = getAdaptrisMarshaller().unmarshal(service.getProcessedSource(config));
+        if (!(o instanceof Service)) {
+          throw new ServiceTestException("Provided shared component isn't a service");
+        }
+        sharedComponentList.addService((Service)o);
+      }
+      adapter.setSharedComponents(sharedComponentList);
       GuidGenerator guidGenerator = new GuidGenerator();
       adapter.setUniqueId(guidGenerator.getUUID());
       adapterManager = new AdapterManager(adapter);
       adapterManager.registerMBean();
       adapterManager.requestStart();
       return JmxHelper.findMBeanServer();
-    } catch (CoreException | MalformedObjectNameException e) {
+    } catch (CoreException | MalformedObjectNameException | SourceException | PreprocessorException e) {
       throw new ServiceTestException(e);
     }
   }
@@ -99,5 +114,29 @@ public class EmbeddedTestClient extends JMXTestClient {
    */
   public SharedComponentList getSharedComponents() {
     return sharedComponents;
+  }
+
+
+  /**
+   * Sets {@link SharedComponentProvider} which is used to add {@link Service} as shared components to the {@link Adapter} during initialisation.
+   * @param sharedComponentsProvider {@link SharedComponentProvider} which is used to add {@link Service} as shared components to the {@link Adapter} during initialisation.
+   */
+  public void setSharedComponentsProvider(SharedComponentProvider sharedComponentsProvider) {
+    this.sharedComponentsProvider = sharedComponentsProvider;
+  }
+
+  /**
+   * Returns {@link SharedComponentProvider} which is used to add {@link Service} as shared components to the {@link Adapter} during initialisation.
+   * @return {@link SharedComponentProvider} that has been set
+   */
+  public SharedComponentProvider getSharedComponentsProvider() {
+    return sharedComponentsProvider;
+  }
+
+  private AdaptrisMarshaller getAdaptrisMarshaller() throws CoreException{
+    if (adaptrisMarshaller == null) {
+      adaptrisMarshaller = DefaultMarshaller.getDefaultMarshaller();
+    }
+    return adaptrisMarshaller;
   }
 }

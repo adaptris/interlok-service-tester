@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.clients;
 
 import com.adaptris.core.util.JmxHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.management.MBeanServerConnection;
@@ -33,10 +34,10 @@ public class LocalTestClient extends JMXTestClient {
   /**
    * Returns {@link MBeanServerConnection} using {@link JmxHelper#findMBeanServer()}.
    *
-   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @return {@link MBeanServerConnection} to be used in {@link #init(ServiceTestConfig config)}
    */
   @Override
-  public MBeanServerConnection initMBeanServerConnection() {
+  public MBeanServerConnection initMBeanServerConnection(ServiceTestConfig config) {
     return JmxHelper.findMBeanServer();
   }
 

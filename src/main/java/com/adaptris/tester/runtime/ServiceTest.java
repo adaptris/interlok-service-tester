@@ -16,7 +16,12 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import com.adaptris.tester.report.junit.JUnitReportTestResults;
+import com.adaptris.tester.runtime.clients.TestClient;
+import com.adaptris.tester.runtime.helpers.Helper;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,13 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-
-import com.adaptris.tester.report.junit.JUnitReportTestResults;
-import com.adaptris.tester.runtime.clients.TestClient;
-import com.adaptris.tester.runtime.helpers.Helper;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * Main class for service tester. Use other components from <code>tester</code> package to define tests execution.
@@ -125,8 +124,8 @@ public class ServiceTest implements TestComponent {
 
   public JUnitReportTestResults execute() throws ServiceTestException {
     initHelpers();
-    testClient.init();
     ServiceTestConfig config = new ServiceTestConfig().withHelperProperties(getHelperProperties()).withWorkingDirectory(getWorkingDirectory());
+    testClient.init(config);
     try {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
       for(TestList tests : getTestLists()){

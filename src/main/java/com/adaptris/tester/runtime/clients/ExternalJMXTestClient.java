@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.clients;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -41,11 +42,11 @@ public class ExternalJMXTestClient extends JMXTestClient {
 
   /**
    * Initialises connection to external JMX client using {@link #getJmxUrl()}.
-   * @return {@link MBeanServerConnection} to be used in {@link #init()}
+   * @return {@link MBeanServerConnection} to be used in {@link #init(ServiceTestConfig config)}
    * @throws ServiceTestException wrapping any thrown exception
    */
   @Override
-  public MBeanServerConnection initMBeanServerConnection() throws ServiceTestException{
+  public MBeanServerConnection initMBeanServerConnection(ServiceTestConfig config) throws ServiceTestException{
     try {
       jmxConnector = JMXConnectorFactory.connect(new JMXServiceURL(getJmxUrl()));
       return jmxConnector.getMBeanServerConnection();
@@ -55,7 +56,7 @@ public class ExternalJMXTestClient extends JMXTestClient {
   }
 
   /**
-   * Close JMX connection initialised in {@link #init()}.
+   * Close JMX connection initialised in {@link #init(ServiceTestConfig config)}.
    *
    * @throws IOException wrapping any thrown exception (dictated by {@link java.io.Closeable#close()}
    */
