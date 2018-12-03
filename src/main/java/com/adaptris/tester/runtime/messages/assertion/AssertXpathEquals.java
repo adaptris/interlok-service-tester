@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.XpathCommon;
 import com.adaptris.tester.runtime.XpathCommonException;
@@ -71,7 +72,7 @@ public class AssertXpathEquals extends XpathCommon implements Assertion {
   }
 
   @Override
-  public AssertionResult execute(TestMessage actual) throws ServiceTestException {
+  public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {
       final String type = "assert-xpath-equals";
       final String xpathResult = nodeToString(selectSingleNode(actual.getPayload()));

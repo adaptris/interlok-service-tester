@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.clients;
 
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
@@ -33,7 +34,7 @@ public interface TestClient extends Closeable {
    *
    * @throws ServiceTestException wrapping any thrown exception
    */
-  void init() throws ServiceTestException;
+  void init(ServiceTestConfig config) throws ServiceTestException;
 
   /**
    * Apply the service to the input message and return outputted message.

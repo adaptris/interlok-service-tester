@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.sources;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -35,7 +36,7 @@ public class FileSourceTest extends SourceCase{
     final String serviceFile = "service.xml";
     File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
     Source source = new FileSource("file:///" + testFile.getAbsolutePath());
-    Document document = XmlHelper.createDocument(source.getSource(), new DocumentBuilderFactoryBuilder());
+    Document document = XmlHelper.createDocument(source.getSource(new ServiceTestConfig()), new DocumentBuilderFactoryBuilder());
     assertEquals("service-collection", document.getDocumentElement().getNodeName());
   }
 
@@ -45,11 +46,21 @@ public class FileSourceTest extends SourceCase{
       final String testFile = "service.xml";
       File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
       Source source = new FileSource("file:///" + parentDir.getAbsolutePath() + "/doesnotexist.xml");
-      source.getSource();
+      source.getSource(new ServiceTestConfig());
       fail();
     } catch (SourceException e){
       assertTrue(e.getMessage().contains("Failed to read file"));
     }
+  }
+
+  @Test
+  public void testGetSourceRelative() throws Exception {
+    final String serviceFile = "service.xml";
+    File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
+    String relative = testFile.getParentFile().toURI().relativize(testFile.toURI()).getPath();
+    Source source = new FileSource("file:///./" + relative);
+    Document document = XmlHelper.createDocument(source.getSource(new ServiceTestConfig().withWorkingDirectory(testFile.getParentFile())), new DocumentBuilderFactoryBuilder());
+    assertEquals("service-collection", document.getDocumentElement().getNodeName());
   }
 
   @Override

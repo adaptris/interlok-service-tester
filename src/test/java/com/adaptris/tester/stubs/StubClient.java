@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.stubs;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -26,7 +27,7 @@ import java.io.IOException;
 @XStreamAlias("stub-test-client")
 public class StubClient implements TestClient {
   @Override
-  public void init() throws ServiceTestException {
+  public void init(ServiceTestConfig config) throws ServiceTestException {
 
   }
 

@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,8 +33,8 @@ public class AssertXmlPayloadEqualsFileTest extends AssertionCase {
   public void testExecute() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
     Assertion matcher = new AssertXmlPayloadEqualsFile("file:///" + file.getAbsolutePath());
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml/>")).isPassed());
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml att=\"foo\" />")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml/>"), new ServiceTestConfig()).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml att=\"foo\" />"), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -44,7 +45,7 @@ public class AssertXmlPayloadEqualsFileTest extends AssertionCase {
   @Test
   public void testGetMessage() throws Exception{
     File file = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
-    AssertionResult result  = new AssertXmlPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage(new HashMap<String, String>(),"<xml att=\"foo\" />"));
+    AssertionResult result  = new AssertXmlPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage(new HashMap<String, String>(),"<xml att=\"foo\" />"), new ServiceTestConfig());
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-xml-payload-equals-file]"));
   }
 

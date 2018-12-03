@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
@@ -38,12 +39,12 @@ public class AssertMetadataNotEqualsTest extends AssertionCase {
     MetadataAssertion matcher = new AssertMetadataNotEquals();
     KeyValuePairSet kvp = new KeyValuePairSet(expected);
     matcher.setMetadata(kvp);
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "other");
-    assertTrue(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.remove("key1");
     actual.put("key2", "val2");
-    assertTrue(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -53,7 +54,7 @@ public class AssertMetadataNotEqualsTest extends AssertionCase {
 
   @Test
   public void testGetMessage() throws Exception {
-    AssertionResult result  = createAssertion().execute(new TestMessage());
+    AssertionResult result  = createAssertion().execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-metadata-not-equals]", result.getMessage());
   }
 

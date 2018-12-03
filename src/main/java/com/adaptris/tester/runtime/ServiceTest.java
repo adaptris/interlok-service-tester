@@ -16,20 +16,20 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.helpers.Helper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * Main class for service tester. Use other components from <code>tester</code> package to define tests execution.
@@ -46,6 +46,8 @@ public class ServiceTest implements TestComponent {
   private List<Helper> helpers;
   @XStreamImplicit
   private List<TestList> testLists;
+
+  private transient File workingDirectory = null;
 
   public ServiceTest(){
     setHelpers(new ArrayList<Helper>());
@@ -78,6 +80,14 @@ public class ServiceTest implements TestComponent {
 
   public List<Helper> getHelpers() {
     return helpers;
+  }
+
+  public File getWorkingDirectory() {
+    return workingDirectory;
+  }
+
+  public void setWorkingDirectory(File workingDirectory) {
+    this.workingDirectory = workingDirectory;
   }
 
   private void initHelpers() throws ServiceTestException {
@@ -114,11 +124,12 @@ public class ServiceTest implements TestComponent {
 
   public JUnitReportTestResults execute() throws ServiceTestException {
     initHelpers();
-    testClient.init();
+    ServiceTestConfig config = new ServiceTestConfig().withHelperProperties(getHelperProperties()).withWorkingDirectory(getWorkingDirectory());
+    testClient.init(config);
     try {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
       for(TestList tests : getTestLists()){
-        results.addTestSuites(tests.execute(testClient, getHelperProperties()));
+        results.addTestSuites(tests.execute(testClient, config));
       }
       return results;
     } finally {

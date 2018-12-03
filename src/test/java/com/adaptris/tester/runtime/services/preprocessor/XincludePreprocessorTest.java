@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -33,7 +34,7 @@ public class XincludePreprocessorTest extends PreprocessorCase {
   public void testExecute() throws Exception {
     File serviceXml = new File(this.getClass().getClassLoader().getResource("service.xml").getFile());
     String XML = "<xi:include xmlns:xi=\"http://www.w3.org/2001/XInclude\" href=\"file:///" + serviceXml.getAbsolutePath()  +"\"/>";
-    String result = createPreprocessor().execute(XML);
+    String result = createPreprocessor().execute(XML, new ServiceTestConfig());
     Document document = XmlHelper.createDocument(result, new DocumentBuilderFactoryBuilder());
     assertEquals("service-collection", document.getDocumentElement().getNodeName());
   }
@@ -44,7 +45,7 @@ public class XincludePreprocessorTest extends PreprocessorCase {
       final String testFile = "service.xml";
       File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
       String XML = "<xi:include xmlns:xi=\"http://www.w3.org/2001/XInclude\" href=\"file:///" + parentDir.getAbsolutePath() + "/doesnotexist.xml\"/>";
-      createPreprocessor().execute(XML);
+      createPreprocessor().execute(XML, new ServiceTestConfig());
       fail();
     } catch (PreprocessorException e){
       assertTrue(e.getMessage().contains("Failed to perform xinclude"));

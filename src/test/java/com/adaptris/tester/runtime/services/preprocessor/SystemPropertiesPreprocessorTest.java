@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
+
 /**
  * @author mwarman
  */
@@ -27,7 +29,7 @@ public class SystemPropertiesPreprocessorTest extends PreprocessorCase {
 
   public void testExecute() throws Exception{
     System.setProperty("foo", "bar");
-    String result = createPreprocessor().execute("hello ${foo}");
+    String result = createPreprocessor().execute("hello ${foo}", new ServiceTestConfig());
     assertEquals("hello bar", result);
   }
 

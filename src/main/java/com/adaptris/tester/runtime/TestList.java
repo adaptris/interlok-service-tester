@@ -79,10 +79,10 @@ public class TestList extends AbstractCollection<Test> implements TestComponent 
     return tests.size();
   }
 
-  JUnitReportTestSuites execute(TestClient client, Map<String, String> helperProperties) throws ServiceTestException {
+  JUnitReportTestSuites execute(TestClient client, ServiceTestConfig config) throws ServiceTestException {
     JUnitReportTestSuites result = new JUnitReportTestSuites(getUniqueId());
     for (Test tests : getTests()) {
-      JUnitReportTestSuite suite = tests.execute(getUniqueId(), client, helperProperties);
+      JUnitReportTestSuite suite = tests.execute(getUniqueId(), client, config);
       result.addTestSuite(suite);
     }
     return result;

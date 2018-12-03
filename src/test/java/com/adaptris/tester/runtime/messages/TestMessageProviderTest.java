@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.util.KeyValuePairSet;
@@ -28,14 +29,14 @@ public class TestMessageProviderTest extends MessagesCase {
 
   public void testEmptyConstructor() throws Exception{
     TestMessageProvider p = new TestMessageProvider();
-    TestMessage m = p.createTestMessage();
+    TestMessage m = p.createTestMessage(new ServiceTestConfig());
     assertEquals("", m.getPayload());
     assertEquals(0, m.getMessageHeaders().size());
   }
 
   public void testConstructor() throws Exception{
     TestMessageProvider p = new TestMessageProvider(new InlineMetadataProvider(new KeyValuePairSet(metadata)), new InlinePayloadProvider(PAYLOAD));
-    TestMessage m = p.createTestMessage();
+    TestMessage m = p.createTestMessage(new ServiceTestConfig());
     assertEquals(1, m.getMessageHeaders().size());
     assertTrue(m.getMessageHeaders().containsKey(METADATA_KEY));
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));

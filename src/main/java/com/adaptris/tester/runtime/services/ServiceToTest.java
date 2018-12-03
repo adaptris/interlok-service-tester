@@ -19,6 +19,7 @@ package com.adaptris.tester.runtime.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.services.preprocessor.Preprocessor;
 import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
 import com.adaptris.tester.runtime.services.sources.Source;
@@ -59,10 +60,10 @@ public class ServiceToTest {
     preprocessors.add(preprocessor);
   }
 
-  public String getProcessedSource() throws PreprocessorException, SourceException {
-    String result = getSource().getSource();
+  public String getProcessedSource(ServiceTestConfig config) throws PreprocessorException, SourceException {
+    String result = getSource().getSource(config);
     for (Preprocessor preprocessor : getPreprocessors()) {
-      result = preprocessor.execute(result);
+      result = preprocessor.execute(result, config);
     }
     return result;
   }

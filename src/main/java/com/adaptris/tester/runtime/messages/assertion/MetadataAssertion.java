@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.adaptris.annotation.AutoPopulated;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
@@ -92,7 +93,7 @@ public abstract class MetadataAssertion implements Assertion {
    * @return Return result of assertion using {@link AssertionResult}
    */
   @Override
-  public final AssertionResult execute(TestMessage actual){
+  public final AssertionResult execute(TestMessage actual, ServiceTestConfig config){
     return execute(actual.getMessageHeaders());
   }
 

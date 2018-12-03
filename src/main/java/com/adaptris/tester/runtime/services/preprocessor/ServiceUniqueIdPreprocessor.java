@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.annotation.DisplayOrder;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.XpathCommon;
 import com.adaptris.tester.runtime.XpathCommonException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -72,7 +73,7 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
   }
 
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     String xpath = generateXpath();
     XpathCommon xpathCommon = new XpathCommon();
     xpathCommon.setXpath(xpath);

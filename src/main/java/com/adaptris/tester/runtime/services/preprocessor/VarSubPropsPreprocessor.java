@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.adaptris.annotation.AutoPopulated;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.utils.SimpleStringSubstitution;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
@@ -51,7 +52,7 @@ public class VarSubPropsPreprocessor implements Preprocessor {
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     SimpleStringSubstitution substitution = new SimpleStringSubstitution();
     return substitution.doSubstitution(input, getKvpAsProperties(), DEFAULT_VARIABLE_PREFIX, DEFAULT_VARIABLE_POSTFIX);
   }

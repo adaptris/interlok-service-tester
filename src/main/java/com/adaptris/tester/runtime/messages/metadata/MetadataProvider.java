@@ -18,11 +18,12 @@ package com.adaptris.tester.runtime.messages.metadata;
 
 import java.util.Map;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.MessageException;
 
 public abstract class MetadataProvider {
 
-  public void init() throws MessageException {
+  public void init(ServiceTestConfig config) throws MessageException {
 
   }
 

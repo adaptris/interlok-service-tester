@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,9 +33,9 @@ public class AssertXmlPayloadEqualsTest extends AssertionCase {
     String actual = "<xml />";
     PayloadAssertion matcher = new AssertPayloadEquals();
     matcher.setPayload("<xml />");
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
     matcher.setPayload("<xml att=\"1\" />");
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual)).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -44,7 +45,7 @@ public class AssertXmlPayloadEqualsTest extends AssertionCase {
 
   @Test
   public void testGetMessage() throws Exception{
-    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml att=\"1\" />"));
+    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml att=\"1\" />"), new ServiceTestConfig());
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-xml-payload-equals]"));
   }
 

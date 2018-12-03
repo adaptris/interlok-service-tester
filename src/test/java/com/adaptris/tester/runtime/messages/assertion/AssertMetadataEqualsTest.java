@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
@@ -36,14 +37,14 @@ public class AssertMetadataEqualsTest extends AssertionCase{
     Map<String, String> actual = new HashMap<>();
     MetadataAssertion matcher = new AssertMetadataEquals();
     matcher.setMetadata(new KeyValuePairSet(expected));
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "val1");
-    assertTrue(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     actual.put("key1", "valother");
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
     expected.remove("key1");
     expected.put("key3", "val3");
-    assertFalse(matcher.execute(new TestMessage(actual,"")).isPassed());
+    assertFalse(matcher.execute(new TestMessage(actual,""), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -53,7 +54,7 @@ public class AssertMetadataEqualsTest extends AssertionCase{
 
   @Test
   public void testGetMessage() throws Exception {
-    AssertionResult result  = createAssertion().execute(new TestMessage());
+    AssertionResult result  = createAssertion().execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-metadata-equals]", result.getMessage());
   }
 

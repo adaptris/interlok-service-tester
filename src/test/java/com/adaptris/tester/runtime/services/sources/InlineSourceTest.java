@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.services.sources;
 
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -29,7 +30,7 @@ public class InlineSourceTest extends SourceCase {
   @Test
   public void testGetSource() throws Exception {
     Source source = createSource();
-    Document document = XmlHelper.createDocument(source.getSource(), new DocumentBuilderFactoryBuilder());
+    Document document = XmlHelper.createDocument(source.getSource(new ServiceTestConfig()), new DocumentBuilderFactoryBuilder());
     assertEquals("add-metadata-service", document.getDocumentElement().getNodeName());
   }
 

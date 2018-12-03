@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.TestComponent;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -36,10 +37,11 @@ public interface Assertion extends TestComponent {
   /**
    * Execute assertion against test message.
    * @param actual Message resulting from text execution
+   * @param config Service test config
    * @return Return result of assertion using {@link AssertionResult}
    * @throws ServiceTestException wraps thrown exceptions
    */
-  AssertionResult execute(TestMessage actual) throws ServiceTestException;
+  AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException;
 
   /**
    * Returns expected result of assertion. Used in error reporting.

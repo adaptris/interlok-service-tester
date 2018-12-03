@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.payload;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.MessageException;
 import com.adaptris.tester.runtime.messages.MessagesCase;
 import org.junit.Test;
@@ -39,7 +40,7 @@ public class FilePayloadProviderTest extends MessagesCase {
     String filePath = "file:///" + testFile.getAbsolutePath();
     checkFileExists(filePath);
     FilePayloadProvider f = new FilePayloadProvider(filePath);
-    f.init();
+    f.init(new ServiceTestConfig());
     assertEquals("{\"hello\": \"world\"}",f.getPayload());
   }
 
@@ -49,7 +50,7 @@ public class FilePayloadProviderTest extends MessagesCase {
       final String testFile = "service.xml";
       File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
       FilePayloadProvider f = new FilePayloadProvider("file:///" + parentDir.getAbsolutePath() + "/doesnotexist.xml");
-      f.init();
+      f.init(new ServiceTestConfig());
       f.getPayload();
       fail();
     } catch (MessageException e){

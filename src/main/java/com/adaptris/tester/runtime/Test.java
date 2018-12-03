@@ -80,16 +80,16 @@ public class Test implements TestComponent {
     testCases.add(testCase);
   }
 
-  JUnitReportTestSuite execute(String parentName, TestClient client, Map<String, String> helperProperties) throws ServiceTestException {
+  JUnitReportTestSuite execute(String parentName, TestClient client, ServiceTestConfig config) throws ServiceTestException {
     String fqName = parentName + "." + getUniqueId();
     log.info("Running [{}]", fqName);
     JUnitReportTestSuite result = new JUnitReportTestSuite(fqName);
-    if (helperProperties.size() > 0) {
-      getServiceToTest().addPreprocessor(new VarSubPropsPreprocessor(helperProperties));
+    if (config.helperProperties.size() > 0) {
+      getServiceToTest().addPreprocessor(new VarSubPropsPreprocessor(config.helperProperties));
     }
     long startTime = System.nanoTime();
     for (TestCase testCase : getTestCases()) {
-      result.addTestCase(testCase.execute(fqName, client, getServiceToTest()));
+      result.addTestCase(testCase.execute(fqName, client, getServiceToTest(), config));
     }
     long endTime = System.nanoTime();
     long elapsedTime = endTime - startTime;

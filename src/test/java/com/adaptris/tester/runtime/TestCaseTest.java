@@ -67,7 +67,7 @@ public class TestCaseTest extends BaseCase {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
     tc.setGlobFilter("filter");
-    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), new ServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), new ServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
@@ -79,7 +79,7 @@ public class TestCaseTest extends BaseCase {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
     tc.setAssertions(new StubAssertions(null));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNull(result.getIssue());
     assertNotNull(result.getTime());
@@ -89,7 +89,7 @@ public class TestCaseTest extends BaseCase {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
     tc.setAssertions(new StubAssertions(new JUnitReportFailure("failure")));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
@@ -102,7 +102,7 @@ public class TestCaseTest extends BaseCase {
     tc.setUniqueId("testcase");
     tc.setExpectedException(new ExpectedException());
     tc.setAssertions(new StubAssertions(null));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClient(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
@@ -116,7 +116,7 @@ public class TestCaseTest extends BaseCase {
     tc.setUniqueId("testcase");
     tc.setExpectedException(new ExpectedException("com.adaptris.tester.runtime.ServiceTestException"));
     tc.setAssertions(new StubAssertions(null));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNull(result.getIssue());
     assertNotNull(result.getTime());
@@ -127,7 +127,7 @@ public class TestCaseTest extends BaseCase {
     tc.setUniqueId("testcase");
     tc.setExpectedException(new ExpectedException("com.adaptris.core.ServiceException"));
     tc.setAssertions(new StubAssertions(null));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
@@ -140,7 +140,7 @@ public class TestCaseTest extends BaseCase {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
     tc.setAssertions(new StubAssertions(null));
-    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest());
+    JUnitReportTestCase result = tc.execute("testlist", new StubClientAlwaysFails(), createServiceToTest(), new ServiceTestConfig());
     assertNotNull(result);
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
@@ -196,7 +196,7 @@ public class TestCaseTest extends BaseCase {
     }
 
     @Override
-    public JUnitReportTestIssue execute(TestMessage actual) {
+    public JUnitReportTestIssue execute(TestMessage actual, ServiceTestConfig config) {
       return result;
     }
 

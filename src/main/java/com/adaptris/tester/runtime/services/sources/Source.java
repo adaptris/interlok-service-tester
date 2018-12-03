@@ -16,8 +16,10 @@
 
 package com.adaptris.tester.runtime.services.sources;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
+
 public interface Source {
 
-  String getSource() throws SourceException;
+  String getSource(ServiceTestConfig config) throws SourceException;
 
 }

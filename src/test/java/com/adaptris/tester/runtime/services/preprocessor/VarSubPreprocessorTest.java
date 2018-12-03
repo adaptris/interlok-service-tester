@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 
 import java.io.File;
@@ -28,14 +29,14 @@ public class VarSubPreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
-    String result = createPreprocessor().execute("hello ${foo}");
+    String result = createPreprocessor().execute("hello ${foo}", new ServiceTestConfig());
     assertEquals("hello bar", result);
   }
 
   @Test
   public void testExecuteNoFiles() throws Exception {
     try {
-      new VarSubPreprocessor().execute("hello ${foo}");
+      new VarSubPreprocessor().execute("hello ${foo}", new ServiceTestConfig());
       fail();
     } catch (PreprocessorException e){
       assertEquals(e.getMessage(), "At least one properties file must be set");

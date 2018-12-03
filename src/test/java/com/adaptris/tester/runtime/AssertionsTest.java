@@ -45,7 +45,7 @@ public class AssertionsTest extends TCCase {
   public void testExecutePassed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", true), "message"));
-    JUnitReportTestIssue issue = a.execute(new TestMessage());
+    JUnitReportTestIssue issue = a.execute(new TestMessage(), new ServiceTestConfig());
     assertNull(issue);
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
   }
@@ -53,7 +53,7 @@ public class AssertionsTest extends TCCase {
   public void testExecuteFailed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", false), "message-1234"));
-    JUnitReportTestIssue issue = a.execute(new TestMessage());
+    JUnitReportTestIssue issue = a.execute(new TestMessage(), new ServiceTestConfig());
     assertNotNull(issue);
     assertTrue(issue instanceof JUnitReportFailure);
     assertEquals("Assertion Failure: [type]", ((JUnitReportFailure)issue).getMessage());
@@ -70,7 +70,7 @@ public class AssertionsTest extends TCCase {
         })
     );
     assertEquals(2, a.size());
-    JUnitReportTestIssue issue = a.execute(new TestMessage());
+    JUnitReportTestIssue issue = a.execute(new TestMessage(), new ServiceTestConfig());
     assertNotNull(issue);
     assertTrue(issue instanceof JUnitReportFailure);
     assertEquals("Assertion Failure: [type]", ((JUnitReportFailure)issue).getMessage());
@@ -114,7 +114,7 @@ public class AssertionsTest extends TCCase {
     }
 
     @Override
-    public AssertionResult execute(TestMessage actual) {
+    public AssertionResult execute(TestMessage actual, ServiceTestConfig config) {
       return result;
     }
 

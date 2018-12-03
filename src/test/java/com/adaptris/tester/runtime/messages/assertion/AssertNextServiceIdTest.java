@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
 public class AssertNextServiceIdTest extends AssertionCase {
@@ -28,9 +29,9 @@ public class AssertNextServiceIdTest extends AssertionCase {
     Assertion a = createAssertion();
     TestMessage tm = new TestMessage();
     tm.setNextServiceId("next-service");
-    assertTrue(a.execute(tm).isPassed());
+    assertTrue(a.execute(tm, new ServiceTestConfig()).isPassed());
     tm.setNextServiceId("not-this-service");
-    assertFalse(a.execute(tm).isPassed());
+    assertFalse(a.execute(tm, new ServiceTestConfig()).isPassed());
   }
 
   public void testExpected() throws Exception {

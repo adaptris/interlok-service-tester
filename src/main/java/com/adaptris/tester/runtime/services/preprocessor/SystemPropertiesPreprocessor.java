@@ -19,6 +19,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.core.CoreException;
 import com.adaptris.core.varsub.SystemPropertiesPreProcessor;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -36,7 +37,7 @@ public class SystemPropertiesPreprocessor implements Preprocessor {
    * {@inheritDoc}
    */
   @Override
-  public String execute(String input) throws PreprocessorException {
+  public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
     try {
       SystemPropertiesPreProcessor processor = new SystemPropertiesPreProcessor(new KeyValuePairSet());
       return processor.process(input);

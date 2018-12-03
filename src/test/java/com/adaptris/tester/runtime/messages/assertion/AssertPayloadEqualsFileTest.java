@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import org.junit.Test;
 
@@ -32,8 +33,8 @@ public class AssertPayloadEqualsFileTest extends AssertionCase {
   public void testExecute() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("test.properties").getFile());
     Assertion matcher = new AssertPayloadEqualsFile("file:///" + file.getAbsolutePath());
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"foo=bar")).isPassed());
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"something-else")).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"foo=bar"), new ServiceTestConfig()).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"something-else"), new ServiceTestConfig()).isPassed());
   }
 
   @Test
@@ -44,7 +45,7 @@ public class AssertPayloadEqualsFileTest extends AssertionCase {
   @Test
   public void testGetMessage() throws Exception{
     File file = new File(this.getClass().getClassLoader().getResource("test.properties").getFile());
-    AssertionResult result  = new AssertPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage());
+    AssertionResult result  = new AssertPayloadEqualsFile("file:///" + file.getAbsolutePath()).execute(new TestMessage(), new ServiceTestConfig());
     assertEquals("Assertion Failure: [assert-payload-equals-file]", result.getMessage());
   }
 

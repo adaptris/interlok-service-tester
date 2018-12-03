@@ -56,7 +56,7 @@ public class TestTest extends junit.framework.TestCase {
   public void testExecute() throws Exception {
     Test t = new Test();
     t.addTestCase(new TestCase());
-    JUnitReportTestSuite result = t.execute("testlist", new StubClient(), new HashMap<String, String>());
+    JUnitReportTestSuite result = t.execute("testlist", new StubClient(), new ServiceTestConfig());
     assertNotNull(result.getTestCases());
     assertEquals(1, result.getTestCases().size());
     assertNotNull(result.getTime());
@@ -68,7 +68,7 @@ public class TestTest extends junit.framework.TestCase {
     t.addTestCase(new TestCase());
     Map<String, String> map = new HashMap<String, String>();
     map.put("property", "value");
-    JUnitReportTestSuite result = t.execute("testlist", new StubClient(), map);
+    JUnitReportTestSuite result = t.execute("testlist", new StubClient(), new ServiceTestConfig().withHelperProperties(map));
     assertEquals("testlist.id", result.getName());
     assertNotNull(result.getTestCases());
     assertEquals(1, result.getTestCases().size());
