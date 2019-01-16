@@ -3,6 +3,7 @@ package com.adaptris.tester.runtime;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author mwarman
@@ -11,8 +12,14 @@ public class ServiceTestConfig {
   public Map<String, String> helperProperties;
   public File workingDirectory;
 
+  public static final String SERVICE_TESTER_WORKING_DIRECTORY = "service.tester.working.directory";
+
+  public Properties workingDirectoryProperties;
+
   public ServiceTestConfig(){
     this.helperProperties = new HashMap<>();
+    this.workingDirectoryProperties = new Properties();
+    withWorkingDirectory(new File(System.getProperty("user.dir")));
   }
 
   public ServiceTestConfig withHelperProperties(Map<String, String> helperProperties){
@@ -21,7 +28,10 @@ public class ServiceTestConfig {
   }
 
   public ServiceTestConfig withWorkingDirectory(File workingDirectory){
-    this.workingDirectory = workingDirectory;
+    if (workingDirectory != null) {
+      this.workingDirectory = workingDirectory;
+      this.workingDirectoryProperties.put(SERVICE_TESTER_WORKING_DIRECTORY, workingDirectory.getAbsolutePath());
+    }
     return this;
   }
 }

@@ -19,6 +19,7 @@ package com.adaptris.tester.runtime.services.preprocessor;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,18 @@ public class VarSubPropsPreprocessorTest extends PreprocessorCase {
   public void testExecute() throws Exception {
     String result = createPreprocessor().execute("Hello ${foo}", new ServiceTestConfig());
     assertEquals("Hello bar", result);
+  }
+
+  @Test
+  public void testExecuteWithWorkingDir() throws Exception {
+    final String testFile = "service.xml";
+    File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
+    Map<String, String> properties = new HashMap<>();
+    properties.put("foo", "bar");
+    properties.put("path", "file:///${service.tester.working.directory}/service.xml");
+    VarSubPropsPreprocessor preprocessor = new VarSubPropsPreprocessor(properties);
+    String result = preprocessor.execute("Hello ${foo}, The path is: ${path}", new ServiceTestConfig().withWorkingDirectory(parentDir));
+    assertEquals("Hello bar, The path is: file:///" + parentDir.getAbsolutePath() + "/service.xml", result);
   }
 
   @Override
