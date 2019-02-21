@@ -18,13 +18,16 @@ package com.adaptris.tester.runtime.services.preprocessor;
 
 import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_POSTFIX;
 import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
+import static com.adaptris.tester.runtime.ServiceTestConfig.SERVICE_TESTER_WORKING_DIRECTORY;
 
 import java.util.Map;
 import java.util.Properties;
 
 import com.adaptris.annotation.AutoPopulated;
+import com.adaptris.core.CoreException;
+import com.adaptris.core.varsub.SimpleStringSubstitution;
+import com.adaptris.core.varsub.VariableExpander;
 import com.adaptris.tester.runtime.ServiceTestConfig;
-import com.adaptris.tester.utils.SimpleStringSubstitution;
 import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairBag;
 import com.adaptris.util.KeyValuePairSet;
@@ -53,8 +56,14 @@ public class VarSubPropsPreprocessor implements Preprocessor {
    */
   @Override
   public String execute(String input, ServiceTestConfig config) throws PreprocessorException {
-    SimpleStringSubstitution substitution = new SimpleStringSubstitution();
-    return substitution.doSubstitution(input, getKvpAsProperties(), DEFAULT_VARIABLE_PREFIX, DEFAULT_VARIABLE_POSTFIX);
+    try {
+      Properties properties = getKvpAsProperties();
+      properties.put(SERVICE_TESTER_WORKING_DIRECTORY, config.workingDirectory.getAbsolutePath());
+      properties = new VariableExpander(DEFAULT_VARIABLE_PREFIX, DEFAULT_VARIABLE_POSTFIX).resolve(properties);
+      return new SimpleStringSubstitution().doSubstitution(input, properties, DEFAULT_VARIABLE_PREFIX, DEFAULT_VARIABLE_POSTFIX);
+    } catch (CoreException e) {
+      throw new PreprocessorException("Property resolution failed.", e);
+    }
   }
 
   public void setProperties(KeyValuePairSet properties) {

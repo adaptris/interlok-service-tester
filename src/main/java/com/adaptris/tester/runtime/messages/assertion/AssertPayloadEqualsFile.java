@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import com.adaptris.core.CoreException;
 import com.adaptris.fs.FsException;
 import com.adaptris.fs.FsWorker;
 import com.adaptris.fs.NioWorker;
@@ -76,7 +77,7 @@ public class AssertPayloadEqualsFile implements Assertion {
     try {
       final byte[] fileContents = FsHelper.getFileBytes(file, config);
       return checkResults(actual.getPayload(), new String(fileContents));
-    } catch (IOException | URISyntaxException | FsException e) {
+    } catch (CoreException | IOException | URISyntaxException | FsException e) {
       throw new ServiceTestException(e);
     }
   }

@@ -54,12 +54,11 @@ public class FileSourceTest extends SourceCase{
   }
 
   @Test
-  public void testGetSourceRelative() throws Exception {
-    final String serviceFile = "service.xml";
-    File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
-    String relative = testFile.getParentFile().toURI().relativize(testFile.toURI()).getPath();
-    Source source = new FileSource("file:///./" + relative);
-    Document document = XmlHelper.createDocument(source.getSource(new ServiceTestConfig().withWorkingDirectory(testFile.getParentFile())), new DocumentBuilderFactoryBuilder());
+  public void testGetSourceWithWorkingDirectory() throws Exception {
+    final String testFile = "service.xml";
+    File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
+    Source source = new FileSource("file:///${service.tester.working.directory}/" + testFile);
+    Document document = XmlHelper.createDocument(source.getSource(new ServiceTestConfig().withWorkingDirectory(parentDir)), new DocumentBuilderFactoryBuilder());
     assertEquals("service-collection", document.getDocumentElement().getNodeName());
   }
 

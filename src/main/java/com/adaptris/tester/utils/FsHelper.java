@@ -1,5 +1,7 @@
 package com.adaptris.tester.utils;
 
+import com.adaptris.core.CoreException;
+import com.adaptris.core.varsub.SimpleStringSubstitution;
 import com.adaptris.fs.FsException;
 import com.adaptris.fs.FsWorker;
 import com.adaptris.fs.NioWorker;
@@ -9,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
+
+import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_POSTFIX;
+import static com.adaptris.core.varsub.Constants.DEFAULT_VARIABLE_PREFIX;
 
 /**
  * @author mwarman
@@ -20,16 +24,13 @@ public class FsHelper {
 
   }
 
-  public static File createFile(String path, ServiceTestConfig config) throws IOException, URISyntaxException {
+  public static File createFile(String path, ServiceTestConfig config) throws IOException, URISyntaxException, CoreException {
+    path = new SimpleStringSubstitution().doSubstitution(path, config.workingDirectoryProperties, DEFAULT_VARIABLE_PREFIX, DEFAULT_VARIABLE_POSTFIX);
     URL url = com.adaptris.core.fs.FsHelper.createUrlFromString(path, true);
-    File fileToRead = com.adaptris.core.fs.FsHelper.createFileReference(url);
-    if(!fileToRead.isAbsolute() && config.workingDirectory != null){
-      fileToRead = Paths.get(config.workingDirectory.getPath(), fileToRead.getPath()).toFile();
-    }
-    return fileToRead;
+    return com.adaptris.core.fs.FsHelper.createFileReference(url);
   }
 
-  public static byte[] getFileBytes(String path, ServiceTestConfig config) throws IOException, URISyntaxException, FsException {
+  public static byte[] getFileBytes(String path, ServiceTestConfig config) throws IOException, URISyntaxException, FsException, CoreException {
     FsWorker fsWorker = new NioWorker();
     return fsWorker.get(createFile(path, config));
   }

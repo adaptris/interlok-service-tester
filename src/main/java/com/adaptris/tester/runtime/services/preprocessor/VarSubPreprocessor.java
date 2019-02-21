@@ -83,7 +83,7 @@ public class VarSubPreprocessor implements Preprocessor {
         kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + "." + i, "file:///" + file.getAbsolutePath()));
       }
       return kvp;
-    } catch (IOException | URISyntaxException e) {
+    } catch (CoreException | IOException | URISyntaxException e) {
       throw new PreprocessorException("Failed to create varsub path", e);
     }
   }
