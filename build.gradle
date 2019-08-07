@@ -95,7 +95,7 @@ dependencies {
   compile "com.github.tomakehurst:wiremock:2.24.1", optional
   compile "org.skyscreamer:jsonassert:1.5.0", optional
   compile "xmlunit:xmlunit:1.6", optional
-  compile "org.json:json:20180813", optional
+  compile "org.json:json:20190722", optional
 
   testCompile ("junit:junit:4.12")
   testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true}
