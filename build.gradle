@@ -24,7 +24,7 @@ ext {
   componentName='Interlok Service Tester'
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion = '1.7.27'
+  slf4jVersion = '1.7.28'
   log4j2Version = '2.12.1'
 }
 
@@ -91,8 +91,8 @@ dependencies {
   compile group: "com.adaptris", name: "interlok-xinclude", version: "$interlokCoreVersion", changing: true, optional
   compile group: "com.adaptris", name: "interlok-stubs", version: "$interlokCoreVersion", changing: true, optional
 
-  compile "org.apache.ant:ant-junit:1.10.6", optional
-  compile "com.github.tomakehurst:wiremock:2.24.1", optional
+  compile "org.apache.ant:ant-junit:1.10.7", optional
+  compile "com.github.tomakehurst:wiremock:2.25.0", optional
   compile "org.skyscreamer:jsonassert:1.5.0", optional
   compile "xmlunit:xmlunit:1.6", optional
   compile "org.json:json:20190722", optional
