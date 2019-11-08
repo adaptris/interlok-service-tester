@@ -16,14 +16,10 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.util.Collections;
+import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
-import com.adaptris.util.KeyValuePairSet;
-import org.junit.Test;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AssertMetadataKeyExistsTest extends AssertionCase{
 
@@ -39,7 +35,7 @@ public class AssertMetadataKeyExistsTest extends AssertionCase{
 
   @Test
   public void testExpected(){
-    assertEquals("Metadata contain key: [key1]", createAssertion().expected());
+    assertEquals("Metadata contains key: [key1]", createAssertion().expected());
   }
 
   @Test
@@ -48,6 +44,7 @@ public class AssertMetadataKeyExistsTest extends AssertionCase{
     assertEquals("Assertion Failure: [assert-metadata-key-exists] metadata does not contain key: [key1]", result.getMessage());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
