@@ -27,17 +27,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config assert-metadata-key-exists
  */
 @XStreamAlias("assert-metadata-key-exists")
-public class AssertMetadataKeyExists implements Assertion {
+public class AssertMetadataKeyExists extends AssertMetadataKeyImpl {
 
   private final static String TEST_ID = "assert-metadata-key-exists";
-
-  private String uniqueId;
-  private String key;
 
   public AssertMetadataKeyExists(){
   }
 
   public AssertMetadataKeyExists(String key){
+    this();
     setKey(key);
   }
 
@@ -49,29 +47,8 @@ public class AssertMetadataKeyExists implements Assertion {
 
   @Override
   public String expected() {
-    return  "Metadata contain key: [" + key + "]";
+    return "Metadata contains key: [" + getKey() + "]";
   }
 
-  @Override
-  public boolean showReturnedMessage() {
-    return true;
-  }
 
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
-  }
-
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public String getKey() {
-    return key;
-  }
 }
