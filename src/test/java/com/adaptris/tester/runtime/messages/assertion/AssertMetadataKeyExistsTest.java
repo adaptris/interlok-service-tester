@@ -35,7 +35,7 @@ public class AssertMetadataKeyExistsTest extends AssertionCase{
 
   @Test
   public void testExpected(){
-    assertEquals("Metadata contain key: [key1]", createAssertion().expected());
+    assertEquals("Metadata contains key: [key1]", createAssertion().expected());
   }
 
   @Test
