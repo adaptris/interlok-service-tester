@@ -23,15 +23,16 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author mwarman
  */
+
 public class AssertLinePayloadEqualsTest extends AssertionCase  {
 
-  public AssertLinePayloadEqualsTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception{
     String actual = "header1,header2,header3\nvalue1,value2,value3";
     AssertLinePayloadEquals matcher = new AssertLinePayloadEquals();
@@ -48,6 +49,7 @@ public class AssertLinePayloadEqualsTest extends AssertionCase  {
     assertTrue(result.contains("value1,value2,value3"));
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -55,5 +57,10 @@ public class AssertLinePayloadEqualsTest extends AssertionCase  {
   @Override
   protected Assertion createAssertion() {
     return new AssertLinePayloadEquals(Arrays.asList("header1,header2,header3", "value1,value2,value3"));
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

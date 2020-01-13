@@ -18,12 +18,9 @@ package com.adaptris.tester.runtime.services.sources;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 
 public class DefaultConfigSourceTest extends SourceCase{
-
-  public DefaultConfigSourceTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testGetFile() throws Exception {
@@ -34,5 +31,10 @@ public class DefaultConfigSourceTest extends SourceCase{
   @Override
   protected Source createSource() {
     return new DefaultConfigSource();
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

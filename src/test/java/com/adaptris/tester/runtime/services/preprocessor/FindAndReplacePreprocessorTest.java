@@ -21,10 +21,9 @@ import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class FindAndReplacePreprocessorTest extends PreprocessorCase {
-  public FindAndReplacePreprocessorTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testExecute() throws Exception {
@@ -42,4 +41,9 @@ public class FindAndReplacePreprocessorTest extends PreprocessorCase {
   }
 
 
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }
 }

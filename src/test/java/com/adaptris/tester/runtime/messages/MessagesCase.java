@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.messages;
 
 import com.adaptris.tester.STExampleConfigCase;
+import org.junit.Before;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,17 +30,15 @@ public abstract class MessagesCase extends STExampleConfigCase {
   protected static final String PAYLOAD = "payload";
   protected Map<String, String> metadata;
 
-  public MessagesCase(String name) {
-    super(name);
+  public MessagesCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }
 
   }
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  @Before
+  public  void setUp() throws Exception {
     metadata = new HashMap<>();
     metadata.put(METADATA_KEY, METADATA_VALUE);
   }

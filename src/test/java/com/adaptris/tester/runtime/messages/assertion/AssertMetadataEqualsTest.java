@@ -24,11 +24,9 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssertMetadataEqualsTest extends AssertionCase{
+import static org.junit.Assert.*;
 
-  public AssertMetadataEqualsTest(String name) {
-    super(name);
-  }
+public class AssertMetadataEqualsTest extends AssertionCase{
 
   @Test
   public void testExecute() throws Exception {
@@ -58,6 +56,7 @@ public class AssertMetadataEqualsTest extends AssertionCase{
     assertEquals("Assertion Failure: [assert-metadata-equals]", result.getMessage());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -67,5 +66,10 @@ public class AssertMetadataEqualsTest extends AssertionCase{
     Map<String, String> expected = new HashMap<>();
     expected.put("key1", "val1");
     return new AssertMetadataEquals(expected);
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

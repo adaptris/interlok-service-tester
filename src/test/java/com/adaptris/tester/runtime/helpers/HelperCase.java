@@ -22,8 +22,7 @@ public abstract class HelperCase extends STExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "HelperCase.baseDir";
 
-  public HelperCase(String name) {
-    super(name);
+  public HelperCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

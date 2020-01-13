@@ -17,6 +17,7 @@
 package com.adaptris.tester.runtime.messages;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +28,14 @@ public class TestMessageTest extends TestCase {
   private static final String METADATA_VALUE = "value";
   private static final String PAYLOAD = "payload";
 
-
+  @Test
   public void testEmptyConstructor() throws Exception{
     TestMessage m = new TestMessage();
     assertEquals("", m.getPayload());
     assertEquals(0, m.getMessageHeaders().size());
   }
 
+  @Test
   public void testConstructor() throws Exception{
     Map<String, String> metadata = new HashMap<>();
     metadata.put(METADATA_KEY, METADATA_VALUE);
@@ -44,6 +46,7 @@ public class TestMessageTest extends TestCase {
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));
   }
 
+  @Test
   public void testSetMessageHeaders() throws Exception {
     TestMessage m = new TestMessage();
     Map<String, String> metadata = new HashMap<>();
@@ -54,6 +57,7 @@ public class TestMessageTest extends TestCase {
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));
   }
 
+  @Test
   public void testAddMessageHeader() throws Exception {
     TestMessage m = new TestMessage();
     m.addMessageHeader(METADATA_KEY, METADATA_VALUE);
@@ -62,12 +66,14 @@ public class TestMessageTest extends TestCase {
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));
   }
 
+  @Test
   public void testSetPayload() throws Exception {
     TestMessage m = new TestMessage();
     m.setPayload(PAYLOAD);
     assertEquals(PAYLOAD, m.getPayload());
   }
 
+  @Test
   public void testToString() throws Exception {
     TestMessage m = new TestMessage();
     m.addMessageHeader(METADATA_KEY, METADATA_VALUE);

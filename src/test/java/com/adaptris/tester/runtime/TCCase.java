@@ -17,7 +17,6 @@
 package com.adaptris.tester.runtime;
 
 import com.adaptris.tester.STExampleConfigCase;
-import com.adaptris.tester.runtime.services.sources.Source;
 import com.adaptris.util.GuidGenerator;
 
 public abstract class TCCase extends STExampleConfigCase {
@@ -28,8 +27,7 @@ public abstract class TCCase extends STExampleConfigCase {
    */
   public static final String BASE_DIR_KEY = "TestCase.baseDir";
 
-  public TCCase(String name) {
-    super(name);
+  public TCCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

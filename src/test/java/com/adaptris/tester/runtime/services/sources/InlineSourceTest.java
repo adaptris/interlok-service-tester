@@ -22,10 +22,9 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import static org.junit.Assert.assertEquals;
+
 public class InlineSourceTest extends SourceCase {
-  public InlineSourceTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testGetSource() throws Exception {
@@ -49,5 +48,10 @@ public class InlineSourceTest extends SourceCase {
             ""
     );
     return source;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

@@ -20,13 +20,14 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.util.KeyValuePairSet;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestMessageProviderTest extends MessagesCase {
 
-  public TestMessageProviderTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testEmptyConstructor() throws Exception{
     TestMessageProvider p = new TestMessageProvider();
     TestMessage m = p.createTestMessage(new ServiceTestConfig());
@@ -34,6 +35,7 @@ public class TestMessageProviderTest extends MessagesCase {
     assertEquals(0, m.getMessageHeaders().size());
   }
 
+  @Test
   public void testConstructor() throws Exception{
     TestMessageProvider p = new TestMessageProvider(new InlineMetadataProvider(new KeyValuePairSet(metadata)), new InlinePayloadProvider(PAYLOAD));
     TestMessage m = p.createTestMessage(new ServiceTestConfig());
@@ -43,12 +45,14 @@ public class TestMessageProviderTest extends MessagesCase {
     assertEquals(PAYLOAD, m.getPayload());
   }
 
+  @Test
   public void testGetMetadataProvider() throws Exception {
     TestMessageProvider m = new TestMessageProvider();
     m.setMetadataProvider(new InlineMetadataProvider());
     assertTrue(m.getMetadataProvider() instanceof InlineMetadataProvider);
   }
 
+  @Test
   public void testGetPayloadProvider() throws Exception {
     TestMessageProvider m = new TestMessageProvider();
     m.setPayloadProvider(new InlinePayloadProvider());
@@ -58,5 +62,10 @@ public class TestMessageProviderTest extends MessagesCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return new TestMessageProvider(new InlineMetadataProvider(new KeyValuePairSet(metadata)), new InlinePayloadProvider(PAYLOAD));
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

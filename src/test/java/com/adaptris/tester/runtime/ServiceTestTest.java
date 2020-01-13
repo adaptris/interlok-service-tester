@@ -31,10 +31,6 @@ import java.util.Collections;
  */
 public class ServiceTestTest extends STExampleConfigCase{
 
-  public ServiceTestTest(String name) {
-    super(name);
-  }
-
   @Override
   protected Object retrieveObjectForSampleConfig() {
     ServiceTest serviceTest = new ServiceTest();
@@ -65,5 +61,10 @@ public class ServiceTestTest extends STExampleConfigCase{
     assertions.addAssertion(new AssertMetadataContains(Collections.singletonMap("key1", "val1")));
     testCase.setAssertions(assertions);
     return serviceTest;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

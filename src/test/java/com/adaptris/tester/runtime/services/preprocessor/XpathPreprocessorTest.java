@@ -26,13 +26,12 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 public class XpathPreprocessorTest extends PreprocessorCase {
 
   private static final String XML = "<root><xml><id>blah</id></xml></root>";
-
-  public XpathPreprocessorTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testExecute() throws Exception {
@@ -61,5 +60,10 @@ public class XpathPreprocessorTest extends PreprocessorCase {
     preprocessor.setNamespaceContext(new KeyValuePairSet(namespace));
     preprocessor.setXpath("//xml[./id= 'blah']");
     return preprocessor;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

@@ -22,14 +22,11 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import static org.junit.Assert.assertEquals;
+
 public class RemoveNodePreprocessorTest extends PreprocessorCase {
 
   private static final String XML = "<root><xml><id>blah</id></xml></root>";
-
-  public RemoveNodePreprocessorTest(String name) {
-    super(name);
-  }
-
 
   @Test
   public void testExecute() throws Exception {
@@ -45,5 +42,10 @@ public class RemoveNodePreprocessorTest extends PreprocessorCase {
     RemoveNodePreprocessor preprocessor = new RemoveNodePreprocessor();
     preprocessor.setXpath("/root/xml/id");
     return preprocessor;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

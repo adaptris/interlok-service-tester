@@ -23,11 +23,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
+
 public class VarSubPropsPreprocessorTest extends PreprocessorCase {
 
-  public VarSubPropsPreprocessorTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testExecute() throws Exception {
@@ -54,4 +53,9 @@ public class VarSubPropsPreprocessorTest extends PreprocessorCase {
     return new VarSubPropsPreprocessor(properties);
   }
 
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }
 }

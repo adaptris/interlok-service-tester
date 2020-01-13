@@ -22,8 +22,7 @@ public abstract class PortProviderCase extends STExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "PortProviderCase.baseDir";
 
-  public PortProviderCase(String name) {
-    super(name);
+  public PortProviderCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

@@ -22,11 +22,9 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-public class AssertXmlPayloadEqualsTest extends AssertionCase {
+import static org.junit.Assert.*;
 
-  public AssertXmlPayloadEqualsTest(String name) {
-    super(name);
-  }
+public class AssertXmlPayloadEqualsTest extends AssertionCase {
 
   @Test
   public void testExecute() throws Exception {
@@ -49,6 +47,7 @@ public class AssertXmlPayloadEqualsTest extends AssertionCase {
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-xml-payload-equals]"));
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -56,5 +55,10 @@ public class AssertXmlPayloadEqualsTest extends AssertionCase {
   @Override
   protected Assertion createAssertion() {
     return new AssertXmlPayloadEquals( "<xml />");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

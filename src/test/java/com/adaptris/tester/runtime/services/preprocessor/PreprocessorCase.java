@@ -26,8 +26,7 @@ public abstract class PreprocessorCase extends STExampleConfigCase {
    */
   public static final String BASE_DIR_KEY = "PreprocessorCase.baseDir";
 
-  public PreprocessorCase(String name) {
-    super(name);
+  public PreprocessorCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

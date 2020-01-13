@@ -29,12 +29,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.*;
+
 public class AssertionsTest extends TCCase {
 
-  public AssertionsTest(String name) {
-    super(name);
-  }
-
+  @org.junit.Test
   public void testGetAssertions() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", true), "message"));
@@ -42,6 +41,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
   }
 
+  @org.junit.Test
   public void testExecutePassed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", true), "message"));
@@ -50,6 +50,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
   }
 
+  @org.junit.Test
   public void testExecuteFailed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", false), "message-1234"));
@@ -61,6 +62,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
   }
 
+  @org.junit.Test
   public void testExecutePassedFailed() throws Exception {
     Assertions a = new Assertions();
     a.setAssertions(Arrays.asList(
@@ -137,5 +139,10 @@ public class AssertionsTest extends TCCase {
     public String getUniqueId() {
       return uniqueId;
     }
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

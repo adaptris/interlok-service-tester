@@ -16,16 +16,15 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
-import java.util.Collections;
-import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
+import org.junit.Test;
+
+import java.util.Collections;
+
+import static org.junit.Assert.*;
 
 public class AssertMetadataKeyNonExistentTest extends AssertionCase{
-
-  public AssertMetadataKeyNonExistentTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testExecute() throws Exception {
@@ -55,5 +54,10 @@ public class AssertMetadataKeyNonExistentTest extends AssertionCase{
   @Override
   protected Assertion createAssertion() {
     return new AssertMetadataKeyNonExistent("key1");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

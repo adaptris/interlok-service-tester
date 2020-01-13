@@ -22,11 +22,9 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-public class AssertPayloadEqualsTest extends AssertionCase {
+import static org.junit.Assert.*;
 
-  public AssertPayloadEqualsTest(String name) {
-    super(name);
-  }
+public class AssertPayloadEqualsTest extends AssertionCase {
 
   @Test
   public void testExecute() throws Exception {
@@ -49,6 +47,7 @@ public class AssertPayloadEqualsTest extends AssertionCase {
     assertEquals("Assertion Failure: [assert-payload-equals]", result.getMessage());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -56,5 +55,10 @@ public class AssertPayloadEqualsTest extends AssertionCase {
   @Override
   protected Assertion createAssertion() {
     return new AssertPayloadEquals("hello");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

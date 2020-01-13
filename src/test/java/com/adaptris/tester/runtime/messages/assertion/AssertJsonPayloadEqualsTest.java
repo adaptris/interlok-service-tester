@@ -22,15 +22,14 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.*;
+
 /**
  * @author mwarman
  */
 public class AssertJsonPayloadEqualsTest extends AssertionCase  {
 
-  public AssertJsonPayloadEqualsTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception{
     String actual = "{ \"key\" : \"value\" }";
     PayloadAssertion matcher = new AssertJsonPayloadEquals();
@@ -54,5 +53,10 @@ public class AssertJsonPayloadEqualsTest extends AssertionCase  {
   @Override
   protected Assertion createAssertion() {
     return new AssertJsonPayloadEquals("{ \"key\" : \"value\" }");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

@@ -19,11 +19,9 @@ package com.adaptris.tester.runtime.messages.metadata;
 import com.adaptris.tester.runtime.messages.MessagesCase;
 import org.junit.Test;
 
-public class EmptyMetadataProviderTest extends MessagesCase {
+import static org.junit.Assert.assertEquals;
 
-  public EmptyMetadataProviderTest(String name) {
-    super(name);
-  }
+public class EmptyMetadataProviderTest extends MessagesCase {
 
   @Test
   public void getMessageHeaders() throws Exception {
@@ -34,5 +32,10 @@ public class EmptyMetadataProviderTest extends MessagesCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return new EmptyMetadataProvider();
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

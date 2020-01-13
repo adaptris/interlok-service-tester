@@ -24,11 +24,9 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssertMetadataContainsTest extends AssertionCase{
+import static org.junit.Assert.*;
 
-  public AssertMetadataContainsTest(String name) {
-    super(name);
-  }
+public class AssertMetadataContainsTest extends AssertionCase{
 
   @Test
   public void testExecute() throws Exception {
@@ -59,6 +57,7 @@ public class AssertMetadataContainsTest extends AssertionCase{
     assertEquals("Assertion Failure: [assert-metadata-contains] metadata does not contain kvp: {key1=val1}", result.getMessage());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -68,5 +67,10 @@ public class AssertMetadataContainsTest extends AssertionCase{
     Map<String, String> expected = new HashMap<>();
     expected.put("key1", "val1");
     return new AssertMetadataContains(expected);
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

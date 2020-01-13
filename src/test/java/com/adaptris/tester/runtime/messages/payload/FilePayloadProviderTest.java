@@ -23,17 +23,17 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static org.junit.Assert.*;
+
 public class FilePayloadProviderTest extends MessagesCase {
 
-  public FilePayloadProviderTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testGetFile() throws Exception {
     FilePayloadProvider f = new FilePayloadProvider("file:////home/user/payload.xml");
     assertEquals("file:////home/user/payload.xml", f.getFile());
   }
 
+  @Test
   public void testGetPayload() throws Exception {
     String file = "http_stubs/__files/hello.json";
     File testFile = new File(this.getClass().getClassLoader().getResource(file).getFile());
@@ -61,5 +61,10 @@ public class FilePayloadProviderTest extends MessagesCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return new FilePayloadProvider("file:////home/user/payload.xml");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

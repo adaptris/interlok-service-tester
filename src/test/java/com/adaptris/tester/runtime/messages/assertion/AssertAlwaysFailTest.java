@@ -18,29 +18,32 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AssertAlwaysFailTest extends AssertionCase {
 
-  public AssertAlwaysFailTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception {
     Assertion a = createAssertion();
     AssertionResult result = a.execute(new TestMessage(), new ServiceTestConfig());
     assertFalse(result.isPassed());
   }
 
+  @Test
   public void testExpected() throws Exception {
     Assertion a = createAssertion();
     assertEquals("This is expected... Will always fail", a.expected());
   }
 
+  @Test
   public void testGetUniqueId() throws Exception {
     Assertion a = createAssertion();
     assertEquals("id", a.getUniqueId());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     AssertAlwaysFail a = createAssertion();
     a.setShowReturnedMessage(null);
@@ -58,5 +61,10 @@ public class AssertAlwaysFailTest extends AssertionCase {
     a.setUniqueId("id");
     a.setShowReturnedMessage(true);
     return a;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

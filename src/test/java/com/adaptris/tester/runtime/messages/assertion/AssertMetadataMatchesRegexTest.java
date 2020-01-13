@@ -25,11 +25,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssertMetadataMatchesRegexTest extends AssertionCase{
+import static org.junit.Assert.*;
 
-  public AssertMetadataMatchesRegexTest(String name) {
-    super(name);
-  }
+public class AssertMetadataMatchesRegexTest extends AssertionCase{
 
   @Test
   public void testExecute() throws Exception {
@@ -62,6 +60,7 @@ public class AssertMetadataMatchesRegexTest extends AssertionCase{
     assertEquals("Assertion Failure: [assert-metadata-matches-regex] metadata contains [key1] but does not match [^val[0-9]$]", result.getMessage());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -71,5 +70,10 @@ public class AssertMetadataMatchesRegexTest extends AssertionCase{
     Map<String, String> expected = new HashMap<>();
     expected.put("key1", "^val[0-9]$");
     return new AssertMetadataMatchesRegex(expected);
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

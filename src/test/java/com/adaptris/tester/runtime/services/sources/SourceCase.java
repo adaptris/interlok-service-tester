@@ -26,8 +26,7 @@ public abstract class SourceCase extends STExampleConfigCase {
    */
   public static final String BASE_DIR_KEY = "SourceCase.baseDir";
 
-  public SourceCase(String name) {
-    super(name);
+  public SourceCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

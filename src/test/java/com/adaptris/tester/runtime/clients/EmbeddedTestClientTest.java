@@ -2,21 +2,20 @@ package com.adaptris.tester.runtime.clients;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
-import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author mwarman
  */
 public class EmbeddedTestClientTest extends ClientCase{
 
-  public EmbeddedTestClientTest(String name) {
-    super(name);
-  }
+
 
   @Test
   public void testSharedComponentProvider() throws Exception{
@@ -46,5 +45,10 @@ public class EmbeddedTestClientTest extends ClientCase{
     sharedComponentProvider.setServices(Collections.singletonList(service));
     embeddedTestClient.setSharedComponentsProvider(sharedComponentProvider);
     return embeddedTestClient;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

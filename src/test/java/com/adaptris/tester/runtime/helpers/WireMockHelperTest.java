@@ -16,18 +16,20 @@
 
 package com.adaptris.tester.runtime.helpers;
 
+import org.junit.Test;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class WireMockHelperTest extends HelperCase {
 
-  public WireMockHelperTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testGet() throws Exception{
     final String serviceFile = "http_stubs";
     File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
@@ -63,5 +65,10 @@ public class WireMockHelperTest extends HelperCase {
     wireMockHelper.setPortProvider(portProvider);
     wireMockHelper.setFileSource("/home/user/http_stubs");
     return wireMockHelper;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

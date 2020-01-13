@@ -17,12 +17,16 @@
 package com.adaptris.tester.runtime.messages;
 
 import com.adaptris.core.SerializableAdaptrisMessage;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageTranslatorTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class MessageTranslatorTest {
 
   protected static final String METADATA_KEY = "key";
   protected static final String METADATA_VALUE = "value";
@@ -30,13 +34,13 @@ public class MessageTranslatorTest extends TestCase {
   private static final String NEXT_SERVICE_ID = "nextServiceId";
   protected Map<String, String> metadata;
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  @Before
+  public void setUp() throws Exception {
     metadata = new HashMap<>();
     metadata.put(METADATA_KEY, METADATA_VALUE);
   }
 
+  @Test
   public void testTranslateAdaptrisMessage() throws Exception {
     MessageTranslator t = new MessageTranslator();
     SerializableAdaptrisMessage sm = new SerializableAdaptrisMessage();
@@ -51,6 +55,7 @@ public class MessageTranslatorTest extends TestCase {
     assertEquals(NEXT_SERVICE_ID, m.getNextServiceId());
   }
 
+  @Test
   public void testTranslateTestMessage() throws Exception {
     MessageTranslator t = new MessageTranslator();
     SerializableAdaptrisMessage sm = t.translate(new TestMessage(metadata, PAYLOAD));

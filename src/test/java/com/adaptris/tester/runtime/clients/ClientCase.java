@@ -26,8 +26,7 @@ public abstract class ClientCase extends STExampleConfigCase {
    */
   public static final String BASE_DIR_KEY = "ClientCase.baseDir";
 
-  public ClientCase(String name) {
-    super(name);
+  public ClientCase() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }

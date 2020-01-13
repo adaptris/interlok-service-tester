@@ -20,38 +20,41 @@ import com.adaptris.core.ServiceException;
 import com.adaptris.tester.report.junit.JUnitReportTestIssue;
 import com.adaptris.tester.report.junit.JUnitReportTestIssueTyped;
 
+import static org.junit.Assert.*;
+
 public class ExpectedExceptionTest extends TCCase {
 
-  public ExpectedExceptionTest(String name) {
-    super(name);
-  }
-
-  public void testDefaultConstructor(){
+  @org.junit.Test
+  public void testDefaultConstructor() {
     ExpectedException e = new ExpectedException();
     assertEquals("com.adaptris.core.ServiceException", e.getClassName());
     assertNull(e.getMessage());
   }
 
-  public void testConstructorClass(){
+  @org.junit.Test
+  public void testConstructorClass() {
     ExpectedException e = new ExpectedException("com.adaptris.core.OtherException");
     assertEquals("com.adaptris.core.OtherException", e.getClassName());
     assertNull(e.getMessage());
   }
 
-  public void testConstructor2Class(){
+  @org.junit.Test
+  public void testConstructor2Class() {
     ExpectedException e = new ExpectedException("com.adaptris.core.OtherException", "message");
     assertEquals("com.adaptris.core.OtherException", e.getClassName());
     assertEquals("message", e.getMessage());
   }
 
-  public void testSetClassName(){
+  @org.junit.Test
+  public void testSetClassName() {
     ExpectedException e = new ExpectedException();
     e.setClassName("com.adaptris.core.OtherException");
     assertEquals("com.adaptris.core.OtherException", e.getClassName());
     assertNull(e.getMessage());
   }
 
-  public void testSetMessage(){
+  @org.junit.Test
+  public void testSetMessage() {
     ExpectedException e = new ExpectedException();
     e.setMessage("message");
     assertEquals("com.adaptris.core.ServiceException", e.getClassName());
@@ -60,6 +63,7 @@ public class ExpectedExceptionTest extends TCCase {
 
 
   @SuppressWarnings("ThrowableInstanceNeverThrown")
+  @org.junit.Test
   public void testCheckExpected() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -68,6 +72,7 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
   @SuppressWarnings("ThrowableInstanceNeverThrown")
+  @org.junit.Test
   public void testCheckExpectedNoMessage() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException");
@@ -76,6 +81,7 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
   @SuppressWarnings("ThrowableInstanceNeverThrown")
+  @org.junit.Test
   public void testCheckNotExpected() throws Exception {
     Exception exception = new Exception("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -85,6 +91,7 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
   @SuppressWarnings("ThrowableInstanceNeverThrown")
+  @org.junit.Test
   public void testCheckMessageNotExpected() throws Exception {
     Exception exception = new ServiceException("does not match");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -94,6 +101,7 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
   @SuppressWarnings("ThrowableInstanceNeverThrown")
+  @org.junit.Test
   public void testCheckMessageClassNotFound() throws Exception {
     Exception exception = new ServiceException("does not match");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.OtherException");
@@ -112,5 +120,10 @@ public class ExpectedExceptionTest extends TCCase {
     TestCase tc = createBaseTestCase();
     tc.setExpectedException(new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present"));
     return tc;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

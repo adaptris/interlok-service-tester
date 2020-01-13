@@ -24,38 +24,39 @@ import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
 import com.adaptris.tester.stubs.StubClient;
 
+import static org.junit.Assert.*;
+
 public class TestCaseTest extends BaseCase {
 
-  public TestCaseTest(String name) {
-    super(name);
-  }
-
-
+  @org.junit.Test
   public void testSetUniqueId() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("id");
     assertEquals("id", tc.getUniqueId());
   }
 
-
+  @org.junit.Test
   public void testSetInputMessageProvider() throws Exception {
     TestCase tc = new TestCase();
     tc.setInputMessageProvider(new TestMessageProvider());
     assertNotNull(tc.getInputMessageProvider());
   }
 
+  @org.junit.Test
   public void testSetAssertions() throws Exception {
     TestCase tc = new TestCase();
     tc.setAssertions(new Assertions());
     assertNotNull(tc.getAssertions());
   }
 
+  @org.junit.Test
   public void testSetExpectedException() throws Exception {
     TestCase tc = new TestCase();
     tc.setExpectedException(new ExpectedException());
     assertNotNull(tc.getExpectedException());
   }
 
+  @org.junit.Test
   public void testSetGlobFilter() throws Exception {
     TestCase tc = new TestCase();
     tc.setGlobFilter("filter");
@@ -63,6 +64,7 @@ public class TestCaseTest extends BaseCase {
     assertEquals("filter", tc.getGlobFilter());
   }
 
+  @org.junit.Test
   public void testExecuteSkipTest() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -75,6 +77,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecute() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -85,6 +88,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteFailed() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -97,6 +101,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteExpectedExceptionButNone() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -107,10 +112,11 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
     assertTrue(result.getIssue().get(0) instanceof JUnitReportFailure);
-    assertEquals("Assertion Failure: Expected Exception [com.adaptris.core.ServiceException]", ((JUnitReportFailure)result.getIssue().get(0)).getMessage());
+    assertEquals("Assertion Failure: Expected Exception [com.adaptris.core.ServiceException]", ((JUnitReportFailure) result.getIssue().get(0)).getMessage());
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteExpectedExceptionThrown() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -122,6 +128,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteExpectedExceptionThrownButNotExpected() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -132,10 +139,11 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
     assertTrue(result.getIssue().get(0) instanceof JUnitReportFailure);
-    assertEquals("Assertion Failure: Expected Exception [com.adaptris.core.ServiceException]", ((JUnitReportFailure)result.getIssue().get(0)).getMessage());
+    assertEquals("Assertion Failure: Expected Exception [com.adaptris.core.ServiceException]", ((JUnitReportFailure) result.getIssue().get(0)).getMessage());
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteExceptionThrownButNotExpected() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -145,10 +153,11 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getIssue());
     assertEquals(1, result.getIssue().size());
     assertTrue(result.getIssue().get(0) instanceof JUnitReportError);
-    assertEquals("Test Error: [com.adaptris.tester.runtime.ServiceTestException]", ((JUnitReportError)result.getIssue().get(0)).getMessage());
+    assertEquals("Test Error: [com.adaptris.tester.runtime.ServiceTestException]", ((JUnitReportError) result.getIssue().get(0)).getMessage());
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testIsTestToBeExecuted() throws Exception {
     System.setProperty("test.glob.filter", "testlist.test.testcase");
     TestCase tc = new TestCase();
@@ -191,7 +200,7 @@ public class TestCaseTest extends BaseCase {
 
     private final JUnitReportTestIssue result;
 
-    StubAssertions(JUnitReportTestIssue result){
+    StubAssertions(JUnitReportTestIssue result) {
       this.result = result;
     }
 
@@ -202,7 +211,7 @@ public class TestCaseTest extends BaseCase {
 
   }
 
-  private class StubClientAlwaysFails extends StubClient{
+  private class StubClientAlwaysFails extends StubClient {
 
     @Override
     public TestMessage applyService(String xml, TestMessage message) throws ServiceTestException {
@@ -210,7 +219,7 @@ public class TestCaseTest extends BaseCase {
     }
   }
 
-  private ServiceToTest createServiceToTest(){
+  private ServiceToTest createServiceToTest() {
     ServiceToTest st = new ServiceToTest();
     InlineSource source = new InlineSource();
     source.setXml("<xml />");
@@ -218,4 +227,9 @@ public class TestCaseTest extends BaseCase {
     return st;
   }
 
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }
 }

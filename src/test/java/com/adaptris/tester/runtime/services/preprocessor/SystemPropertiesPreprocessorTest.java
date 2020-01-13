@@ -17,16 +17,16 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author mwarman
  */
 public class SystemPropertiesPreprocessorTest extends PreprocessorCase {
 
-  public SystemPropertiesPreprocessorTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception{
     System.setProperty("foo", "bar");
     String result = createPreprocessor().execute("hello ${foo}", new ServiceTestConfig());
@@ -36,5 +36,10 @@ public class SystemPropertiesPreprocessorTest extends PreprocessorCase {
   @Override
   protected Preprocessor createPreprocessor() {
     return new SystemPropertiesPreprocessor();
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

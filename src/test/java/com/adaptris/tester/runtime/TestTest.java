@@ -25,20 +25,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestTest extends junit.framework.TestCase {
+import static org.junit.Assert.*;
 
+public class TestTest {
+
+  @org.junit.Test
   public void testSetUniqueId() throws Exception {
     Test t = new Test();
     t.setUniqueId("id");
     assertEquals("id", t.getUniqueId());
   }
 
+  @org.junit.Test
   public void testSetServiceToTest() throws Exception {
     Test t = new Test();
     t.setServiceToTest(new ServiceToTest());
     assertNotNull(t.getServiceToTest());
   }
 
+  @org.junit.Test
   public void testSetTestCases() throws Exception {
     Test t = new Test();
     t.setTestCases(Arrays.asList(new TestCase()));
@@ -46,6 +51,7 @@ public class TestTest extends junit.framework.TestCase {
     assertEquals(1, t.getTestCases().size());
   }
 
+  @org.junit.Test
   public void testAddTestCase() throws Exception {
     Test t = new Test();
     t.addTestCase(new TestCase());
@@ -53,6 +59,7 @@ public class TestTest extends junit.framework.TestCase {
     assertEquals(1, t.getTestCases().size());
   }
 
+  @org.junit.Test
   public void testExecute() throws Exception {
     Test t = new Test();
     t.addTestCase(new TestCase());
@@ -62,6 +69,7 @@ public class TestTest extends junit.framework.TestCase {
     assertNotNull(result.getTime());
   }
 
+  @org.junit.Test
   public void testExecuteHelperProperties() throws Exception {
     Test t = new Test();
     t.setUniqueId("id");

@@ -18,17 +18,19 @@ package com.adaptris.tester.runtime.messages.metadata;
 
 import com.adaptris.tester.runtime.messages.MessagesCase;
 import com.adaptris.util.KeyValuePairSet;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class InlineMetadataProviderTest extends MessagesCase {
-  public InlineMetadataProviderTest(String name) {
-    super(name);
-  }
 
+  @Test
   public void testEmptyConstructor() throws Exception{
     InlineMetadataProvider m = new InlineMetadataProvider();
     assertEquals(0, m.getMessageHeaders().size());
   }
 
+  @Test
   public void testConstructor() throws Exception{
     InlineMetadataProvider m = new InlineMetadataProvider(new KeyValuePairSet(metadata));
     assertEquals(1, m.getMessageHeaders().size());
@@ -36,6 +38,7 @@ public class InlineMetadataProviderTest extends MessagesCase {
     assertEquals(METADATA_VALUE, m.getMessageHeaders().get(METADATA_KEY));
   }
 
+  @Test
   public void testGetMetadata() throws Exception {
     InlineMetadataProvider m = new InlineMetadataProvider(new KeyValuePairSet(metadata));
     assertEquals(1, m.getMetadata().size());
@@ -43,6 +46,7 @@ public class InlineMetadataProviderTest extends MessagesCase {
     assertEquals(METADATA_VALUE, m.getMetadata().getValue(METADATA_KEY));
   }
 
+  @Test
   public void testGetMessageHeaders() throws Exception {
     InlineMetadataProvider m = new InlineMetadataProvider(new KeyValuePairSet(metadata));
     assertEquals(1, m.getMessageHeaders().size());
@@ -53,5 +57,10 @@ public class InlineMetadataProviderTest extends MessagesCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return new InlineMetadataProvider(new KeyValuePairSet(metadata));
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

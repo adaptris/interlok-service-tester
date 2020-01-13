@@ -18,13 +18,12 @@ package com.adaptris.tester.runtime.helpers;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class DynamicPortProviderTest extends PortProviderCase {
 
   private static final int PORT = 8080;
-
-  public DynamicPortProviderTest(String name) {
-    super(name);
-  }
 
 
   @Test
@@ -50,5 +49,10 @@ public class DynamicPortProviderTest extends PortProviderCase {
     DynamicPortProvider pp = new DynamicPortProvider();
     pp.setOffset(PORT);
     return pp;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

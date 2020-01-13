@@ -22,6 +22,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 /**
  * @author mwarman
  */
@@ -42,10 +45,7 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   private static final String SINGLE_SERVICE_XPATH = "//*[unique-id = 'service-1']";
   private static final String MULTI_SERVICE_XPATH = SINGLE_SERVICE_XPATH + "/services/*[unique-id = 'service-2']";
 
-  public ServiceUniqueIdPreprocessorTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception{
     ServiceUniqueIdPreprocessor preprocessor;
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Collections.singletonList("service-1"));
@@ -93,6 +93,7 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
     }
   }
 
+  @Test
   public void testGenerateXpath() {
     ServiceUniqueIdPreprocessor preprocessor;
     preprocessor = new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Collections.singletonList("service-1"));
@@ -112,5 +113,10 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   @Override
   protected Preprocessor createPreprocessor() {
     return new ServiceUniqueIdPreprocessor("channel-1", "workflow-1", Arrays.asList("service-1", "service-2"));
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

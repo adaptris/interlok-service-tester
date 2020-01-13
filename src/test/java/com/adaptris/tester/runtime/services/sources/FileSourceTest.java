@@ -24,12 +24,9 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 
+import static org.junit.Assert.*;
 
 public class FileSourceTest extends SourceCase{
-
-  public FileSourceTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testGetSource() throws Exception {
@@ -65,5 +62,10 @@ public class FileSourceTest extends SourceCase{
   @Override
   protected Source createSource() {
     return new FileSource("file:///home/users/service.xml");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

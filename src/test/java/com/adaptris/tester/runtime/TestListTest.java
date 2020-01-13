@@ -18,18 +18,19 @@ package com.adaptris.tester.runtime;
 
 import com.adaptris.tester.report.junit.JUnitReportTestSuites;
 import com.adaptris.tester.stubs.StubClient;
-import junit.framework.TestCase;
 
-import java.util.HashMap;
+import static org.junit.Assert.*;
 
-public class TestListTest extends TestCase {
+public class TestListTest {
 
+  @org.junit.Test
   public void testSetUniqueId() throws Exception {
     TestList tl = new TestList();
     tl.setUniqueId("id");
     assertEquals("id", tl.getUniqueId());
   }
 
+  @org.junit.Test
   public void testAddTestCase() throws Exception {
     TestList tl = new TestList();
     tl.addTest(new Test());
@@ -38,6 +39,7 @@ public class TestListTest extends TestCase {
     assertTrue(tl.iterator().hasNext());
   }
 
+  @org.junit.Test
   public void testExecute() throws Exception {
     TestList tl = new TestList();
     tl.setUniqueId("id");

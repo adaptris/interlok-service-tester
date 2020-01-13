@@ -17,23 +17,25 @@
 package com.adaptris.tester.runtime.messages.payload;
 
 import com.adaptris.tester.runtime.messages.MessagesCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class InlinePayloadProviderTest extends MessagesCase {
 
-  public InlinePayloadProviderTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testEmptyConstructor() throws Exception{
     InlinePayloadProvider m = new InlinePayloadProvider();
     assertEquals("", m.getPayload());
   }
 
+  @Test
   public void testConstructor() throws Exception{
     InlinePayloadProvider m = new InlinePayloadProvider(PAYLOAD);
     assertEquals(PAYLOAD, m.getPayload());
   }
 
+  @Test
   public void testGetPayload() throws Exception {
     InlinePayloadProvider m = new InlinePayloadProvider(PAYLOAD);
     assertEquals(PAYLOAD, m.getPayload());
@@ -42,5 +44,10 @@ public class InlinePayloadProviderTest extends MessagesCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return new InlinePayloadProvider(PAYLOAD);
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

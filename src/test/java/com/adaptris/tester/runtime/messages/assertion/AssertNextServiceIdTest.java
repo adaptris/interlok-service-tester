@@ -18,13 +18,13 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AssertNextServiceIdTest extends AssertionCase {
 
-  public AssertNextServiceIdTest(String name) {
-    super(name);
-  }
-
+  @Test
   public void testExecute() throws Exception {
     Assertion a = createAssertion();
     TestMessage tm = new TestMessage();
@@ -34,21 +34,25 @@ public class AssertNextServiceIdTest extends AssertionCase {
     assertFalse(a.execute(tm, new ServiceTestConfig()).isPassed());
   }
 
+  @Test
   public void testExpected() throws Exception {
     Assertion a = createAssertion();
     assertEquals("Next service id: next-service", a.expected());
   }
 
+  @Test
   public void testGetUniqueId() throws Exception {
     Assertion a = createAssertion();
     assertEquals("id", a.getUniqueId());
   }
 
+  @Test
   public void testGetValue(){
     AssertNextServiceId a = createAssertion();
     assertEquals("next-service", a.getValue());
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -61,4 +65,9 @@ public class AssertNextServiceIdTest extends AssertionCase {
     return a;
   }
 
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
+  }
 }

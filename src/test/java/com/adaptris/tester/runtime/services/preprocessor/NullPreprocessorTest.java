@@ -17,12 +17,13 @@
 package com.adaptris.tester.runtime.services.preprocessor;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class NullPreprocessorTest extends PreprocessorCase {
-  public NullPreprocessorTest(String name) {
-    super(name);
-  }
 
+  @Test
   public void testExecute() throws Exception {
     String value  = "value";
     String result = createPreprocessor().execute(value, new ServiceTestConfig());
@@ -32,5 +33,10 @@ public class NullPreprocessorTest extends PreprocessorCase {
   @Override
   protected Preprocessor createPreprocessor() {
     return new NullPreprocessor();
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

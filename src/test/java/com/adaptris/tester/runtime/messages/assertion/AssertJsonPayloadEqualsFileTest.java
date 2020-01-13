@@ -23,11 +23,9 @@ import org.junit.Test;
 import java.io.File;
 import java.util.HashMap;
 
-public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
+import static org.junit.Assert.*;
 
-  public AssertJsonPayloadEqualsFileTest(String name) {
-    super(name);
-  }
+public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
 
   @Test
   public void testExecute() throws Exception {
@@ -49,6 +47,7 @@ public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-json-payload-equals-file]"));
   }
 
+  @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
   }
@@ -56,5 +55,10 @@ public class AssertJsonPayloadEqualsFileTest extends AssertionCase {
   @Override
   protected Assertion createAssertion() {
     return new AssertJsonPayloadEqualsFile("file:///./message.json");
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

@@ -24,11 +24,9 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 
-public class XincludePreprocessorTest extends PreprocessorCase {
+import static org.junit.Assert.*;
 
-  public XincludePreprocessorTest(String name) {
-    super(name);
-  }
+public class XincludePreprocessorTest extends PreprocessorCase {
 
   @Test
   public void testExecute() throws Exception {
@@ -55,5 +53,10 @@ public class XincludePreprocessorTest extends PreprocessorCase {
   @Override
   protected Preprocessor createPreprocessor() {
     return new XincludePreprocessor();
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

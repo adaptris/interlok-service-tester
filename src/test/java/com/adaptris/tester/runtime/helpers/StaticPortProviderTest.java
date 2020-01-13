@@ -18,13 +18,11 @@ package com.adaptris.tester.runtime.helpers;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class StaticPortProviderTest extends PortProviderCase {
 
   private static final int PORT = 9999;
-
-  public StaticPortProviderTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testDefaultPort(){
@@ -47,5 +45,10 @@ public class StaticPortProviderTest extends PortProviderCase {
     StaticPortProvider pp = new StaticPortProvider();
     pp.setPort(PORT);
     return pp;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }

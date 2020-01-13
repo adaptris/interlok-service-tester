@@ -21,11 +21,11 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 public class VarSubPreprocessorTest extends PreprocessorCase {
 
-  public VarSubPreprocessorTest(String name) {
-    super(name);
-  }
 
   @Test
   public void testExecute() throws Exception {
@@ -56,5 +56,10 @@ public class VarSubPreprocessorTest extends PreprocessorCase {
     File propertiesFile = new File(this.getClass().getClassLoader().getResource("test.properties").getFile());
     preprocessor.addPropertyFile("file:///" + propertiesFile.getAbsolutePath());
     return preprocessor;
+  }
+
+  @Override
+  public boolean isAnnotatedForJunit4() {
+    return true;
   }
 }
