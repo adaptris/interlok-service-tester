@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import com.adaptris.tester.report.junit.*;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -23,7 +25,6 @@ import com.adaptris.tester.runtime.messages.TestMessageProvider;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  *
@@ -132,7 +133,7 @@ public class TestCase implements TestComponent {
     }
     long endTime = System.nanoTime();
     long elapsedTime = endTime - startTime;
-    result.setTime((double)elapsedTime / 1000000000.0);
+    result.setTime(elapsedTime / 1000000000.0);
     return result;
   }
 

@@ -16,12 +16,7 @@
 
 package com.adaptris.tester.runtime;
 
-import com.adaptris.tester.report.junit.JUnitReportTestResults;
-import com.adaptris.tester.runtime.clients.TestClient;
-import com.adaptris.tester.runtime.helpers.Helper;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.apache.commons.io.IOUtils;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +24,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import org.apache.commons.io.IOUtils;
+
+import com.adaptris.tester.report.junit.JUnitReportTestResults;
+import com.adaptris.tester.runtime.clients.TestClient;
+import com.adaptris.tester.runtime.helpers.Helper;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * Main class for service tester. Use other components from <code>tester</code> package to define tests execution.
