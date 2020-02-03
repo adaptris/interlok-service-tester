@@ -17,11 +17,10 @@
 package com.adaptris.tester.runtime.clients;
 
 
+import java.io.Closeable;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
-
-import java.io.Closeable;
 
 /**
  * Base interface for test client in the service tester.
@@ -29,12 +28,15 @@ import java.io.Closeable;
 public interface TestClient extends Closeable {
 
   /**
-   * Initialises the test client. Test client initialisation includes configuring and connecting to client needed in
-   * {@link #applyService(String, TestMessage)}.
-   *
+   * Initialises the test client.
+   * <p>
+   * Test client initialisation includes configuring and connecting to client needed in {@link #applyService(String, TestMessage)}.
+   * </p>
+   * 
+   * @return an initialised TestClient instance for try-with-resources...
    * @throws ServiceTestException wrapping any thrown exception
    */
-  void init(ServiceTestConfig config) throws ServiceTestException;
+  <T extends TestClient> T init(ServiceTestConfig config) throws ServiceTestException;
 
   /**
    * Apply the service to the input message and return outputted message.

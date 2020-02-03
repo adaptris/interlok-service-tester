@@ -16,6 +16,17 @@
 
 package com.adaptris.tester.runtime.clients;
 
+import static com.adaptris.core.runtime.AdapterComponentCheckerMBean.COMPONENT_CHECKER_TYPE;
+import static com.adaptris.core.runtime.AdapterComponentMBean.ADAPTER_PREFIX;
+import static com.adaptris.core.runtime.AdapterComponentMBean.ID_PREFIX;
+import java.io.IOException;
+import java.util.Set;
+import javax.management.InstanceNotFoundException;
+import javax.management.JMX;
+import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectInstance;
+import javax.management.ObjectName;
 import com.adaptris.core.CoreException;
 import com.adaptris.core.runtime.AdapterComponentChecker;
 import com.adaptris.core.runtime.AdapterComponentCheckerMBean;
@@ -24,14 +35,6 @@ import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.MessageTranslator;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
-import javax.management.*;
-import java.io.IOException;
-import java.util.Set;
-
-import static com.adaptris.core.runtime.AdapterComponentCheckerMBean.COMPONENT_CHECKER_TYPE;
-import static com.adaptris.core.runtime.AdapterComponentMBean.ADAPTER_PREFIX;
-import static com.adaptris.core.runtime.AdapterComponentMBean.ID_PREFIX;
 
 /**
  * Abstract class for {@link TestClient} implementations over JMX.
@@ -49,14 +52,14 @@ public abstract class JMXTestClient implements TestClient {
    * @throws ServiceTestException wrapping any thrown exception
    */
   @Override
-  public final void init(ServiceTestConfig config) throws ServiceTestException {
+  public final JMXTestClient init(ServiceTestConfig config) throws ServiceTestException {
     try {
       MBeanServerConnection mBeanServer = initMBeanServerConnection(config);
       manager = JMX.newMBeanProxy(mBeanServer, createComponentCheckerObjectName(mBeanServer), AdapterComponentCheckerMBean.class);
     } catch (MalformedObjectNameException | IOException | InstanceNotFoundException e) {
       throw new ServiceTestException(e);
     }
-
+    return this;
   }
 
   /**
@@ -72,6 +75,7 @@ public abstract class JMXTestClient implements TestClient {
    *
    * @throws IOException wrapping any thrown exception (dictated by {@link java.io.Closeable#close()}
    */
+  @Override
   public abstract void close() throws IOException;
 
   /**

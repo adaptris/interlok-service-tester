@@ -13,10 +13,7 @@ dependencies {
   javadoc project(":interlok-service-tester")
 
   testCompile ("junit:junit:4.13")
-  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") {
-    exclude group: "org.apache.logging.log4j"
-    changing= true
-  }
+  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion")
   testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
   testCompile ("org.apache.logging.log4j:log4j-1.2-api:$log4j2Version")
   testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")

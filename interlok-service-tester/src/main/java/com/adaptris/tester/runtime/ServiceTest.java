@@ -17,15 +17,13 @@
 package com.adaptris.tester.runtime;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.IOUtils;
-
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.helpers.Helper;
@@ -97,6 +95,7 @@ public class ServiceTest implements TestComponent {
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void closeHelpers()  {
     for(Helper helper : getHelpers()){
       IOUtils.closeQuietly(helper);
@@ -126,15 +125,15 @@ public class ServiceTest implements TestComponent {
   public JUnitReportTestResults execute() throws ServiceTestException {
     initHelpers();
     ServiceTestConfig config = new ServiceTestConfig().withHelperProperties(getHelperProperties()).withWorkingDirectory(getWorkingDirectory());
-    testClient.init(config);
-    try {
+    try (TestClient t = testClient.init(config)) {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
       for(TestList tests : getTestLists()){
-        results.addTestSuites(tests.execute(testClient, config));
+        results.addTestSuites(tests.execute(t, config));
       }
       return results;
+    } catch (IOException e) {
+      throw new ServiceTestException(e);
     } finally {
-      IOUtils.closeQuietly(testClient);
       closeHelpers();
     }
   }

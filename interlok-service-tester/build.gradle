@@ -5,13 +5,9 @@ ext {
 dependencies {
   compile ("com.adaptris:interlok-varsub:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-xinclude:$interlokCoreVersion"){ changing= true}
-  compile "org.apache.ant:ant-junit:1.10.7", optional
 
   testCompile ("junit:junit:4.13")
-  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") {
-    exclude group: "org.apache.logging.log4j"
-    changing= true
-  }
+  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion")
   testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
   testCompile ("org.apache.logging.log4j:log4j-1.2-api:$log4j2Version")
   testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")
