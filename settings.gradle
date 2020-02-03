@@ -1,1 +1,6 @@
-rootProject.name = 'interlok-service-tester'
+rootProject.name = 'interlok-service-tester-root'
+include 'interlok-service-tester'
+include 'interlok-service-tester-wiremock'
+include 'interlok-service-tester-json'
+include 'interlok-service-tester-xml'
+include 'interlok-service-tester-gradle'

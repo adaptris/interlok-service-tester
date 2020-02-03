@@ -1,0 +1,145 @@
+ext {
+  componentName='Interlok Service Tester/JSON'
+}
+
+dependencies {
+  compile project(":interlok-service-tester")
+  compile ("org.skyscreamer:jsonassert:1.5.0") {
+    exclude group: 'com.vaadin.external.google', module: 'android-json'
+  }
+  compile ("org.json:json:20190722")
+
+  // Custom service-tester taglets
+  javadoc project(":interlok-service-tester")
+
+  testCompile ("junit:junit:4.13")
+  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") {
+    exclude group: "org.apache.logging.log4j"
+    changing= true
+  }
+  testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
+  testCompile ("org.apache.logging.log4j:log4j-1.2-api:$log4j2Version")
+  testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task examplesJar(type: Jar, dependsOn: test) {
+  classifier = 'examples'
+  from new File(buildDir, '/examples')
+}
+
+jar {
+  manifest {
+    attributes("Built-By": System.getProperty('user.name'),
+              "Build-Jdk": System.getProperty('java.version'),
+              "Implementation-Title": componentName,
+              "Implementation-Version": project.version,
+              "Implementation-Vendor-Id": project.group,
+              "Implementation-Vendor": organizationName)
+  }
+}
+artifacts {
+  archives javadocJar
+  archives sourcesJar
+  archives examplesJar
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact javadocJar { classifier "javadoc" }
+      artifact sourcesJar { classifier "sources" }
+      artifact examplesJar { classifier "examples" }
+
+      pom.withXml {
+        asNode().appendNode("name", componentName)
+        asNode().appendNode("description", "JSON Assertions for service-tester")
+        def properties = asNode().appendNode("properties")
+        properties.appendNode("url", "https://interlok.adaptris.net/interlok-docs/service-tester-introduction.html")
+        properties.appendNode("target", "3.10.0+")
+        properties.appendNode("tags", "testing,services,json")
+        properties.appendNode("license", "false")
+      }
+    }
+  }
+  repositories {
+    maven {
+      credentials {
+        username repoUsername
+        password repoPassword
+      }
+      url mavenPublishUrl
+    }
+  }
+}
+
+javadoc {
+  onlyIf {
+    !hasGraphViz()
+  }
+  configure(options) {
+    options.linksOffline(interlokJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-core-$interlokCoreVersion-javadoc.jar")
+    options.linksOffline(interlokCommonJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-common-$interlokCoreVersion-javadoc.jar")
+    taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
+    options.addStringOption "tagletpath", configurations.javadoc.asPath
+    options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
+      group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
+      group ("Service Tester - Runtime Configuration and Execution", ["com.adaptris.tester.runtime.*" , "com.adaptris.tester.runtime"]).
+      group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
+    exclude "com/adaptris/taglet/**"
+  }
+
+}
+
+task umlJavadoc(type: Javadoc) {
+  group 'Documentation'
+  description 'Build javadocs using plantuml + graphviz + umldoclet, if dot is available'
+
+  onlyIf {
+    hasGraphViz()
+  }
+  source = sourceSets.main.allJava
+  classpath = project.sourceSets.main.compileClasspath
+  configure(options) {
+    options.linksOffline(interlokJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-core-$interlokCoreVersion-javadoc.jar")
+    options.linksOffline(interlokCommonJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-common-$interlokCoreVersion-javadoc.jar")
+    options.docletpath = configurations.umlDoclet.files.asType(List)
+    options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+    options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
+      group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
+      group ("Service Tester - Runtime Configuration and Execution", ["com.adaptris.tester.runtime.*" , "com.adaptris.tester.runtime"]).
+      group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
+    taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
+    options.addStringOption "tagletpath", configurations.javadoc.asPath
+    exclude "com/adaptris/taglet/**"
+    options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
+    options.addStringOption "umlImageFormat", "SVG"
+    options.addStringOption "umlExcludedReferences", "java.lang.Exception,java.lang.Object,java.lang.Enum"
+    options.addStringOption "umlIncludePrivateClasses","false"
+    options.addStringOption "umlIncludePackagePrivateClasses","false"
+    options.addStringOption "umlIncludeProtectedClasses","false"
+    options.addStringOption "umlIncludeAbstractSuperclassMethods","false"
+    options.addStringOption "umlIncludeConstructors","false"
+    options.addStringOption "umlIncludePublicFields","false"
+    options.addStringOption "umlIncludePackagePrivateFields","false"
+    options.addStringOption "umlIncludeProtectedFields", "false"
+    options.addStringOption "umlIncludeDeprecatedClasses", "false"
+    options.addStringOption "umlIncludePrivateInnerClasses", "false"
+    options.addStringOption "umlIncludePackagePrivateInnerClasses", "false"
+    options.addStringOption "umlIncludeProtectedInnerClasses","false"
+  }
+}
+
+javadoc.dependsOn offlinePackageList,umlJavadoc
+processTestResources.dependsOn copyUnitTestProperties

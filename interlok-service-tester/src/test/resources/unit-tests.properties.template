@@ -1,0 +1,16 @@
+#Ant properties
+#Mon Feb 03 10:45:06 GMT 2020
+junit.ConsumerCase.baseDir=@BUILD_DIR@/examples/consumers
+junit.ServiceCase.baseDir=@BUILD_DIR@/examples/services
+junit.ProducerCase.baseDir=@BUILD_DIR@/examples/producers
+junit.WorkflowCase.baseDir=@BUILD_DIR@/examples/workflows
+
+junit.SampleConfigCase.baseDir=@BUILD_DIR@/examples
+junit.PreprocessorCase.baseDir=@BUILD_DIR@/examples/preprocessor
+junit.SourceCase.baseDir=@BUILD_DIR@/examples/sources
+junit.AssertionCase.baseDir=@BUILD_DIR@/examples/assertions
+junit.HelperCase.baseDir=@BUILD_DIR@/examples/helpers
+junit.PortProviderCase.baseDir=@BUILD_DIR@/examples/helpers
+junit.MessagesCase.baseDir=@BUILD_DIR@/examples/messages
+junit.TestCase.baseDir=@BUILD_DIR@/examples/test-case
+junit.ClientCase.baseDir=@BUILD_DIR@/examples/clients
