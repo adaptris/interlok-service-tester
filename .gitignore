@@ -29,3 +29,5 @@ log4j.properties
 target
 bin
 gradle.properties
+unit-tests.properties
+unit-tests.properties.resolved
