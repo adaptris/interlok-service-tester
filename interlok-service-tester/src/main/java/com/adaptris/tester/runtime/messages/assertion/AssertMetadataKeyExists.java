@@ -42,7 +42,7 @@ public class AssertMetadataKeyExists extends AssertMetadataKeyImpl {
   @Override
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     String message = String.format("Assertion Failure: [%s] metadata does not contain key: [%s]", TEST_ID, getKey());
-    return new AssertionResult(getUniqueId(), TEST_ID, actual.getMessageHeaders().containsKey(getKey()), message);
+    return new AssertionResult(TEST_ID, actual.getMessageHeaders().containsKey(getKey()), message);
   }
 
   @Override

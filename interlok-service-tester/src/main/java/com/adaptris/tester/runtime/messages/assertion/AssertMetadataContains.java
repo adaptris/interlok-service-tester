@@ -16,10 +16,9 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.util.Map;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.util.Map;
 
 /**
  * Checks if all keys and corresponding values set in {@link #getMessageHeaders()} are present in
@@ -44,9 +43,9 @@ public class AssertMetadataContains extends MetadataAssertion {
     for(Map.Entry<String, String> entry :  getMessageHeaders().entrySet()){
       if(!(actual.containsKey(entry.getKey()) && actual.get(entry.getKey()).equals(entry.getValue()))){
         String message = String.format("Assertion Failure: [%s] metadata does not contain kvp: {%s=%s}", testType, entry.getKey(), entry.getValue());
-        return new AssertionResult(getUniqueId(), testType, false, message);
+        return new AssertionResult(testType, false, message);
       }
     }
-    return new AssertionResult(getUniqueId(), testType, true);
+    return new AssertionResult(testType, true);
   }
 }

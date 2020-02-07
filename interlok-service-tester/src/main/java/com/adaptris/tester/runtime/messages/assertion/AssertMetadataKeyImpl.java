@@ -18,6 +18,7 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 public abstract class AssertMetadataKeyImpl implements Assertion {
 
+  @Deprecated
   private String uniqueId;
   private String key;
 
@@ -30,13 +31,9 @@ public abstract class AssertMetadataKeyImpl implements Assertion {
   }
 
   @Override
+  @Deprecated
   public void setUniqueId(String uniqueId) {
     this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
   }
 
   public void setKey(String key) {

@@ -27,7 +27,6 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
-import com.adaptris.util.GuidGenerator;
 
 /**
  * @author mwarman
@@ -50,9 +49,7 @@ public class AssertJsonPayloadEqualsTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    GuidGenerator guidGenerator = new GuidGenerator();
     Assertion assertion = createAssertion();
-    assertion.setUniqueId(guidGenerator.getUUID());
     return assertion;
   }
 

@@ -27,7 +27,6 @@ import com.adaptris.tester.runtime.messages.assertion.AssertPayloadEquals;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
-import com.adaptris.util.GuidGenerator;
 
 public class AssertXmlPayloadEqualsTest extends ExampleConfigCase {
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
@@ -48,9 +47,7 @@ public class AssertXmlPayloadEqualsTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    GuidGenerator guidGenerator = new GuidGenerator();
     Assertion assertion = createAssertion();
-    assertion.setUniqueId(guidGenerator.getUUID());
     return assertion;
   }
   @Test

@@ -30,8 +30,11 @@ public interface Assertion extends TestComponent {
 
   /**
    * Sets the unique id
+   * 
    * @param uniqueId The unique id
+   * @deprecated since 3.10 with no replacement since it adds no value.
    */
+  @Deprecated
   void setUniqueId(String uniqueId);
 
   /**

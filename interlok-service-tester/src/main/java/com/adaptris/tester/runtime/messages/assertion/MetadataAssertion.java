@@ -19,7 +19,6 @@ package com.adaptris.tester.runtime.messages.assertion;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.adaptris.annotation.AutoPopulated;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -34,6 +33,7 @@ import com.adaptris.util.KeyValuePairSet;
  */
 public abstract class MetadataAssertion implements Assertion {
 
+  @Deprecated
   private String uniqueId;
   @AutoPopulated
   private KeyValuePairSet metadata;
@@ -47,13 +47,9 @@ public abstract class MetadataAssertion implements Assertion {
   }
 
   @Override
+  @Deprecated
   public void setUniqueId(String uniqueId) {
     this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
   }
 
   /**

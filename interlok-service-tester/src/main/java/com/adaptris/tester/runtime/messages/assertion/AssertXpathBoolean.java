@@ -39,16 +39,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-xpath-boolean")
 public class AssertXpathBoolean extends XpathCommon implements Assertion {
 
+  @Deprecated
   private String uniqueId;
 
   @Override
+  @Deprecated
   public void setUniqueId(String uniqueId) {
     this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
   }
 
   @Override
@@ -57,7 +54,7 @@ public class AssertXpathBoolean extends XpathCommon implements Assertion {
       final String type = "assert-xpath-boolean";
       final boolean xpathResult = selectSingleBoolean(actual.getPayload());
       String message = String.format("Assertion Failure: [%s] Expected [%s] Returned [%s]", type, "true", xpathResult);
-      return new AssertionResult(getUniqueId(), type, xpathResult, message);
+      return new AssertionResult(type, xpathResult, message);
     } catch (XpathCommonException e) {
       throw new ServiceTestException(e);
     }

@@ -18,11 +18,13 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
+@SuppressWarnings("deprecation")
 public class AssertAlwaysFailTest extends AssertionCase {
 
   @Test
@@ -41,7 +43,7 @@ public class AssertAlwaysFailTest extends AssertionCase {
   @Test
   public void testGetUniqueId() throws Exception {
     Assertion a = createAssertion();
-    assertEquals("id", a.getUniqueId());
+    assertNull(a.getUniqueId());
   }
 
   @Test
