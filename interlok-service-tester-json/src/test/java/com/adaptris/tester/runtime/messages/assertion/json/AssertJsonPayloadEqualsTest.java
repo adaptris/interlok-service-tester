@@ -31,6 +31,7 @@ import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
 /**
  * @author mwarman
  */
+@SuppressWarnings("deprecation")
 public class AssertJsonPayloadEqualsTest extends ExampleConfigCase {
 
   public AssertJsonPayloadEqualsTest() {
@@ -50,6 +51,7 @@ public class AssertJsonPayloadEqualsTest extends ExampleConfigCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     Assertion assertion = createAssertion();
+    assertion.setUniqueId(null);
     return assertion;
   }
 

@@ -27,6 +27,7 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 
+@SuppressWarnings("deprecation")
 public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
@@ -48,6 +49,7 @@ public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     Assertion assertion = createAssertion();
+    assertion.setUniqueId(null);
     return assertion;
   }
 
