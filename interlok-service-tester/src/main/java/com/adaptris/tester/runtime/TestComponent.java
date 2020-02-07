@@ -25,7 +25,5 @@ public interface TestComponent {
    * Return the unique id.
    * @return The unique id
    */
-  default String getUniqueId() {
-    return null;
-  }
+  String getUniqueId();
 }

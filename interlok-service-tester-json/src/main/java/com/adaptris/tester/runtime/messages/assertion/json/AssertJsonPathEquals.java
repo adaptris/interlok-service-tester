@@ -48,11 +48,6 @@ public class AssertJsonPathEquals implements Assertion {
   }
 
   @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-  }
-
-  @Override
   public String expected() {
     return "Value [" + getValue() + "] at JSONPath [" + getJsonPath() + "]";
   }

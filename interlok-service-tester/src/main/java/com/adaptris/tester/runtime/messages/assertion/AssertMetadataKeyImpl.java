@@ -30,12 +30,6 @@ public abstract class AssertMetadataKeyImpl implements Assertion {
     return true;
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   public void setKey(String key) {
     this.key = key;
   }

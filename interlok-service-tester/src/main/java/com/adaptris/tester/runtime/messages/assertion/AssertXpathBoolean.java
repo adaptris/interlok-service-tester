@@ -43,12 +43,6 @@ public class AssertXpathBoolean extends XpathCommon implements Assertion {
   private String uniqueId;
 
   @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {
       final String type = "assert-xpath-boolean";

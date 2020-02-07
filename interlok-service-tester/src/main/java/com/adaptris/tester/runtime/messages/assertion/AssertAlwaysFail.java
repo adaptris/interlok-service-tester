@@ -46,12 +46,6 @@ public class AssertAlwaysFail implements Assertion {
     return "This is expected... Will always fail";
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   /**
    * Set value to used in {@link #showReturnedMessage()}.
    * @param showReturnedMessage value to used in {@link #showReturnedMessage()}

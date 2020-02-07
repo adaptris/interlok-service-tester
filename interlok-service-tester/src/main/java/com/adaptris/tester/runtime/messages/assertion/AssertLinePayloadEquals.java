@@ -45,13 +45,6 @@ public class AssertLinePayloadEquals implements Assertion {
     }
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-
   public void setExpectedLines(List<String> expectedLines) {
     this.expectedLines = expectedLines;
   }

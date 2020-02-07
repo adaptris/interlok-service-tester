@@ -46,12 +46,6 @@ public class AssertXpathEquals extends XpathCommon implements Assertion {
   private String uniqueId;
   private String value;
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   /**
    * Set value to check against xpath result.
    * @param value Value to check against xpath result

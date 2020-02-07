@@ -41,12 +41,6 @@ public abstract class PayloadAssertion implements Assertion {
     setPayload(payload);
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   /**
    * Set the expected payload to be used during assertions.
    * @param payload the expected payload

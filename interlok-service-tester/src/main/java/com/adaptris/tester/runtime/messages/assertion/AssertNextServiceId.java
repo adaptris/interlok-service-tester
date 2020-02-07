@@ -64,9 +64,4 @@ public class AssertNextServiceId implements Assertion {
     return value;
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
 }

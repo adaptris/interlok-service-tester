@@ -47,12 +47,6 @@ public class AssertPayloadEqualsFile implements Assertion {
     setFile(file);
   }
 
-  @Deprecated
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   public String getFile() {
     return file;
   }

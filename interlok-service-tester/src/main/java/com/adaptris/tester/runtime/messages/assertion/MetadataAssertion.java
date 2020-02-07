@@ -46,12 +46,6 @@ public abstract class MetadataAssertion implements Assertion {
     setMetadata(metadata);
   }
 
-  @Override
-  @Deprecated
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
   /**
    * Set the expected metadata kvps to be used during assertions.
    * @param metadata the expected metadata kvps
