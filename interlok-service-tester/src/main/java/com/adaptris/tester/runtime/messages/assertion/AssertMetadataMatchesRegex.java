@@ -16,12 +16,11 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
-import com.adaptris.util.KeyValuePairSet;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.adaptris.util.KeyValuePairSet;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Checks if all keys and corresponding regular expression in values set in {@link #getMessageHeaders()} match
@@ -51,13 +50,13 @@ public class AssertMetadataMatchesRegex extends MetadataAssertion {
         Matcher m = pattern.matcher(actualValue);
         if (!m.find()) {
           String message = String.format("Assertion Failure: [%s] metadata contains [%s] but does not match [%s]", testType, entry.getKey(), entry.getValue());
-          return new AssertionResult(getUniqueId(), testType, false, message);
+          return new AssertionResult(testType, false, message);
         }
       } else {
         String message = String.format("Assertion Failure: [%s] message doesn't contain: [%s]", testType, entry.getKey());
-        return new AssertionResult(getUniqueId(), testType, false, message);
+        return new AssertionResult(testType, false, message);
       }
     }
-    return new AssertionResult(getUniqueId(), testType, true);
+    return new AssertionResult(testType, true);
   }
 }

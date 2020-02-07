@@ -16,18 +16,15 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import com.adaptris.core.CoreException;
 import com.adaptris.fs.FsException;
-import com.adaptris.fs.FsWorker;
-import com.adaptris.fs.NioWorker;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals file contents.
@@ -39,6 +36,7 @@ import java.net.URISyntaxException;
 @XStreamAlias("assert-payload-equals-file")
 public class AssertPayloadEqualsFile implements Assertion {
 
+  @Deprecated
   private String uniqueId;
   private String file;
 
@@ -47,16 +45,6 @@ public class AssertPayloadEqualsFile implements Assertion {
 
   public AssertPayloadEqualsFile(String file){
     setFile(file);
-  }
-
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
   }
 
   public String getFile() {
@@ -83,7 +71,7 @@ public class AssertPayloadEqualsFile implements Assertion {
   }
 
   public AssertionResult checkResults(String actual, String expected) throws ServiceTestException {
-    return new AssertionResult(getUniqueId(), "assert-payload-equals-file", expected.equals(actual));
+    return new AssertionResult("assert-payload-equals-file", expected.equals(actual));
   }
 
   @Override

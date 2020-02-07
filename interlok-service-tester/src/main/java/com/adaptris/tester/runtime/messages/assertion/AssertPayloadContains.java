@@ -36,6 +36,6 @@ public class AssertPayloadContains extends PayloadAssertion {
 
   @Override
   public AssertionResult execute(String actual) {
-    return new AssertionResult(getUniqueId(), "assert-payload-contains", actual.contains(getPayload()));
+    return new AssertionResult("assert-payload-contains", actual.contains(getPayload()));
   }
 }

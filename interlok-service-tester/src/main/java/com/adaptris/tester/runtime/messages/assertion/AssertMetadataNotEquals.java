@@ -16,10 +16,9 @@
 
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.util.Map;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import java.util.Map;
 
 /**
  * Checks if all keys and corresponding values set in {@link #getMessageHeaders()} are not present in
@@ -42,10 +41,10 @@ public class AssertMetadataNotEquals extends MetadataAssertion {
   public AssertionResult execute(Map<String, String> actual) {
     String testType = "assert-metadata-not-equals";
     for(Map.Entry<String, String> entry :  actual.entrySet()){
-      if((getMessageHeaders().containsKey(entry.getKey()) && getMessageHeaders().get(entry.getKey()).equals(entry.getValue()))){
-        return new AssertionResult(getUniqueId(), testType, false);
+      if(getMessageHeaders().containsKey(entry.getKey()) && getMessageHeaders().get(entry.getKey()).equals(entry.getValue())){
+        return new AssertionResult(testType, false);
       }
     }
-    return new AssertionResult(getUniqueId(), "assert-metadata-not-equals", true);
+    return new AssertionResult("assert-metadata-not-equals", true);
   }
 }

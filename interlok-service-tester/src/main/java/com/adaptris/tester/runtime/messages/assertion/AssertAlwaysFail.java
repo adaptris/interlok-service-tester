@@ -31,28 +31,19 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-always-fail")
 public class AssertAlwaysFail implements Assertion {
 
+  @Deprecated
   private String uniqueId;
   private Boolean showReturnedMessage;
 
 
   @Override
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
-    return new AssertionResult(getUniqueId(), "assert-always-fail", false);
+    return new AssertionResult("assert-always-fail", false);
   }
 
   @Override
   public String expected() {
     return "This is expected... Will always fail";
-  }
-
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return this.uniqueId;
   }
 
   /**

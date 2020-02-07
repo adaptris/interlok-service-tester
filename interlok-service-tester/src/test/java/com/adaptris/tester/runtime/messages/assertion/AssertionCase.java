@@ -17,8 +17,8 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.tester.STExampleConfigCase;
-import com.adaptris.util.GuidGenerator;
 
+@SuppressWarnings("deprecation")
 public abstract class AssertionCase extends STExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
@@ -31,9 +31,8 @@ public abstract class AssertionCase extends STExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    GuidGenerator guidGenerator = new GuidGenerator();
     Assertion assertion = createAssertion();
-    assertion.setUniqueId(guidGenerator.getUUID());
+    assertion.setUniqueId(null);
     return assertion;
   }
 

@@ -30,14 +30,13 @@ import com.adaptris.tester.runtime.messages.assertion.AssertMetadataContains;
 import com.adaptris.tester.runtime.messages.assertion.AssertPayloadContains;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
-import com.adaptris.util.GuidGenerator;
 
 public class AssertionsTest extends TCCase {
 
   @org.junit.Test
   public void testGetAssertions() throws Exception {
     Assertions a = new Assertions();
-    a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", true), "message"));
+    a.addAssertion(new StubAssertion("id", new AssertionResult("type", true), "message"));
     assertEquals(1, a.size());
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
   }
@@ -45,7 +44,7 @@ public class AssertionsTest extends TCCase {
   @org.junit.Test
   public void testExecutePassed() throws Exception {
     Assertions a = new Assertions();
-    a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", true), "message"));
+    a.addAssertion(new StubAssertion("id", new AssertionResult("type", true), "message"));
     JUnitReportTestIssue issue = a.execute(new TestMessage(), new ServiceTestConfig());
     assertNull(issue);
     assertEquals("id", a.getAssertions().get(0).getUniqueId());
@@ -54,7 +53,7 @@ public class AssertionsTest extends TCCase {
   @org.junit.Test
   public void testExecuteFailed() throws Exception {
     Assertions a = new Assertions();
-    a.addAssertion(new StubAssertion("id", new AssertionResult("id", "type", false), "message-1234"));
+    a.addAssertion(new StubAssertion("id", new AssertionResult("type", false), "message-1234"));
     JUnitReportTestIssue issue = a.execute(new TestMessage(), new ServiceTestConfig());
     assertNotNull(issue);
     assertTrue(issue instanceof JUnitReportFailure);
@@ -68,8 +67,8 @@ public class AssertionsTest extends TCCase {
     Assertions a = new Assertions();
     a.setAssertions(Arrays.asList(
         new Assertion[] {
-          new StubAssertion("id", new AssertionResult("id", "type", true), "message"),
-          new StubAssertion("id", new AssertionResult("id", "type", false), "message-1234")
+            new StubAssertion("id", new AssertionResult("type", true), "message"),
+            new StubAssertion("id", new AssertionResult("type", false), "message-1234")
         })
     );
     assertEquals(2, a.size());
@@ -90,13 +89,10 @@ public class AssertionsTest extends TCCase {
   @Override
   protected Object retrieveObjectForSampleConfig() {
     Assertions a = new Assertions();
-    GuidGenerator guidGenerator = new GuidGenerator();
     Map<String, String> expected = new HashMap<>();
     expected.put("key1", "val1");
     Assertion a1 = new AssertMetadataContains(expected);
-    a1.setUniqueId(guidGenerator.getUUID());
     Assertion a2 = new AssertPayloadContains("hello");
-    a2.setUniqueId(guidGenerator.getUUID());
     a.addAssertion(a1);
     a.addAssertion(a2);
     TestCase tc = createBaseTestCase();

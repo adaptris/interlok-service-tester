@@ -27,8 +27,8 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
-import com.adaptris.util.GuidGenerator;
 
+@SuppressWarnings("deprecation")
 public class AssertJsonPayloadEqualsFileTest extends ExampleConfigCase {
 
   public AssertJsonPayloadEqualsFileTest() {
@@ -48,9 +48,8 @@ public class AssertJsonPayloadEqualsFileTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    GuidGenerator guidGenerator = new GuidGenerator();
     Assertion assertion = createAssertion();
-    assertion.setUniqueId(guidGenerator.getUUID());
+    assertion.setUniqueId(null);
     return assertion;
   }
 

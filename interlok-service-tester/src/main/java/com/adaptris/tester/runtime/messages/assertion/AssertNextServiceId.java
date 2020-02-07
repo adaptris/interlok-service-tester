@@ -29,12 +29,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-next-service-id")
 public class AssertNextServiceId implements Assertion {
 
+  @Deprecated
   private String uniqueId;
   private String value;
 
   @Override
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
-    return new AssertionResult(getUniqueId(), "assert-next-service-id", actual.getNextServiceId().equals(getValue()));
+    return new AssertionResult("assert-next-service-id", actual.getNextServiceId().equals(getValue()));
   }
 
   @Override
@@ -63,13 +64,4 @@ public class AssertNextServiceId implements Assertion {
     return value;
   }
 
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return this.uniqueId;
-  }
 }

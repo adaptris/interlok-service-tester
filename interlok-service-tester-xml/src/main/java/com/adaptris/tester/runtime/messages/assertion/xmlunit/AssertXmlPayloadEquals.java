@@ -16,16 +16,15 @@
 
 package com.adaptris.tester.runtime.messages.assertion.xmlunit;
 
+import java.io.IOException;
+import java.util.List;
+import org.custommonkey.xmlunit.DetailedDiff;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.xml.sax.SAXException;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.custommonkey.xmlunit.DetailedDiff;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getPayload()}
@@ -52,7 +51,7 @@ public class AssertXmlPayloadEquals extends PayloadAssertion {
       XMLUnit.setIgnoreAttributeOrder(true);
       DetailedDiff diff = new DetailedDiff(XMLUnit.compareXML(getPayload(), actual));
       List<?> allDifferences = diff.getAllDifferences();
-      return new AssertionResult(getUniqueId(), "assert-xml-payload-equals", allDifferences.size() == 0,
+      return new AssertionResult("assert-xml-payload-equals", allDifferences.size() == 0,
           "Assertion Failure: [assert-xml-payload-equals]\n" + diff.toString());
     } catch (SAXException | IOException e) {
       throw new ServiceTestException(e);

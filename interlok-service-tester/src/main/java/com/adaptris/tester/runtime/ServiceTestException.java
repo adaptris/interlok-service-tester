@@ -28,11 +28,18 @@ public class ServiceTestException extends Exception {
     super(message);
   }
 
-  public ServiceTestException(String message, Exception e) {
+  public ServiceTestException(String message, Throwable e) {
     super(message, e);
   }
 
-  public ServiceTestException(Exception e) {
+  public ServiceTestException(Throwable e) {
     super(e);
+  }
+
+  public static ServiceTestException wrapException(Throwable e) {
+    if (e instanceof ServiceTestException) {
+      return (ServiceTestException) e;
+    }
+    return new ServiceTestException(e);
   }
 }

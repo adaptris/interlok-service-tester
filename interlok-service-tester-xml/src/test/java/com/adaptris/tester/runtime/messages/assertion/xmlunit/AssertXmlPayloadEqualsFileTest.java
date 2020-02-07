@@ -26,8 +26,8 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
-import com.adaptris.util.GuidGenerator;
 
+@SuppressWarnings("deprecation")
 public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
@@ -48,9 +48,8 @@ public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    GuidGenerator guidGenerator = new GuidGenerator();
     Assertion assertion = createAssertion();
-    assertion.setUniqueId(guidGenerator.getUUID());
+    assertion.setUniqueId(null);
     return assertion;
   }
 
@@ -58,7 +57,7 @@ public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
   public void testExecute() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
     Assertion matcher = new AssertXmlPayloadEqualsFile("file:///" + file.getAbsolutePath());
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml/>"), new ServiceTestConfig()).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(), "<xml/>"), new ServiceTestConfig()).isPassed());
     assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),"<xml att=\"foo\" />"), new ServiceTestConfig()).isPassed());
   }
 

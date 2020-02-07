@@ -47,7 +47,7 @@ public class AssertJsonPayloadEquals extends PayloadAssertion {
   public AssertionResult execute(String actual) throws ServiceTestException {
     try {
       JSONCompareResult result = JSONCompare.compareJSON(getPayload(), actual, JSONCompareMode.STRICT_ORDER);
-      return new AssertionResult(getUniqueId(), "assert-json-payload-equals", !result.failed(),
+      return new AssertionResult("assert-json-payload-equals", !result.failed(),
           "Assertion Failure: [assert-json-payload-equals]\n" + result.getMessage());
     } catch (JSONException e) {
       throw new ServiceTestException(e);

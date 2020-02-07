@@ -1,16 +1,15 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.io.IOUtils;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getExpectedLines()}
@@ -22,6 +21,7 @@ import java.util.List;
 @XStreamAlias("assert-line-payload-equals")
 public class AssertLinePayloadEquals implements Assertion {
 
+  @Deprecated
   private String uniqueId;
 
   @XStreamImplicit(itemFieldName = "line")
@@ -39,20 +39,10 @@ public class AssertLinePayloadEquals implements Assertion {
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {
       List<String> actualLines = IOUtils.readLines(new StringReader(actual.getPayload()));
-      return new AssertionResult(getUniqueId(), "assert-lines-payload-equals", expectedLines.equals(actualLines));
+      return new AssertionResult("assert-lines-payload-equals", expectedLines.equals(actualLines));
     } catch (IOException e) {
       throw new ServiceTestException(e);
     }
-  }
-
-  @Override
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
-
-  @Override
-  public String getUniqueId() {
-    return uniqueId;
   }
 
   public void setExpectedLines(List<String> expectedLines) {

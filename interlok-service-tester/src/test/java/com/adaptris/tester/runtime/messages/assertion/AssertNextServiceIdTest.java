@@ -23,6 +23,7 @@ import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
+@SuppressWarnings("deprecation")
 public class AssertNextServiceIdTest extends AssertionCase {
 
   @Test
@@ -39,12 +40,6 @@ public class AssertNextServiceIdTest extends AssertionCase {
   public void testExpected() throws Exception {
     Assertion a = createAssertion();
     assertEquals("Next service id: next-service", a.expected());
-  }
-
-  @Test
-  public void testGetUniqueId() throws Exception {
-    Assertion a = createAssertion();
-    assertEquals("id", a.getUniqueId());
   }
 
   @Test

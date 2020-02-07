@@ -36,6 +36,6 @@ public class AssertPayloadEquals extends PayloadAssertion {
 
   @Override
   public AssertionResult execute(String actual) {
-    return new AssertionResult(getUniqueId(), "assert-payload-equals", getPayload().equals(actual));
+    return new AssertionResult("assert-payload-equals", getPayload().equals(actual));
   }
 }

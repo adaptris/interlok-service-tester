@@ -48,7 +48,7 @@ public class AssertJsonPayloadEqualsFile extends AssertPayloadEqualsFile {
   public AssertionResult checkResults(String actual, String expected) throws ServiceTestException{
     try {
       JSONCompareResult result = JSONCompare.compareJSON(expected, actual, JSONCompareMode.STRICT);
-      return new AssertionResult(getUniqueId(), "assert-json-payload-equals-file", !result.failed(),
+      return new AssertionResult("assert-json-payload-equals-file", !result.failed(),
           "Assertion Failure: [assert-json-payload-equals-file]\n" + result.getMessage());
     } catch (JSONException e) {
       throw new ServiceTestException(e);

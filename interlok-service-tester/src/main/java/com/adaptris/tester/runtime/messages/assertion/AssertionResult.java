@@ -21,19 +21,17 @@ package com.adaptris.tester.runtime.messages.assertion;
  */
 public class AssertionResult {
 
-  private final String uniqueId;
   private final String type;
   private final boolean passed;
   private String message;
 
-  public AssertionResult(String uniqueId, String type, boolean passed){
-    this.uniqueId = uniqueId;
+  public AssertionResult(String type, boolean passed) {
     this.type = type;
     this.passed = passed;
   }
 
-  public AssertionResult(String uniqueId, String type, boolean passed, String message){
-    this(uniqueId, type, passed);
+  public AssertionResult(String type, boolean passed, String message) {
+    this(type, passed);
     this.message = message;
   }
 

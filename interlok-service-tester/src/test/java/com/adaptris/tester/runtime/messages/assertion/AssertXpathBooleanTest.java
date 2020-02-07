@@ -25,15 +25,11 @@ import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 
+@SuppressWarnings("deprecation")
 public class AssertXpathBooleanTest extends AssertionCase {
 
   private final static String PAYLOAD = "<root><key>value</key></root>";
 
-  @Test
-  public void testGetUniqueId() throws Exception {
-    AssertXpathBoolean a = createAssertion();
-    assertEquals("id", a.getUniqueId());
-  }
 
   @Test
   public void testExecute() throws Exception {
