@@ -1,9 +1,8 @@
 package com.adaptris.tester.runtime;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -35,9 +34,9 @@ public class ServiceTestConfig {
       if (workingDirectory != null) {
         this.workingDirectory = workingDirectory;
         this.workingDirectoryProperties.put(SERVICE_TESTER_WORKING_DIRECTORY,
-            URLEncoder.encode(workingDirectory.getAbsolutePath(), StandardCharsets.UTF_8.name()));
+            new URI(null, workingDirectory.getAbsolutePath(), null).toASCIIString());
       }
-    } catch (UnsupportedEncodingException e) {
+    } catch (URISyntaxException e) {
       throw new RuntimeException(e);
     }
     return this;
