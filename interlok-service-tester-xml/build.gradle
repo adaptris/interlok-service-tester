@@ -1,5 +1,5 @@
 ext {
-  componentName='Interlok Service Tester/JSON'
+  componentName='Interlok Service Tester/XML'
 }
 
 dependencies {
