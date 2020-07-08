@@ -4,16 +4,27 @@ ext {
 
 dependencies {
   compile project(":interlok-service-tester")
-  compile ("com.github.tomakehurst:wiremock:2.25.0")
-
+  compile ("com.github.tomakehurst:wiremock:2.25.0") {
+    exclude group: 'com.google.guava', module: 'guava'
+    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
+    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
+    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-annotations'
+  }
+  compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+  compile ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+  compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+  implementation ("com.google.guava:guava:29.0-jre")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 
   testCompile ("junit:junit:4.13")
-  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true}
-  testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
-  testCompile ("org.apache.logging.log4j:log4j-1.2-api:$log4j2Version")
-  testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")
+  testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
+  // exclude any log4j dependencies so that we can just use slf4j simple.
+  // works around INTERLOk-3233
+  testCompile "com.adaptris:interlok-stubs:$interlokCoreVersion", {
+    changing= true
+    exclude group: "org.apache.logging.log4j"
+  }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

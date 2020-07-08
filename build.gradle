@@ -2,10 +2,9 @@ import org.apache.tools.ant.taskdefs.condition.Os
 import org.apache.tools.ant.filters.*
 
 plugins {
-  id 'com.github.spotbugs' version '4.0.5' apply false
+  id 'com.github.spotbugs' version '4.2.3' apply false
   id 'org.owasp.dependencycheck' version '5.3.2.1' apply false
   id 'nebula.optional-base' version '5.0.3' apply false
-
 }
 
 ext {
@@ -24,7 +23,7 @@ ext {
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
   slf4jVersion = '1.7.30'
-  log4j2Version = '2.13.2'
+  jacksonVersion = "2.11.0"
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -229,6 +228,19 @@ subprojects { subproject ->
     }
     includeFilter = new File("$rootDir/gradle/spotbugs-filter.xml")
     // excludeFilter = new File("$rootDir/gradle/spotbugs-exclude.xml")
+  }
+
+  dependencyCheck  {
+    suppressionFiles= [ "https://raw.githubusercontent.com/adaptris/interlok/develop/gradle/owasp-exclude.xml" , "$rootDir/gradle/owasp-exclude.xml" ]
+    skipConfigurations = [ "antSql", "spotbugs", "umlDoclet", "offlineJavadocPackages", "javadoc", "jacocoAnt", "jacocoAgent", "spotbugsPlugins", "spotbugsSlf4j" ]
+    // This is acceptable because service-tester as a gradle plugin is difficult because classpath is hard.
+    skipProjects = [':interlok-service-tester-gradle']
+    formats = [ "HTML", "JUNIT" ]
+    junitFailOnCVSS = 7.0
+    failBuildOnCVSS = 7.0
+    analyzers {
+      assemblyEnabled=false
+    }
   }
 
   // disable spotbugsTests which checks our test code..

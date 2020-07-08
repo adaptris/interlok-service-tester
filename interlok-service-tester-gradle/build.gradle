@@ -8,7 +8,7 @@ dependencies {
   compile gradleApi()
   compile localGroovy()
   compile project(":interlok-service-tester")
-  compile ("org.apache.ant:ant-junit:1.10.7")
+  compile ("org.apache.ant:ant-junit:1.10.8")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
@@ -18,9 +18,6 @@ dependencies {
     exclude group: "org.apache.logging.log4j"
     changing= true
   }
-  testCompile ("org.apache.logging.log4j:log4j-core:$log4j2Version")
-  testCompile ("org.apache.logging.log4j:log4j-1.2-api:$log4j2Version")
-  testCompile ("org.apache.logging.log4j:log4j-api:$log4j2Version")
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

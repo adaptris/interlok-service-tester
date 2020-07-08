@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+<suppress>
+   <notes><![CDATA[
+   file name: handlebars-4.0.7.jar: handlebars-v4.0.4.js : the user is totally in control of wiremock + handlebars
+   ]]></notes>
+   <packageUrl regex="true">^pkg:javascript/handlebars@.*$</packageUrl>
+   <vulnerabilityName>A prototype pollution vulnerability in handlebars is exploitable if an attacker can control the template</vulnerabilityName>
+   <vulnerabilityName>Disallow calling helperMissing and blockHelperMissing directly</vulnerabilityName>
+   <vulnerabilityName>Prototype pollution</vulnerabilityName>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: wiremock-2.25.0.jar: jquery-3.4.1.min.js : the user is totally in control of wiremock
+    ]]></notes>
+    <packageUrl regex="true">^pkg:javascript/jquery@.*$</packageUrl>
+    <vulnerabilityName>Regex in its jQuery.htmlPrefilter  sometimes may introduce XSS</vulnerabilityName>
+  </suppress>
+</suppressions>
