@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
@@ -113,7 +113,12 @@ public class XpathCommon {
     try {
       Transformer t = TransformerFactory.newInstance().newTransformer();
       t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-      t.transform(new DOMSource(node), new StreamResult(sw));
+      DOMSource source = new DOMSource(node);
+      if (source.getNode().getNodeType() != Node.ATTRIBUTE_NODE) {
+        t.transform(source, new StreamResult(sw));
+      } else {
+        sw.write(source.getNode().toString());
+      }
     } catch (TransformerException e) {
       throw new XpathCommonException("Failed to convert node to string", e);
     }
