@@ -28,7 +28,7 @@ import com.adaptris.util.KeyValuePairSet;
 @SuppressWarnings("deprecation")
 public class AssertXpathEqualsTest extends AssertionCase {
 
-  private final static String PAYLOAD = "<root><key>value</key></root>";
+  private final static String PAYLOAD = "<root><key attribute=\"att\">value</key></root>";
 
   @Test
   public void testGetValue() throws Exception {
@@ -42,12 +42,13 @@ public class AssertXpathEqualsTest extends AssertionCase {
     AssertXpathEquals a  = createAssertion();
     assertTrue(a.execute(new TestMessage(new HashMap<String, String>(),PAYLOAD), new ServiceTestConfig()).isPassed());
   }
+ 
 
   @Test
   public void testExpected(){
     assertEquals("Value [value] at Xpath [/root/key/text()]", createAssertion().expected());
   }
-
+  
   @Test
   public void testGetMessage() throws Exception {
     AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), PAYLOAD), new ServiceTestConfig());
@@ -57,6 +58,33 @@ public class AssertXpathEqualsTest extends AssertionCase {
   @Test
   public void testShowReturnedMessage(){
     assertTrue(createAssertion().showReturnedMessage());
+  }
+  
+  @Test
+  public void testAttributeExpected(){
+    assertEquals("Value [attribute=\"att\"] at Xpath [/root/key/@attribute]", attributeAssertion().expected());
+  }
+
+  @Test
+  public void testAttributeExecute() throws Exception {
+    AssertXpathEquals a  = attributeAssertion();
+    assertTrue(a.execute(new TestMessage(new HashMap<String, String>(),PAYLOAD), new ServiceTestConfig()).isPassed());
+  }
+  
+  @Test
+  public void testShowAttributeReturnedMessage(){
+    assertTrue(attributeAssertion().showReturnedMessage());
+  }
+  
+  protected AssertXpathEquals attributeAssertion() {
+    AssertXpathEquals a= new AssertXpathEquals();
+    a.setUniqueId("id");
+    a.setValue("attribute=\"att\"");
+    a.setXpath("/root/key/@attribute");
+    Map<String, String> namespace = new HashMap<>();
+    namespace.put("xhtml", "http://www.w3.org/1999/xhtml");
+    a.setNamespaceContext(new KeyValuePairSet(namespace));
+    return a;
   }
 
   @Override
