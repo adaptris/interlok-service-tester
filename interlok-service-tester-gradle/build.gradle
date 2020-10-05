@@ -8,7 +8,7 @@ dependencies {
   compile gradleApi()
   compile localGroovy()
   compile project(":interlok-service-tester")
-  compile ("org.apache.ant:ant-junit:1.10.8")
+  compile ("org.apache.ant:ant-junit:1.10.9")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
