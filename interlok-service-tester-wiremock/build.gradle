@@ -13,11 +13,11 @@ dependencies {
   compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   compile ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
   compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-  implementation ("com.google.guava:guava:29.0-jre")
+  implementation ("com.google.guava:guava:30.0-jre")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 
-  testCompile ("junit:junit:4.13")
+  testCompile ("junit:junit:4.13.1")
   testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
   // exclude any log4j dependencies so that we can just use slf4j simple.
   // works around INTERLOk-3233
