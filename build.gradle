@@ -90,7 +90,8 @@ subprojects { subproject ->
   apply plugin: 'org.owasp.dependencycheck'
   apply plugin: 'nebula.optional-base'
 
-  sourceCompatibility = 1.8
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
   group   = 'com.adaptris'
   version = releaseVersion
   def versionDir = "$buildDir/version"
