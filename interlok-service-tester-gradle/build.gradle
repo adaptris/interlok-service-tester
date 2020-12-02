@@ -13,11 +13,6 @@ dependencies {
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 
-  testCompile ("junit:junit:4.13.1")
-  testCompile ("com.adaptris:interlok-stubs:$interlokCoreVersion") {
-    exclude group: "org.apache.logging.log4j"
-    changing= true
-  }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

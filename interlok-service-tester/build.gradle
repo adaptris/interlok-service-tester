@@ -5,15 +5,6 @@ ext {
 dependencies {
   compile ("com.adaptris:interlok-varsub:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-xinclude:$interlokCoreVersion"){ changing= true}
-
-  testCompile ("junit:junit:4.13.1")
-  testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
-  // exclude any log4j dependencies so that we can just use slf4j simple.
-  // works around INTERLOk-3233
-  testCompile "com.adaptris:interlok-stubs:$interlokCoreVersion", {
-    changing= true
-    exclude group: "org.apache.logging.log4j"
-  }
   testCompile ("com.github.stefanbirkner:system-rules:1.19.0")
 }
 
