@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import org.junit.Test;
 import com.adaptris.core.ExampleConfigCase;
 import com.adaptris.tester.runtime.helpers.DynamicPortProvider;
@@ -60,7 +62,7 @@ public class WireMockHelperTest extends ExampleConfigCase {
     DynamicPortProvider portProvider = new DynamicPortProvider(8080);
     wireMockHelper.setPortProvider(portProvider);
     wireMockHelper.setFileSource(testFile.getAbsolutePath());
-    wireMockHelper.init();
+    wireMockHelper.init(new ServiceTestConfig());
 
     URL url = new URL("http://localhost:" + portProvider.getPort() + "/hello" );
     URLConnection urlConnection = url.openConnection();
@@ -75,7 +77,7 @@ public class WireMockHelperTest extends ExampleConfigCase {
     }
     assertEquals("{\"hello\": \"world\"}",response.toString());
     assertTrue(wireMockHelper.getHelperProperties().containsKey("wire.mock.helper.port"));
-    assertTrue(8080 <= Integer.valueOf(wireMockHelper.getHelperProperties().get("wire.mock.helper.port")));
+    assertTrue(8080 <= Integer.parseInt(wireMockHelper.getHelperProperties().get("wire.mock.helper.port")));
     in.close();
     wireMockHelper.close();
   }

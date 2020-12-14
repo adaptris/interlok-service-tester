@@ -89,9 +89,9 @@ public class ServiceTest implements TestComponent {
     this.workingDirectory = workingDirectory;
   }
 
-  private void initHelpers() throws ServiceTestException {
+  private void initHelpers(ServiceTestConfig config) throws ServiceTestException {
     for(Helper helper : getHelpers()){
-      helper.init();
+      helper.init(config);
     }
   }
 
@@ -123,8 +123,9 @@ public class ServiceTest implements TestComponent {
   }
 
   public JUnitReportTestResults execute() throws ServiceTestException {
-    initHelpers();
-    ServiceTestConfig config = new ServiceTestConfig().withHelperProperties(getHelperProperties()).withWorkingDirectory(getWorkingDirectory());
+    ServiceTestConfig config = new ServiceTestConfig().withWorkingDirectory(getWorkingDirectory());
+    initHelpers(config);
+    config.withHelperProperties(getHelperProperties());
     try (TestClient t = testClient.init(config)) {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
       for(TestList tests : getTestLists()){

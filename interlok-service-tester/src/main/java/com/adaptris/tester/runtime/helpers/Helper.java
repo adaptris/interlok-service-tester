@@ -17,11 +17,13 @@
 package com.adaptris.tester.runtime.helpers;
 
 
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.io.Closeable;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,9 +45,10 @@ public abstract class Helper implements Closeable {
   /**
    * Implementations initialise service so its usable in tests, all properties for connectivity should also be set
    * using {@link #addHelperProperty(String, String)}.
+   * @param config The service tester config
    * @throws ServiceTestException
    */
-  public abstract void init() throws ServiceTestException;
+  public abstract void init(ServiceTestConfig config) throws ServiceTestException;
 
   /**
    * Helper properties should be set during initialisation, they are resolved in the service config.
