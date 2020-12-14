@@ -18,13 +18,17 @@ package com.adaptris.tester.runtime.helpers.wiremock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
 import com.adaptris.tester.runtime.ServiceTestConfig;
+import com.adaptris.tester.runtime.ServiceTestException;
 import org.junit.Test;
 import com.adaptris.core.ExampleConfigCase;
 import com.adaptris.tester.runtime.helpers.DynamicPortProvider;
@@ -80,6 +84,20 @@ public class WireMockHelperTest extends ExampleConfigCase {
     assertTrue(8080 <= Integer.parseInt(wireMockHelper.getHelperProperties().get("wire.mock.helper.port")));
     in.close();
     wireMockHelper.close();
+  }
+
+  @Test
+  public void testSyntaxError() throws Exception {
+    WireMockHelper wireMockHelper = new WireMockHelper();
+    DynamicPortProvider portProvider = new DynamicPortProvider(8080);
+    wireMockHelper.setPortProvider(portProvider);
+    wireMockHelper.setFileSource("invalid://uri^");
+    try {
+      wireMockHelper.init(new ServiceTestConfig());
+      fail();
+    } catch (ServiceTestException e){
+      assertTrue(e.getCause() instanceof URISyntaxException);
+    }
   }
 
   protected Helper createHelper() {

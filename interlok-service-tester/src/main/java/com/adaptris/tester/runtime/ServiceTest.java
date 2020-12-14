@@ -89,14 +89,14 @@ public class ServiceTest implements TestComponent {
     this.workingDirectory = workingDirectory;
   }
 
-  private void initHelpers(ServiceTestConfig config) throws ServiceTestException {
+  void initHelpers(ServiceTestConfig config) throws ServiceTestException {
     for(Helper helper : getHelpers()){
       helper.init(config);
     }
   }
 
   @SuppressWarnings("deprecation")
-  public void closeHelpers()  {
+  void closeHelpers()  {
     for(Helper helper : getHelpers()){
       IOUtils.closeQuietly(helper);
     }
