@@ -12,29 +12,29 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.helpers.wiremock;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.junit.Test;
+
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
-import org.junit.Test;
-import com.adaptris.core.ExampleConfigCase;
 import com.adaptris.tester.runtime.helpers.DynamicPortProvider;
 import com.adaptris.tester.runtime.helpers.Helper;
 
-public class WireMockHelperTest extends ExampleConfigCase {
+public class WireMockHelperTest extends ExampleConfigGenerator {
   public static final String BASE_DIR_KEY = "HelperCase.baseDir";
 
   public WireMockHelperTest() {
@@ -60,12 +60,12 @@ public class WireMockHelperTest extends ExampleConfigCase {
   @Test
   public void testGet() throws Exception{
     final String serviceFile = "http_stubs";
-    File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
+    URL testFile = this.getClass().getClassLoader().getResource(serviceFile).toURI().toURL();
 
     WireMockHelper wireMockHelper = new WireMockHelper();
     DynamicPortProvider portProvider = new DynamicPortProvider(8080);
     wireMockHelper.setPortProvider(portProvider);
-    wireMockHelper.setFileSource(testFile.getAbsolutePath());
+    wireMockHelper.setFileSource(testFile.toString());
     wireMockHelper.init(new ServiceTestConfig());
 
     URL url = new URL("http://localhost:" + portProvider.getPort() + "/hello" );
@@ -92,12 +92,10 @@ public class WireMockHelperTest extends ExampleConfigCase {
     DynamicPortProvider portProvider = new DynamicPortProvider(8080);
     wireMockHelper.setPortProvider(portProvider);
     wireMockHelper.setFileSource("invalid://uri^");
-    try {
-      wireMockHelper.init(new ServiceTestConfig());
-      fail();
-    } catch (ServiceTestException e){
-      assertTrue(e.getCause() instanceof URISyntaxException);
-    }
+
+    ServiceTestException exception = assertThrows(ServiceTestException.class,
+        () -> wireMockHelper.init(new ServiceTestConfig()));
+    assertTrue(exception.getCause() instanceof URISyntaxException);
   }
 
   protected Helper createHelper() {
@@ -108,8 +106,4 @@ public class WireMockHelperTest extends ExampleConfigCase {
     return wireMockHelper;
   }
 
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
 }
