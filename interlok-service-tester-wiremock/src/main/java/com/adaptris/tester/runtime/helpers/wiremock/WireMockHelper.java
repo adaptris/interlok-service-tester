@@ -16,16 +16,22 @@
 
 package com.adaptris.tester.runtime.helpers.wiremock;
 
+import com.adaptris.core.CoreException;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.helpers.Helper;
 import com.adaptris.tester.runtime.helpers.PortProvider;
 import com.adaptris.tester.runtime.helpers.StaticPortProvider;
+import com.adaptris.tester.utils.FsHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.SingleRootFileSource;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,14 +72,28 @@ public class WireMockHelper extends Helper {
   /**
    * Initialises WireMock server with port set as value from {@link #getPortProvider()} which also added as a helper
    * property to {@value #WIRE_MOCK_HELPER_PORT_PROPERTY_NAME}.
+   * @param config The service tester config
    * @throws ServiceTestException wrapping any thrown exception
    */
   @Override
-  public void init() throws ServiceTestException {
+  public void init(ServiceTestConfig config) throws ServiceTestException {
     getPortProvider().initPort();
     addHelperProperty(WIRE_MOCK_HELPER_PORT_PROPERTY_NAME, String.valueOf(getPortProvider().getPort()));
-    wireMockServer = new WireMockServer(getPortProvider().getPort(), new SingleRootFileSource(getFileSource()), false);
+    wireMockServer = new WireMockServer(
+      WireMockConfiguration.options()
+        .port(getPortProvider().getPort())
+        .fileSource(new SingleRootFileSource(getFileFromFileSource(config)))
+        .enableBrowserProxying(false)
+        .jettyStopTimeout(10000L));
     wireMockServer.start();
+  }
+
+  private File getFileFromFileSource(ServiceTestConfig config) throws ServiceTestException {
+    try {
+      return FsHelper.createFile(getFileSource(), config);
+    } catch (IOException | URISyntaxException | CoreException e) {
+      throw new ServiceTestException(e);
+    }
   }
 
   /**
