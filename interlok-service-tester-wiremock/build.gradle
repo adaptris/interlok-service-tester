@@ -62,13 +62,13 @@ publishing {
       pom.withXml {
         asNode().appendNode("name", componentName)
         asNode().appendNode("description", "Wiremock boostrapper for service-tester")
+		asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
-        properties.appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         properties.appendNode("target", "3.10.0+")
         properties.appendNode("tags", "testing,services")
         properties.appendNode("license", "false")
         properties.appendNode("repository", "https://github.com/adaptris/interlok-service-tester")
-		properties.appendNode("readme", "https://raw.githubusercontent.com/adaptris/interlok-service-tester/develop/README.md")
+        properties.appendNode("readme", "https://raw.githubusercontent.com/adaptris/interlok-service-tester/develop/README.md")
       }
     }
   }
