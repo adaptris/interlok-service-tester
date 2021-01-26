@@ -1,5 +1,6 @@
 ext {
   componentName='Interlok Service Tester/JSON'
+  jacksonVersion='2.12.1'
 }
 
 dependencies {
@@ -7,22 +8,13 @@ dependencies {
   compile ("org.skyscreamer:jsonassert:1.5.0") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
-  compile ("org.json:json:20200518")
+  compile ("org.json:json:20201115")
   compile ("com.jayway.jsonpath:json-path:2.4.0")
   compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
-
-  testCompile ("junit:junit:4.13.1")
-  testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
-  // exclude any log4j dependencies so that we can just use slf4j simple.
-  // works around INTERLOk-3233
-  testCompile "com.adaptris:interlok-stubs:$interlokCoreVersion", {
-    changing= true
-    exclude group: "org.apache.logging.log4j"
-  }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -68,11 +60,13 @@ publishing {
       pom.withXml {
         asNode().appendNode("name", componentName)
         asNode().appendNode("description", "JSON Assertions for service-tester")
+        asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
-        properties.appendNode("url", "https://interlok.adaptris.net/interlok-docs/service-tester-introduction.html")
         properties.appendNode("target", "3.10.0+")
         properties.appendNode("tags", "testing,services,json")
         properties.appendNode("license", "false")
+        properties.appendNode("repository", "https://github.com/adaptris/interlok-service-tester")
+        properties.appendNode("readme", "https://raw.githubusercontent.com/adaptris/interlok-service-tester/develop/README.md")
       }
     }
   }

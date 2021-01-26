@@ -5,15 +5,6 @@ ext {
 dependencies {
   compile ("com.adaptris:interlok-varsub:$interlokCoreVersion") { changing= true}
   compile ("com.adaptris:interlok-xinclude:$interlokCoreVersion"){ changing= true}
-
-  testCompile ("junit:junit:4.13.1")
-  testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
-  // exclude any log4j dependencies so that we can just use slf4j simple.
-  // works around INTERLOk-3233
-  testCompile "com.adaptris:interlok-stubs:$interlokCoreVersion", {
-    changing= true
-    exclude group: "org.apache.logging.log4j"
-  }
   testCompile ("com.github.stefanbirkner:system-rules:1.19.0")
 }
 
@@ -60,11 +51,13 @@ publishing {
       pom.withXml {
         asNode().appendNode("name", componentName)
         asNode().appendNode("description", "Unit testing framework for Interlok")
+        asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
-        properties.appendNode("url", "https://interlok.adaptris.net/interlok-docs/service-tester-introduction.html")
         properties.appendNode("target", "3.5.0+")
         properties.appendNode("tags", "testing,services")
         properties.appendNode("license", "false")
+        properties.appendNode("repository", "https://github.com/adaptris/interlok-service-tester")
+        properties.appendNode("readme", "https://raw.githubusercontent.com/adaptris/interlok-service-tester/develop/README.md")
       }
     }
   }

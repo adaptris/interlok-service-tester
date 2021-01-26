@@ -16,8 +16,10 @@
 
 package com.adaptris.tester.runtime;
 
+import java.io.IOException;
 import java.util.Collections;
 import com.adaptris.tester.STExampleConfigCase;
+import com.adaptris.tester.runtime.helpers.Helper;
 import com.adaptris.tester.runtime.messages.TestMessageProvider;
 import com.adaptris.tester.runtime.messages.assertion.AssertMetadataContains;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
@@ -25,10 +27,38 @@ import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author mwarman
  */
 public class ServiceTestTest extends STExampleConfigCase {
+
+  @org.junit.Test
+  public void serviceTestHelpers() throws Exception{
+    ServiceTest serviceTest = new ServiceTest();
+    serviceTest.setHelpers(Collections.singletonList(new StubHelper()));
+    assertEquals(1, serviceTest.getHelpers().size());
+    assertTrue(serviceTest.getHelpers().get(0) instanceof StubHelper);
+    serviceTest.initHelpers(new ServiceTestConfig());
+    assertTrue(serviceTest.getHelperProperties().containsKey("test"));
+    assertEquals("value", serviceTest.getHelperProperties().get("test"));
+    serviceTest.closeHelpers();
+  }
+
+  private static class StubHelper extends Helper {
+
+    @Override
+    public void init(ServiceTestConfig config) throws ServiceTestException {
+      addHelperProperty("test", "value");
+    }
+
+    @Override
+    public void close() throws IOException {
+
+    }
+  }
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
