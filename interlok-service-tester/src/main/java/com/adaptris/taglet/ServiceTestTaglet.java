@@ -16,7 +16,7 @@
 
 package com.adaptris.taglet;
 
-import com.sun.tools.doclets.Taglet;
+import jdk.javadoc.doclet.Taglet;
 
 import java.util.Map;
 
