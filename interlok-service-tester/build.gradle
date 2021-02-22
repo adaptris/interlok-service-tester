@@ -1,5 +1,6 @@
 ext {
-  componentName='Interlok Service Tester'
+  componentName='Interlok Service Tester/Core'
+  componentDesc="Unit testing framework for Interlok"
 }
 
 dependencies {
@@ -50,7 +51,7 @@ publishing {
 
       pom.withXml {
         asNode().appendNode("name", componentName)
-        asNode().appendNode("description", "Unit testing framework for Interlok")
+        asNode().appendNode("description", componentDesc)
         asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "3.5.0+")

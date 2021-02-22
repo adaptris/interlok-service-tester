@@ -1,5 +1,6 @@
 ext {
   componentName='Interlok Service Tester/Wiremock'
+  componentDesc="Wiremock boostrapper for service-tester"
   jacksonVersion='2.12.1'
 }
 
@@ -61,7 +62,7 @@ publishing {
 
       pom.withXml {
         asNode().appendNode("name", componentName)
-        asNode().appendNode("description", "Wiremock boostrapper for service-tester")
+        asNode().appendNode("description", componentDesc)
         asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "3.10.0+")

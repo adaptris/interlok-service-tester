@@ -1,5 +1,6 @@
 ext {
   componentName='Interlok Service Tester/gradle'
+  componentDesc="Experimental Gradle plugin for service-tester"
 }
 
 group   = 'com.adaptris.labs'
@@ -57,7 +58,7 @@ publishing {
 
       pom.withXml {
         asNode().appendNode("name", componentName)
-        asNode().appendNode("description", "Experimental Gradle plugin for service-tester")
+        asNode().appendNode("description", componentDesc)
         asNode().appendNode("url", "https://interlok.adaptris.net/interlok-docs/#/pages/service-tester/service-tester-introduction")
         def properties = asNode().appendNode("properties")
         properties.appendNode("target", "3.10.0+")
