@@ -12,13 +12,13 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.taglet;
 
-import jdk.javadoc.doclet.Taglet;
-
 import java.util.Map;
+
+import jdk.javadoc.doclet.Taglet;
 
 /**
  * @author mwarman
@@ -40,10 +40,9 @@ public class ServiceTestTaglet extends AbstractTaglet {
     return "</code></b> which is the preferred alternative to the fully qualified classname when building your configuration.</p>";
   }
 
-  @SuppressWarnings("unchecked")
-  public static void register(Map tagletMap) {
+  public static void register(Map<String, Taglet> tagletMap) {
     ServiceTestTaglet tag = new ServiceTestTaglet();
-    Taglet t = (Taglet) tagletMap.get(tag.getName());
+    Taglet t = tagletMap.get(tag.getName());
     if (t != null) {
       tagletMap.remove(tag.getName());
     }

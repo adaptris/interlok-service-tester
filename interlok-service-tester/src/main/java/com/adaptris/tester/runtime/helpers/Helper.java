@@ -12,20 +12,18 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.helpers;
 
 
-import com.adaptris.tester.runtime.ServiceTestConfig;
-import com.adaptris.tester.runtime.ServiceTestException;
-import com.adaptris.tester.runtime.messages.TestMessage;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
 import java.io.Closeable;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.adaptris.tester.runtime.ServiceTestConfig;
+import com.adaptris.tester.runtime.ServiceTestException;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * Abstract class for helper implementation.

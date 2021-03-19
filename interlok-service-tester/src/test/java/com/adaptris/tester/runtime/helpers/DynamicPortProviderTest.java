@@ -18,12 +18,12 @@ package com.adaptris.tester.runtime.helpers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 public class DynamicPortProviderTest extends PortProviderCase {
 
   private static final int PORT = 8080;
-
 
   @Test
   public void testDefaultOffset(){

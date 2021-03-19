@@ -29,28 +29,6 @@ import com.adaptris.tester.runtime.messages.TestMessage;
 public interface Assertion extends TestComponent {
 
   /**
-   * Sets the unique id
-   * 
-   * @param uniqueId The unique id
-   * @implNote The default implementation is no-op
-   * @deprecated since 3.10 with no replacement since it adds no value.
-   */
-  @Deprecated
-  default void setUniqueId(String uniqueId) {
-    
-  }
-
-  /**
-   * Default method since setUniqueID is deprecated
-   * 
-   * @implNote The default implementation just returns null
-   */
-  @Override
-  default String getUniqueId() {
-    return null;
-  }
-
-  /**
    * Execute assertion against test message.
    * @param actual Message resulting from text execution
    * @param config Service test config

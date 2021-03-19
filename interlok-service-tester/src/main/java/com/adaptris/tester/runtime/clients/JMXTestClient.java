@@ -12,21 +12,24 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.clients;
 
 import static com.adaptris.core.runtime.AdapterComponentCheckerMBean.COMPONENT_CHECKER_TYPE;
 import static com.adaptris.core.runtime.AdapterComponentMBean.ADAPTER_PREFIX;
 import static com.adaptris.core.runtime.AdapterComponentMBean.ID_PREFIX;
+
 import java.io.IOException;
 import java.util.Set;
+
 import javax.management.InstanceNotFoundException;
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
+
 import com.adaptris.core.CoreException;
 import com.adaptris.core.runtime.AdapterComponentChecker;
 import com.adaptris.core.runtime.AdapterComponentCheckerMBean;
@@ -107,9 +110,10 @@ public abstract class JMXTestClient implements TestClient {
     ObjectName patternName = ObjectName.getInstance(interlokBaseObject);
     Set<ObjectInstance> instances = mBeanServer.queryMBeans(patternName, null);
 
-    if (instances.size() == 0)
+    if (instances.size() == 0) {
       throw new InstanceNotFoundException("No configured Adapters");
-    else
+    } else {
       return instances.iterator().next().getObjectName();
+    }
   }
 }

@@ -12,24 +12,24 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages.assertion.json;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.io.File;
+
 import java.util.HashMap;
+
 import org.junit.Test;
-import com.adaptris.core.ExampleConfigCase;
+
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
-import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 
-@SuppressWarnings("deprecation")
-public class AssertJsonPathEqualsTest extends ExampleConfigCase {
+public class AssertJsonPathEqualsTest extends ExampleConfigGenerator {
 
   private static final String JSON_PATH = "$.store.bicycle.color";
 
@@ -49,16 +49,14 @@ public class AssertJsonPathEqualsTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    Assertion assertion = createAssertion();
-    assertion.setUniqueId(null);
-    return assertion;
+    return createAssertion();
   }
 
   @Test
   public void testExecute() throws Exception {
     assertTrue(
         createAssertion().execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig())
-            .isPassed());
+        .isPassed());
     assertFalse(createAssertion().withValue("blue")
         .execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig()).isPassed());
 
@@ -76,7 +74,6 @@ public class AssertJsonPathEqualsTest extends ExampleConfigCase {
 
   @Test
   public void testGetMessage() throws Exception{
-    File file = new File(this.getClass().getClassLoader().getResource("test.json").getFile());
     AssertionResult result = createAssertion().withValue("blue")
         .execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig());
     assertTrue(result.getMessage().contains("assert-jsonpath-equals"));
@@ -91,11 +88,6 @@ public class AssertJsonPathEqualsTest extends ExampleConfigCase {
     return new AssertJsonPathEquals().withValue("red").withJsonPath(JSON_PATH);
   }
 
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
-  
   public static String sampleJsonContent() {
     return "{\"store\": {\"bicycle\": {\"color\": \"red\",\"price\": 19.95}}}";
   }

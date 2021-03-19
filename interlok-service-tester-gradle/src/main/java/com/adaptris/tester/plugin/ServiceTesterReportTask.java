@@ -1,14 +1,17 @@
 package com.adaptris.tester.plugin;
 
+import java.io.File;
+
 import org.apache.tools.ant.taskdefs.XSLTProcess;
 import org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer;
 import org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator;
 import org.apache.tools.ant.types.FileSet;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.*;
-
-import java.io.File;
-
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.TaskAction;
 
 public class ServiceTesterReportTask extends DefaultTask {
 

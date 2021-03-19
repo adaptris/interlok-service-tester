@@ -12,11 +12,12 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import com.adaptris.tester.report.junit.JUnitReportError;
 import com.adaptris.tester.report.junit.JUnitReportFailure;
 import com.adaptris.tester.report.junit.JUnitReportSkipped;
@@ -34,7 +35,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @service-test-config test-case
  */
 @XStreamAlias("test-case")
-public class TestCase implements TestComponent {
+public class TestCase implements UniqueIdAwareTestComponent {
 
   private static final String TEST_FILTER =  "test.glob.filter";
 
@@ -106,7 +107,7 @@ public class TestCase implements TestComponent {
 
   public JUnitReportTestCase execute(String parentId, TestClient client, ServiceToTest serviceToTest,
       ServiceTestConfig config)
-      throws ServiceTestException {
+          throws ServiceTestException {
     final String fqName = parentId + "." + getUniqueId();
 
     JUnitReportTestCase result = new JUnitReportTestCase(getUniqueId());

@@ -12,13 +12,12 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages.assertion;
 
 import com.adaptris.tester.STExampleConfigCase;
 
-@SuppressWarnings("deprecation")
 public abstract class AssertionCase extends STExampleConfigCase {
 
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
@@ -31,9 +30,7 @@ public abstract class AssertionCase extends STExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    Assertion assertion = createAssertion();
-    assertion.setUniqueId(null);
-    return assertion;
+    return createAssertion();
   }
 
   protected abstract Assertion createAssertion();

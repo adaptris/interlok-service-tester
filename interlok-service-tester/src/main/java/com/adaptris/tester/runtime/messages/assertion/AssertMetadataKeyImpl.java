@@ -18,8 +18,6 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 public abstract class AssertMetadataKeyImpl implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   private String key;
 
   public AssertMetadataKeyImpl(){
