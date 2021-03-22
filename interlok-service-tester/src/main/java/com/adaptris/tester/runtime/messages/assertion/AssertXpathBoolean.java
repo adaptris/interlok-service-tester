@@ -39,9 +39,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-xpath-boolean")
 public class AssertXpathBoolean extends XpathCommon implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
-
   @Override
   public AssertionResult execute(TestMessage actual, ServiceTestConfig config) throws ServiceTestException {
     try {

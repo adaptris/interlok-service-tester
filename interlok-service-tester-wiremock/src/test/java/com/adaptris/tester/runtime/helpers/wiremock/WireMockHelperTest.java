@@ -48,14 +48,12 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
     return createHelper();
   }
 
-
   @Override
   protected String createExampleXml(Object object) throws Exception {
     String result = getExampleCommentHeader(object);
     result = result + configMarshaller.marshal(object);
     return result;
   }
-
 
   @Test
   public void testGet() throws Exception{
@@ -86,6 +84,7 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
     wireMockHelper.close();
   }
 
+  @SuppressWarnings("resource")
   @Test
   public void testSyntaxError() throws Exception {
     WireMockHelper wireMockHelper = new WireMockHelper();

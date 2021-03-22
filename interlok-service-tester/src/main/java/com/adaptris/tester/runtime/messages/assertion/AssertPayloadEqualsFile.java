@@ -36,8 +36,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-payload-equals-file")
 public class AssertPayloadEqualsFile implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   private String file;
 
   public AssertPayloadEqualsFile(){

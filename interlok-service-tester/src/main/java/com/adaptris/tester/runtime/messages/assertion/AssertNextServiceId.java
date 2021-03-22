@@ -29,8 +29,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-next-service-id")
 public class AssertNextServiceId implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   private String value;
 
   @Override

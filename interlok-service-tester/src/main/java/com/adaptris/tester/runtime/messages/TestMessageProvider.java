@@ -16,7 +16,6 @@
 
 package com.adaptris.tester.runtime.messages;
 
-import com.adaptris.tester.runtime.ServiceTest;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.MetadataProvider;

@@ -12,23 +12,25 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages.assertion.xmlunit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.HashMap;
+
 import org.junit.Test;
-import com.adaptris.core.ExampleConfigCase;
+
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 
-@SuppressWarnings("deprecation")
-public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
+public class AssertXmlPayloadEqualsFileTest extends ExampleConfigGenerator {
 
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
 
@@ -48,9 +50,7 @@ public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    Assertion assertion = createAssertion();
-    assertion.setUniqueId(null);
-    return assertion;
+    return createAssertion();
   }
 
   @Test
@@ -82,8 +82,4 @@ public class AssertXmlPayloadEqualsFileTest extends ExampleConfigCase {
     return new AssertXmlPayloadEqualsFile("file:///./message.xml");
   }
 
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
 }

@@ -12,31 +12,32 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages.assertion.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.HashMap;
+
 import org.junit.Test;
-import com.adaptris.core.ExampleConfigCase;
+
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 
-@SuppressWarnings("deprecation")
-public class AssertJsonPayloadEqualsFileTest extends ExampleConfigCase {
+public class AssertJsonPayloadEqualsFileTest extends ExampleConfigGenerator {
 
   public AssertJsonPayloadEqualsFileTest() {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }
   }
-
 
   @Override
   protected String createExampleXml(Object object) throws Exception {
@@ -45,14 +46,10 @@ public class AssertJsonPayloadEqualsFileTest extends ExampleConfigCase {
     return result;
   }
 
-
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    Assertion assertion = createAssertion();
-    assertion.setUniqueId(null);
-    return assertion;
+    return createAssertion();
   }
-
 
   @Test
   public void testExecute() throws Exception {
@@ -81,10 +78,5 @@ public class AssertJsonPayloadEqualsFileTest extends ExampleConfigCase {
 
   protected Assertion createAssertion() {
     return new AssertJsonPayloadEqualsFile("file:///./message.json");
-  }
-
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
   }
 }

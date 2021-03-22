@@ -42,8 +42,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("assert-xpath-equals")
 public class AssertXpathEquals extends XpathCommon implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   private String value;
 
   /**

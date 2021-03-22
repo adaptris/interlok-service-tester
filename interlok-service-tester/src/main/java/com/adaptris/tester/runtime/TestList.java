@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
@@ -20,7 +20,6 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import com.adaptris.tester.report.junit.JUnitReportTestSuite;
 import com.adaptris.tester.report.junit.JUnitReportTestSuites;
@@ -33,7 +32,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @service-test-config test-list
  */
 @XStreamAlias("test-list")
-public class TestList extends AbstractCollection<Test> implements TestComponent {
+public class TestList extends AbstractCollection<Test> implements UniqueIdAwareTestComponent {
 
   private String uniqueId;
   @XStreamImplicit

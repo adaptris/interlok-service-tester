@@ -21,9 +21,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias("assert-line-payload-equals")
 public class AssertLinePayloadEquals implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
-
   @XStreamImplicit(itemFieldName = "line")
   private List<String> expectedLines;
 

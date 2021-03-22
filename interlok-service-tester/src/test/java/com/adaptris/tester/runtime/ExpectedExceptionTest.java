@@ -19,6 +19,7 @@ package com.adaptris.tester.runtime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
 import com.adaptris.core.ServiceException;
 import com.adaptris.tester.report.junit.JUnitReportTestIssue;
 import com.adaptris.tester.report.junit.JUnitReportTestIssueTyped;
@@ -63,7 +64,6 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
 
-  @SuppressWarnings("ThrowableInstanceNeverThrown")
   @org.junit.Test
   public void testCheckExpected() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
@@ -72,7 +72,6 @@ public class ExpectedExceptionTest extends TCCase {
     assertNull(result);
   }
 
-  @SuppressWarnings("ThrowableInstanceNeverThrown")
   @org.junit.Test
   public void testCheckExpectedNoMessage() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
@@ -81,7 +80,6 @@ public class ExpectedExceptionTest extends TCCase {
     assertNull(result);
   }
 
-  @SuppressWarnings("ThrowableInstanceNeverThrown")
   @org.junit.Test
   public void testCheckNotExpected() throws Exception {
     Exception exception = new Exception("required-metadata-not-present");
@@ -91,7 +89,6 @@ public class ExpectedExceptionTest extends TCCase {
     assertEquals("failure", result.getType());
   }
 
-  @SuppressWarnings("ThrowableInstanceNeverThrown")
   @org.junit.Test
   public void testCheckMessageNotExpected() throws Exception {
     Exception exception = new ServiceException("does not match");
@@ -101,7 +98,6 @@ public class ExpectedExceptionTest extends TCCase {
     assertEquals("failure", result.getType());
   }
 
-  @SuppressWarnings("ThrowableInstanceNeverThrown")
   @org.junit.Test
   public void testCheckMessageClassNotFound() throws Exception {
     Exception exception = new ServiceException("does not match");

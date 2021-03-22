@@ -12,9 +12,13 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.helpers.wiremock;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import com.adaptris.core.CoreException;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -27,13 +31,6 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.SingleRootFileSource;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Helper which starts a WireMock server.
@@ -80,7 +77,7 @@ public class WireMockHelper extends Helper {
     getPortProvider().initPort();
     addHelperProperty(WIRE_MOCK_HELPER_PORT_PROPERTY_NAME, String.valueOf(getPortProvider().getPort()));
     wireMockServer = new WireMockServer(
-      WireMockConfiguration.options()
+        WireMockConfiguration.options()
         .port(getPortProvider().getPort())
         .fileSource(new SingleRootFileSource(getFileFromFileSource(config)))
         .enableBrowserProxying(false)

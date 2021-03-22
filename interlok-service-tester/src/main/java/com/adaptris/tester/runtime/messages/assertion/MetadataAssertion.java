@@ -33,8 +33,6 @@ import com.adaptris.util.KeyValuePairSet;
  */
 public abstract class MetadataAssertion implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   @AutoPopulated
   private KeyValuePairSet metadata;
 
