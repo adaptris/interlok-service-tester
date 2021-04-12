@@ -12,19 +12,27 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
-import com.adaptris.core.BaseCase;
-import com.adaptris.tester.report.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import com.adaptris.interlok.junit.scaffolding.BaseCase;
+import com.adaptris.tester.report.junit.JUnitReportError;
+import com.adaptris.tester.report.junit.JUnitReportFailure;
+import com.adaptris.tester.report.junit.JUnitReportSkipped;
+import com.adaptris.tester.report.junit.JUnitReportTestCase;
+import com.adaptris.tester.report.junit.JUnitReportTestIssue;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.TestMessageProvider;
 import com.adaptris.tester.runtime.services.ServiceToTest;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
 import com.adaptris.tester.stubs.StubClient;
-
-import static org.junit.Assert.*;
 
 public class TestCaseTest extends BaseCase {
 
@@ -227,9 +235,4 @@ public class TestCaseTest extends BaseCase {
     return st;
   }
 
-
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
-  }
 }

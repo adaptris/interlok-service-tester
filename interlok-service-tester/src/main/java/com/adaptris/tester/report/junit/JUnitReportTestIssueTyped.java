@@ -18,7 +18,6 @@ package com.adaptris.tester.report.junit;
 
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
-
 /**
  * Abstract implementations used in {@link JUnitReportTestCase} for storing results.
  *

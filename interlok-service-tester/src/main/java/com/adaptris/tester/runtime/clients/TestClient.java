@@ -12,12 +12,13 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.clients;
 
 
 import java.io.Closeable;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -32,11 +33,11 @@ public interface TestClient extends Closeable {
    * <p>
    * Test client initialisation includes configuring and connecting to client needed in {@link #applyService(String, TestMessage)}.
    * </p>
-   * 
+   *
    * @return an initialised TestClient instance for try-with-resources...
    * @throws ServiceTestException wrapping any thrown exception
    */
-  <T extends TestClient> T init(ServiceTestConfig config) throws ServiceTestException;
+  TestClient init(ServiceTestConfig config) throws ServiceTestException;
 
   /**
    * Apply the service to the input message and return outputted message.

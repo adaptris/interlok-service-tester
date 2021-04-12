@@ -1,18 +1,20 @@
 package com.adaptris.tester.plugin;
 
-import com.adaptris.core.stubs.TempFileUtils;
-import com.adaptris.util.GuidGenerator;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.internal.TaskInternal;
 import org.gradle.api.specs.Spec;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.Test;
 
-import java.io.File;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import com.adaptris.core.stubs.TempFileUtils;
+import com.adaptris.util.GuidGenerator;
 
 public class ServiceTesterTaskTest {
 
@@ -51,7 +53,7 @@ public class ServiceTesterTaskTest {
     assertTrue(expectedFile.exists());
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("deprecation")
   @Test
   public void onlyIf() throws Exception {
     final String serviceFile = "simple_sample.xml";
@@ -62,11 +64,11 @@ public class ServiceTesterTaskTest {
     ServiceTesterTask task = project.getTasks().create("interlokServiceTester", ServiceTesterTask.class);
     task.setServiceTest(testFile);
     task.setServiceTestOutput(tempDir);
-    Spec onlyIf =  task.getOnlyIf();
+    Spec<? super TaskInternal> onlyIf = task.getOnlyIf();
     assertTrue(onlyIf.isSatisfiedBy(task));
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("deprecation")
   @Test
   public void onlyIfMissing() throws Exception {
     final String serviceFile = "simple_sample1.xml";
@@ -77,7 +79,7 @@ public class ServiceTesterTaskTest {
     ServiceTesterTask task = project.getTasks().create("interlokServiceTester", ServiceTesterTask.class);
     task.setServiceTest(testFile);
     task.setServiceTestOutput(tempDir);
-    Spec onlyIf =  task.getOnlyIf();
+    Spec<? super TaskInternal> onlyIf = task.getOnlyIf();
     assertFalse(onlyIf.isSatisfiedBy(task));
   }
 }

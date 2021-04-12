@@ -17,17 +17,11 @@
 package com.adaptris.tester.runtime.messages.payload;
 
 
-import com.adaptris.fs.FsWorker;
-import com.adaptris.fs.NioWorker;
-import com.adaptris.tester.runtime.ServiceTest;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.MessageException;
 import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-
-import java.io.File;
-import java.net.URL;
 
 /**
  *
@@ -49,6 +43,7 @@ public class FilePayloadProvider extends PayloadProvider {
     setFile(file);
   }
 
+  @Override
   public void init(ServiceTestConfig config) throws MessageException{
     try {
       final byte[] fileContents = FsHelper.getFileBytes(file, config);
@@ -68,7 +63,7 @@ public class FilePayloadProvider extends PayloadProvider {
 
   @Override
   public String getPayload(){
-    return this.payload;
+    return payload;
   }
 
   public void setPayload(String payload) {

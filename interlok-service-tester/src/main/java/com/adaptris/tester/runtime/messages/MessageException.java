@@ -12,11 +12,13 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages;
 
 public class MessageException extends Exception {
+
+  private static final long serialVersionUID = 4932128208115808069L;
 
   public MessageException(String message, Exception e){
     super(message, e);

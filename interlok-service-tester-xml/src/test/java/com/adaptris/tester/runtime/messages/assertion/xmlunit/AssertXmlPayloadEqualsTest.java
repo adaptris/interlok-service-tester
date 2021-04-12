@@ -12,15 +12,18 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.messages.assertion.xmlunit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
+
 import org.junit.Test;
-import com.adaptris.core.ExampleConfigCase;
+
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.AssertPayloadEquals;
@@ -28,8 +31,7 @@ import com.adaptris.tester.runtime.messages.assertion.Assertion;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
 
-@SuppressWarnings("deprecation")
-public class AssertXmlPayloadEqualsTest extends ExampleConfigCase {
+public class AssertXmlPayloadEqualsTest extends ExampleConfigGenerator {
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
 
   public AssertXmlPayloadEqualsTest() {
@@ -48,9 +50,7 @@ public class AssertXmlPayloadEqualsTest extends ExampleConfigCase {
 
   @Override
   protected Object retrieveObjectForSampleConfig() {
-    Assertion assertion = createAssertion();
-    assertion.setUniqueId(null);
-    return assertion;
+    return createAssertion();
   }
 
   @Test
@@ -81,10 +81,5 @@ public class AssertXmlPayloadEqualsTest extends ExampleConfigCase {
 
   protected Assertion createAssertion() {
     return new AssertXmlPayloadEquals( "<xml />");
-  }
-
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
   }
 }

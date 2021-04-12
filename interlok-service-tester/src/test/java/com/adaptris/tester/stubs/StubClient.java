@@ -12,11 +12,12 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.stubs;
 
 import java.io.IOException;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.clients.TestClient;
@@ -25,6 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("stub-test-client")
 public class StubClient implements TestClient {
+
   @Override
   public StubClient init(ServiceTestConfig config) throws ServiceTestException {
     return this;

@@ -18,14 +18,16 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.Test;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 
-@SuppressWarnings("deprecation")
 public class AssertXpathBooleanTest extends AssertionCase {
 
   private final static String PAYLOAD = "<root><key>value</key></root>";
@@ -56,7 +58,6 @@ public class AssertXpathBooleanTest extends AssertionCase {
   @Override
   protected AssertXpathBoolean createAssertion() {
     AssertXpathBoolean a = new AssertXpathBoolean();
-    a.setUniqueId("id");
     a.setXpath("count(/root/key) = 1");
     Map<String, String> namespace = new HashMap<>();
     namespace.put("xhtml", "http://www.w3.org/1999/xhtml");

@@ -12,18 +12,21 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
+
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.helpers.Helper;
@@ -37,7 +40,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @service-test-config service-test
  */
 @XStreamAlias("service-test")
-public class ServiceTest implements TestComponent {
+public class ServiceTest implements UniqueIdAwareTestComponent {
 
   private String uniqueId;
 
@@ -95,10 +98,9 @@ public class ServiceTest implements TestComponent {
     }
   }
 
-  @SuppressWarnings("deprecation")
   void closeHelpers()  {
     for(Helper helper : getHelpers()){
-      IOUtils.closeQuietly(helper);
+      IOUtils.closeQuietly(helper, null);
     }
   }
 

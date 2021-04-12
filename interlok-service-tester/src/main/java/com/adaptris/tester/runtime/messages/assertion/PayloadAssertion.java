@@ -28,8 +28,6 @@ import com.adaptris.tester.runtime.messages.TestMessage;
  */
 public abstract class PayloadAssertion implements Assertion {
 
-  @Deprecated
-  private String uniqueId;
   @MarshallingCDATA
   private String payload;
 

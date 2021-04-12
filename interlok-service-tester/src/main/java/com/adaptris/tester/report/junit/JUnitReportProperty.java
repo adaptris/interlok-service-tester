@@ -19,8 +19,6 @@ package com.adaptris.tester.report.junit;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
-import java.util.Map;
-
 /**
  * Child of {@link JUnitReportTestSuite} for storing results.
  *

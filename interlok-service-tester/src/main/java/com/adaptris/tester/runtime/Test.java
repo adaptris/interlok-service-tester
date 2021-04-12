@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
@@ -20,8 +20,10 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.adaptris.tester.report.junit.JUnitReportTestSuite;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.services.ServiceToTest;
@@ -34,7 +36,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @service-test-config test
  */
 @XStreamAlias("test")
-public class Test implements TestComponent {
+public class Test implements UniqueIdAwareTestComponent {
 
   private transient Logger log = LoggerFactory.getLogger(this.getClass().getName());
 

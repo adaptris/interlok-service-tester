@@ -19,11 +19,12 @@ package com.adaptris.tester.runtime.messages.assertion;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 
-@SuppressWarnings("deprecation")
 public class AssertNextServiceIdTest extends AssertionCase {
 
   @Test
@@ -56,7 +57,6 @@ public class AssertNextServiceIdTest extends AssertionCase {
   @Override
   protected AssertNextServiceId createAssertion() {
     AssertNextServiceId a = new AssertNextServiceId();
-    a.setUniqueId("id");
     a.setValue("next-service");
     return a;
   }

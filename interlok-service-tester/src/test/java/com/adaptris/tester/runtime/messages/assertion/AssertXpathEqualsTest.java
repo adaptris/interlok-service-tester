@@ -18,14 +18,16 @@ package com.adaptris.tester.runtime.messages.assertion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.Test;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.util.KeyValuePairSet;
 
-@SuppressWarnings("deprecation")
 public class AssertXpathEqualsTest extends AssertionCase {
 
   private final static String PAYLOAD = "<root><key attribute=\"att\">value</key></root>";
@@ -78,7 +80,6 @@ public class AssertXpathEqualsTest extends AssertionCase {
   
   protected AssertXpathEquals attributeAssertion() {
     AssertXpathEquals a= new AssertXpathEquals();
-    a.setUniqueId("id");
     a.setValue("attribute=\"att\"");
     a.setXpath("/root/key/@attribute");
     Map<String, String> namespace = new HashMap<>();
@@ -90,7 +91,6 @@ public class AssertXpathEqualsTest extends AssertionCase {
   @Override
   protected AssertXpathEquals createAssertion() {
     AssertXpathEquals a= new AssertXpathEquals();
-    a.setUniqueId("id");
     a.setValue("value");
     a.setXpath("/root/key/text()");
     Map<String, String> namespace = new HashMap<>();
