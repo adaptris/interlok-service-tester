@@ -27,6 +27,12 @@ public class ServiceTestConfig {
     withWorkingDirectory(new File(System.getProperty("user.dir")));
   }
 
+  /**
+   * Add the ServiceTest source to the ServiceTestConfig
+   *
+   * @param source
+   * @return this
+   */
   public ServiceTestConfig withSource(ParentSource source) {
     this.source = source;
     return this;

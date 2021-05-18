@@ -76,10 +76,20 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
     return testClient;
   }
 
+  /**
+   * The source of the XML configuration
+   *
+   * @return source
+   */
   public ParentSource getSource() {
     return source;
   }
 
+  /**
+   * The source of the XML configuration
+   *
+   * @param source
+   */
   public void setSource(ParentSource source) {
     this.source = source;
   }
