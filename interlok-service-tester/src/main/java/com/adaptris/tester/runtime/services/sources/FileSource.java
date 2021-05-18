@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services.sources;
 
@@ -25,13 +25,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config file-source
  */
 @XStreamAlias("file-source")
-public class FileSource implements Source {
-
+public class FileSource implements ParentSource {
 
   private String file;
 
   public FileSource(){
-
   }
 
   public FileSource(String file){

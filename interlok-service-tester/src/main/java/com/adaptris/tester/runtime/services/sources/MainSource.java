@@ -17,24 +17,20 @@
 package com.adaptris.tester.runtime.services.sources;
 
 import com.adaptris.annotation.ComponentProfile;
+import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Extension of {@link FileSource} that simply defaults to
- * {@code file:///${service.tester.working.directory}/src/main/interlok/config/adapter.xml}.
  *
- *
- * @service-test-config default-config-file-source
+ * @service-test-config main-source
  */
-@XStreamAlias("default-config-file-source")
-@ComponentProfile(since = "3.9.3")
-public class DefaultConfigSource extends FileSource {
+@XStreamAlias("main-source")
+@ComponentProfile(since = "4.1.0")
+public class MainSource implements Source {
 
-  private static final String DEFAULT_SRC = "file:///${service.tester.working.directory}/src/main/interlok/config/adapter.xml";
-
-  public DefaultConfigSource(){
-    super();
-    setFile(DEFAULT_SRC);
+  @Override
+  public String getSource(ServiceTestConfig config) throws SourceException {
+    return config.source.getSource(config);
   }
 
 }

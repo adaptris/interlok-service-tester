@@ -7,10 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.adaptris.tester.runtime.services.sources.ParentSource;
+
 /**
  * @author mwarman
  */
 public class ServiceTestConfig {
+  public ParentSource source;
   public Map<String, String> helperProperties;
   public File workingDirectory;
 
@@ -19,9 +22,14 @@ public class ServiceTestConfig {
   public Properties workingDirectoryProperties;
 
   public ServiceTestConfig(){
-    this.helperProperties = new HashMap<>();
-    this.workingDirectoryProperties = new Properties();
+    helperProperties = new HashMap<>();
+    workingDirectoryProperties = new Properties();
     withWorkingDirectory(new File(System.getProperty("user.dir")));
+  }
+
+  public ServiceTestConfig withSource(ParentSource source) {
+    this.source = source;
+    return this;
   }
 
   public ServiceTestConfig withHelperProperties(Map<String, String> helperProperties){
@@ -33,7 +41,7 @@ public class ServiceTestConfig {
     try {
       if (workingDirectory != null) {
         this.workingDirectory = workingDirectory;
-        this.workingDirectoryProperties.put(SERVICE_TESTER_WORKING_DIRECTORY,
+        workingDirectoryProperties.put(SERVICE_TESTER_WORKING_DIRECTORY,
             new URI(null, workingDirectory.getAbsolutePath(), null).toASCIIString());
       }
     } catch (URISyntaxException e) {

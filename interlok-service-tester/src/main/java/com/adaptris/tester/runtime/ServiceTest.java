@@ -16,8 +16,6 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,9 +25,12 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
+import com.adaptris.core.util.Args;
 import com.adaptris.tester.report.junit.JUnitReportTestResults;
 import com.adaptris.tester.runtime.clients.TestClient;
 import com.adaptris.tester.runtime.helpers.Helper;
+import com.adaptris.tester.runtime.services.sources.DefaultConfigSource;
+import com.adaptris.tester.runtime.services.sources.ParentSource;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
@@ -45,6 +46,7 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
   private String uniqueId;
 
   private TestClient testClient;
+  private ParentSource source;
   private List<Helper> helpers;
   @XStreamImplicit
   private List<TestList> testLists;
@@ -52,15 +54,13 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
   private transient File workingDirectory = null;
 
   public ServiceTest(){
+    setSource(new DefaultConfigSource());
     setHelpers(new ArrayList<Helper>());
     setTestLists(new ArrayList<TestList>());
   }
 
   public void setUniqueId(String uniqueId) {
-    if (isEmpty(uniqueId)) {
-      throw new IllegalArgumentException();
-    }
-    this.uniqueId = uniqueId;
+    this.uniqueId = Args.notBlank(uniqueId, "unique id");
   }
 
   @Override
@@ -74,6 +74,14 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
 
   public TestClient getTestClient() {
     return testClient;
+  }
+
+  public ParentSource getSource() {
+    return source;
+  }
+
+  public void setSource(ParentSource source) {
+    this.source = source;
   }
 
   public void setHelpers(List<Helper> helpers) {
@@ -93,20 +101,20 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
   }
 
   void initHelpers(ServiceTestConfig config) throws ServiceTestException {
-    for(Helper helper : getHelpers()){
+    for (Helper helper : getHelpers()) {
       helper.init(config);
     }
   }
 
   void closeHelpers()  {
-    for(Helper helper : getHelpers()){
+    for (Helper helper : getHelpers()) {
       IOUtils.closeQuietly(helper, null);
     }
   }
 
   public Map<String, String> getHelperProperties(){
     Map<String,String> p = new HashMap<>();
-    for(Helper helper : getHelpers()){
+    for (Helper helper : getHelpers()) {
       p.putAll(helper.getHelperProperties());
     }
     return p;
@@ -125,12 +133,12 @@ public class ServiceTest implements UniqueIdAwareTestComponent {
   }
 
   public JUnitReportTestResults execute() throws ServiceTestException {
-    ServiceTestConfig config = new ServiceTestConfig().withWorkingDirectory(getWorkingDirectory());
+    ServiceTestConfig config = new ServiceTestConfig().withWorkingDirectory(getWorkingDirectory()).withSource(getSource());
     initHelpers(config);
     config.withHelperProperties(getHelperProperties());
     try (TestClient t = testClient.init(config)) {
       JUnitReportTestResults results = new JUnitReportTestResults(uniqueId);
-      for(TestList tests : getTestLists()){
+      for (TestList tests : getTestLists()) {
         results.addTestSuites(tests.execute(t, config));
       }
       return results;

@@ -143,15 +143,12 @@ public class TestCase implements UniqueIdAwareTestComponent {
     return result;
   }
 
-  private String createRegexFromGlob(String glob)
-  {
+  private String createRegexFromGlob(String glob) {
     String out = "^";
     boolean escaping = false;
-    for(int i = 0; i < glob.length(); ++i)
-    {
+    for (int i = 0; i < glob.length(); ++i) {
       final char c = glob.charAt(i);
-      switch(c)
-      {
+      switch (c) {
         case '*':
           if (escaping){
             out += "*";

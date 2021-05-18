@@ -12,12 +12,16 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.Collections;
+
 import com.adaptris.tester.STExampleConfigCase;
 import com.adaptris.tester.runtime.helpers.Helper;
 import com.adaptris.tester.runtime.messages.TestMessageProvider;
@@ -25,15 +29,21 @@ import com.adaptris.tester.runtime.messages.assertion.AssertMetadataContains;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.tester.runtime.services.ServiceToTest;
+import com.adaptris.tester.runtime.services.sources.FileSource;
 import com.adaptris.tester.runtime.services.sources.InlineSource;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author mwarman
  */
 public class ServiceTestTest extends STExampleConfigCase {
+
+  @org.junit.Test
+  public void serviceTestSource() throws Exception {
+    ServiceTest serviceTest = new ServiceTest();
+    FileSource source = new FileSource();
+    serviceTest.setSource(source);
+    assertEquals(source, serviceTest.getSource());
+  }
 
   @org.junit.Test
   public void serviceTestHelpers() throws Exception{
