@@ -25,7 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config main-source
  */
 @XStreamAlias("main-source")
-@ComponentProfile(since = "4.1.0")
+@ComponentProfile(since = "4.1.0", summary = "Use the source defined in ServiceTest")
 public class MainSource implements Source {
 
   @Override

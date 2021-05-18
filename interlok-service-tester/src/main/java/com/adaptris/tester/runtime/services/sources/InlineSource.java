@@ -35,10 +35,20 @@ public class InlineSource implements Source {
     return getXml();
   }
 
+  /**
+   * Adapter or Service XML configuration
+   *
+   * @param xml
+   */
   public void setXml(String xml) {
     this.xml = xml;
   }
 
+  /**
+   * Adapter or Service XML configuration
+   *
+   * @return xml
+   */
   public String getXml() {
     return xml;
   }

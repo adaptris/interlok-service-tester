@@ -16,6 +16,7 @@
 
 package com.adaptris.tester.runtime.services.sources;
 
+import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -25,6 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config file-source
  */
 @XStreamAlias("file-source")
+@ComponentProfile(summary = "A file source for the adapter or service config")
 public class FileSource implements ParentSource {
 
   private String file;
@@ -46,10 +48,20 @@ public class FileSource implements ParentSource {
     }
   }
 
+  /**
+   * Location of the XML configuration file
+   *
+   * @param file
+   */
   public void setFile(String file) {
     this.file = file;
   }
 
+  /**
+   * Location of the XML configuration file
+   *
+   * @return file
+   */
   public String getFile() {
     return file;
   }

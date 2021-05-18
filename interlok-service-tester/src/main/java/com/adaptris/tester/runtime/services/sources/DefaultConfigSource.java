@@ -27,7 +27,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config default-config-file-source
  */
 @XStreamAlias("default-config-file-source")
-@ComponentProfile(since = "3.9.3")
+@ComponentProfile(since = "3.9.3", summary = "Default project adapter XML config")
 public class DefaultConfigSource extends FileSource {
 
   private static final String DEFAULT_SRC = "file:///${service.tester.working.directory}/src/main/interlok/config/adapter.xml";
