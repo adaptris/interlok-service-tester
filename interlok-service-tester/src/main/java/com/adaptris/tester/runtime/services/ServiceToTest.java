@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services;
 
@@ -22,6 +22,7 @@ import java.util.List;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.services.preprocessor.Preprocessor;
 import com.adaptris.tester.runtime.services.preprocessor.PreprocessorException;
+import com.adaptris.tester.runtime.services.sources.MainSource;
 import com.adaptris.tester.runtime.services.sources.Source;
 import com.adaptris.tester.runtime.services.sources.SourceException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -37,6 +38,7 @@ public class ServiceToTest {
   private List<Preprocessor> preprocessors;
 
   public ServiceToTest(){
+    setSource(new MainSource());
     setPreprocessors(new ArrayList<Preprocessor>());
   }
 

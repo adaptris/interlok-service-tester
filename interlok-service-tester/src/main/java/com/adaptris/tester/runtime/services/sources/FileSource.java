@@ -12,10 +12,11 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services.sources;
 
+import com.adaptris.annotation.ComponentProfile;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -25,13 +26,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config file-source
  */
 @XStreamAlias("file-source")
-public class FileSource implements Source {
-
+@ComponentProfile(summary = "A file source for the adapter or service config")
+public class FileSource implements ParentSource {
 
   private String file;
 
   public FileSource(){
-
   }
 
   public FileSource(String file){
@@ -48,10 +48,20 @@ public class FileSource implements Source {
     }
   }
 
+  /**
+   * Location of the XML configuration file
+   *
+   * @param file
+   */
   public void setFile(String file) {
     this.file = file;
   }
 
+  /**
+   * Location of the XML configuration file
+   *
+   * @return file
+   */
   public String getFile() {
     return file;
   }

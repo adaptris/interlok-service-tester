@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services.sources;
 
@@ -35,10 +35,20 @@ public class InlineSource implements Source {
     return getXml();
   }
 
+  /**
+   * Adapter or Service XML configuration
+   *
+   * @param xml
+   */
   public void setXml(String xml) {
     this.xml = xml;
   }
 
+  /**
+   * Adapter or Service XML configuration
+   *
+   * @return xml
+   */
   public String getXml() {
     return xml;
   }

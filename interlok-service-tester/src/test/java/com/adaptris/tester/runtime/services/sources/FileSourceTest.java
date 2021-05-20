@@ -12,16 +12,19 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services.sources;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
 import java.io.File;
+
 import org.junit.Test;
 import org.w3c.dom.Document;
+
 import com.adaptris.core.util.DocumentBuilderFactoryBuilder;
 import com.adaptris.core.util.XmlHelper;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -39,15 +42,12 @@ public class FileSourceTest extends SourceCase{
 
   @Test
   public void testGetSourceNoFiles() throws Exception {
-    try {
-      final String testFile = "service.xml";
-      File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
-      Source source = new FileSource("file:///" + parentDir.getAbsolutePath() + "/doesnotexist.xml");
-      source.getSource(new ServiceTestConfig());
-      fail();
-    } catch (SourceException e){
-      assertTrue(e.getMessage().contains("Failed to read file"));
-    }
+    final String testFile = "service.xml";
+    File parentDir = new File(this.getClass().getClassLoader().getResource(testFile).getFile()).getParentFile();
+    Source source = new FileSource("file:///" + parentDir.getAbsolutePath() + "/doesnotexist.xml");
+
+    SourceException e = assertThrows(SourceException.class, () -> source.getSource(new ServiceTestConfig()));
+    assertTrue(e.getMessage().contains("Failed to read file"));
   }
 
   @Test
