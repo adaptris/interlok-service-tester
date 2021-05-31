@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.helpers;
 
@@ -24,7 +24,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * Implementation of {@link PortProvider} that returns available port based on offset.
  *
  * <p>
- * Under the covers it uses {@link PortManager} <//p>
+ * Under the covers it uses {@link PortManager}
+ * </p>
  *
  * @service-test-config dynamic-port-provider
  */
