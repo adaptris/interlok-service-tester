@@ -24,6 +24,7 @@ public class MessageTranslator {
   public TestMessage translate(SerializableMessage message){
     TestMessage tm = new TestMessage(message.getMessageHeaders(), message.getContent());
     tm.setNextServiceId(message.getNextServiceId());
+    tm.setContentEncoding(message.getContentEncoding());
     return tm;
   }
 
@@ -32,6 +33,7 @@ public class MessageTranslator {
     message.setContent(input.getPayload());
     message.setMessageHeaders(input.getMessageHeaders());
     message.setNextServiceId(null);
+    message.setContentEncoding(input.getContentEncoding());
     return message;
   }
 }
