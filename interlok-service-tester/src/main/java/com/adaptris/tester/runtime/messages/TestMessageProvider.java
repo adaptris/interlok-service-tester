@@ -67,7 +67,7 @@ public class TestMessageProvider {
     getPayloadProvider().init(config);
     TestMessage message = new TestMessage(getMetadataProvider().getMessageHeaders(), getPayloadProvider().getPayload());
     if (getPayloadProvider() instanceof FilePayloadProvider) {
-      message.setContentEncoding(((FilePayloadProvider)getPayloadProvider()).getContentEncoding());
+      message.addMessageHeader("_interlokMessageSerialization", "BASE64");
     }
     return message;
   }

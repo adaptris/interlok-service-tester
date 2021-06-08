@@ -37,8 +37,6 @@ public class FilePayloadProvider extends PayloadProvider {
 
   private String file;
 
-  private String contentEncoding;
-
   public FilePayloadProvider(){
 
   }
@@ -51,10 +49,7 @@ public class FilePayloadProvider extends PayloadProvider {
   public void init(ServiceTestConfig config) throws MessageException{
     try {
       final byte[] fileContents = FsHelper.getFileBytes(file, config);
-      StringBuilder sb = new StringBuilder();
-      sb.append(Base64.getEncoder().encodeToString(fileContents));
-      setPayload(sb.toString());
-      setContentEncoding("BASE64");
+      setPayload(Base64.getEncoder().encodeToString(fileContents));
     } catch (Exception e) {
       throw new MessageException("Failed to read file", e);
     }
@@ -75,13 +70,5 @@ public class FilePayloadProvider extends PayloadProvider {
 
   public void setPayload(String payload) {
     this.payload = payload;
-  }
-
-  public String getContentEncoding() {
-    return contentEncoding;
-  }
-
-  public void setContentEncoding(String contentEncoding) {
-    this.contentEncoding = contentEncoding;
   }
 }

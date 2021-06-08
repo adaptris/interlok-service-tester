@@ -29,8 +29,6 @@ public class TestMessage{
   private String payload;
   @XStreamOmitField
   private String nextServiceId;
-  @XStreamOmitField
-  private String contentEncoding;
 
   public TestMessage(){
     setMessageHeaders(new HashMap<String, String>());
@@ -42,13 +40,6 @@ public class TestMessage{
     setMessageHeaders(messageHeaders);
     setPayload(payload);
     setNextServiceId("");
-  }
-
-  public TestMessage(Map<String, String> messageHeaders, String payload, String contentEncoding){
-    setMessageHeaders(messageHeaders);
-    setPayload(payload);
-    setNextServiceId("");
-    setContentEncoding(contentEncoding);
   }
 
   public Map<String, String> getMessageHeaders()  {
@@ -77,14 +68,6 @@ public class TestMessage{
 
   public void setNextServiceId(String nextServiceId) {
     this.nextServiceId = nextServiceId;
-  }
-
-  public String getContentEncoding() {
-    return contentEncoding;
-  }
-
-  public void setContentEncoding(String contentEncoding) {
-    this.contentEncoding = contentEncoding;
   }
 
   @Override
