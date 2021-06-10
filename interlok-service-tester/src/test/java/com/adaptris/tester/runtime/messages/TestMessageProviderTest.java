@@ -18,13 +18,21 @@ package com.adaptris.tester.runtime.messages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
+import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
+import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
 import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.util.KeyValuePairSet;
 
+import java.net.URL;
+
 public class TestMessageProviderTest extends MessagesCase {
+
+  private static final String BASE64_ENCODED = "SlVMSUVUICBBeSBtZSEKUk9NRU8gICBTaGUgc3BlYWtzOgogICAgICAgIE8sIHNwZWFrIGFnYWluLCBicmlnaHQgYW5nZWwhIGZvciB0aG91IGFydAogICAgICAgIEFzIGdsb3Jpb3VzIHRvIHRoaXMgbmlnaHQsIGJlaW5nIG8nZXIgbXkgaGVhZAogICAgICAgIEFzIGlzIGEgd2luZ2VkIG1lc3NlbmdlciBvZiBoZWF2ZW4KICAgICAgICBVbnRvIHRoZSB3aGl0ZS11cHR1cm5lZCB3b25kZXJpbmcgZXllcwogICAgICAgIE9mIG1vcnRhbHMgdGhhdCBmYWxsIGJhY2sgdG8gZ2F6ZSBvbiBoaW0KICAgICAgICBXaGVuIGhlIGJlc3RyaWRlcyB0aGUgbGF6eS1wYWNpbmcgY2xvdWRzCiAgICAgICAgQW5kIHNhaWxzIHVwb24gdGhlIGJvc29tIG9mIHRoZSBhaXIuCkpVTElFVCAgTyBSb21lbywgUm9tZW8hIHdoZXJlZm9yZSBhcnQgdGhvdSBSb21lbz8KICAgICAgICBEZW55IHRoeSBmYXRoZXIgYW5kIHJlZnVzZSB0aHkgbmFtZTsKICAgICAgICBPciwgaWYgdGhvdSB3aWx0IG5vdCwgYmUgYnV0IHN3b3JuIG15IGxvdmUsCiAgICAgICAgQW5kIEknbGwgbm8gbG9uZ2VyIGJlIGEgQ2FwdWxldC4KICAtLSBXaWxsaWFtIFNoYWtlc3BlYXJlLCBSb21lbyBhbmQgSnVsaWV0LCBBY3QgSUksIFNjZW5lIElJCg==";
 
   @Test
   public void testEmptyConstructor() throws Exception{
@@ -56,6 +64,15 @@ public class TestMessageProviderTest extends MessagesCase {
     TestMessageProvider m = new TestMessageProvider();
     m.setPayloadProvider(new InlinePayloadProvider());
     assertTrue(m.getPayloadProvider() instanceof InlinePayloadProvider);
+  }
+
+  @Test
+  public void testBase64FilePayloadProvider() throws Exception {
+    String path = getClass().getClassLoader().getResource("base64-test.txt").getFile();
+    TestMessageProvider p = new TestMessageProvider(new EmptyMetadataProvider(), new FilePayloadProvider(path));
+    TestMessage m = p.createTestMessage(new ServiceTestConfig());
+    assertEquals(BASE64_ENCODED, m.getPayload());
+    assertEquals("BASE64", m.getMessageHeaders().get("_interlokMessageSerialization"));
   }
 
   @Override
