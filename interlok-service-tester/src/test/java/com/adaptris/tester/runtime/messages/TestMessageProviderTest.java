@@ -19,9 +19,11 @@ package com.adaptris.tester.runtime.messages;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.adaptris.core.CoreConstants;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
+import com.adaptris.util.text.mime.MimeConstants;
 import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
@@ -72,7 +74,7 @@ public class TestMessageProviderTest extends MessagesCase {
     TestMessageProvider p = new TestMessageProvider(new EmptyMetadataProvider(), new FilePayloadProvider(path));
     TestMessage m = p.createTestMessage(new ServiceTestConfig());
     assertEquals(BASE64_ENCODED, m.getPayload());
-    assertEquals("BASE64", m.getMessageHeaders().get("_interlokMessageSerialization"));
+    assertEquals(MimeConstants.ENCODING_BASE64, m.getMessageHeaders().get(CoreConstants.SERIALIZED_MESSAGE_ENCODING));
   }
 
   @Override
