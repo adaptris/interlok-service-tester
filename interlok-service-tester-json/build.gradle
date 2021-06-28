@@ -5,14 +5,14 @@ ext {
 }
 
 dependencies {
-  compile project(":interlok-service-tester")
-  compile ("org.skyscreamer:jsonassert:1.5.0") {
+  api project(":interlok-service-tester")
+  api ("org.skyscreamer:jsonassert:1.5.0") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
-  compile ("org.json:json:20210307")
-  compile ("com.jayway.jsonpath:json-path:2.6.0")
-  compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-  compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+  api ("org.json:json:20210307")
+  api ("com.jayway.jsonpath:json-path:2.6.0")
+  api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+  api ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
@@ -92,6 +92,7 @@ javadoc {
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.tags('apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:','implNote:a:Implementation Note:')
     options.addStringOption "tagletpath", configurations.javadoc.asPath
+    options.addStringOption('Xdoclint:none', '-quiet')
     options.addBooleanOption "-no-module-directories", true
     options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
       group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
@@ -123,6 +124,7 @@ task umlJavadoc(type: Javadoc) {
       group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
+    options.addStringOption('Xdoclint:none', '-quiet')
     options.addBooleanOption "-no-module-directories", true
     exclude "com/adaptris/taglet/**"
     options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
