@@ -23,6 +23,8 @@ import com.adaptris.tester.utils.FsHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+import java.util.Base64;
+
 /**
  *
  * @service-test-config file-payload-provider
@@ -47,7 +49,7 @@ public class FilePayloadProvider extends PayloadProvider {
   public void init(ServiceTestConfig config) throws MessageException{
     try {
       final byte[] fileContents = FsHelper.getFileBytes(file, config);
-      setPayload(new String(fileContents));
+      setPayload(Base64.getEncoder().encodeToString(fileContents));
     } catch (Exception e) {
       throw new MessageException("Failed to read file", e);
     }
