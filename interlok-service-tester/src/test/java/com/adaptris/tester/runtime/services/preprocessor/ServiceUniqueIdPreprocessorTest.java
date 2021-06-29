@@ -34,11 +34,11 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   private static final String EXPECTED_MULTI = "<service-list><unique-id>service-2</unique-id><services><add-metadata-service><unique-id>add-metadata</unique-id><metadata-element><key>key2</key><value>value2</value></metadata-element></add-metadata-service></services></service-list>";
   private static final String EXPECTED_MULTI_ADD = "<add-metadata-service><unique-id>add-metadata</unique-id><metadata-element><key>key2</key><value>value2</value></metadata-element></add-metadata-service>";
 
-  private static final String CHANNEL_WORKFLOW_SINGLE_SERVICE_XPATH = "//channel-list/*[unique-id = 'channel-1']/workflow-list/*[unique-id = 'workflow-1']/service-collection/services/*[unique-id = 'service-1']";
-  private static final String CHANNEL_WORKFLOW_MULTI_SERVICE_XPATH = CHANNEL_WORKFLOW_SINGLE_SERVICE_XPATH + "/services/*[unique-id = 'service-2']";
+  private static final String CHANNEL_WORKFLOW_SINGLE_SERVICE_XPATH = "//channel-list/*[unique-id = 'channel-1']/workflow-list/*[unique-id = 'workflow-1']/service-collection/services//*[unique-id = 'service-1']";
+  private static final String CHANNEL_WORKFLOW_MULTI_SERVICE_XPATH = CHANNEL_WORKFLOW_SINGLE_SERVICE_XPATH + "/services//*[unique-id = 'service-2']";
 
-  private static final String WORKFLOW_SINGLE_SERVICE_XPATH = "//workflow-list/*[unique-id = 'workflow-1']/service-collection/services/*[unique-id = 'service-1']";
-  private static final String WORKFLOW_MULTI_SERVICE_XPATH = WORKFLOW_SINGLE_SERVICE_XPATH + "/services/*[unique-id = 'service-2']";
+  private static final String WORKFLOW_SINGLE_SERVICE_XPATH = "//workflow-list/*[unique-id = 'workflow-1']/service-collection/services//*[unique-id = 'service-1']";
+  private static final String WORKFLOW_MULTI_SERVICE_XPATH = WORKFLOW_SINGLE_SERVICE_XPATH + "/services//*[unique-id = 'service-2']";
 
   private static final String SINGLE_SERVICE_XPATH = "//*[unique-id = 'service-1']";
   private static final String MULTI_SERVICE_XPATH = SINGLE_SERVICE_XPATH + "/services/*[unique-id = 'service-2']";
@@ -87,7 +87,7 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
       preprocessor.execute(ADAPTER_XML, new ServiceTestConfig());
       fail();
     } catch (PreprocessorException e) {
-      assertEquals("Failed to find service: channel: [channel-1] workflow: [workflow-1] services: [[service-no-match]] xpath [//channel-list/*[unique-id = 'channel-1']/workflow-list/*[unique-id = 'workflow-1']/service-collection/services/*[unique-id = 'service-no-match']]", e.getMessage());
+      assertEquals("Failed to find service: channel: [channel-1] workflow: [workflow-1] services: [[service-no-match]] xpath [//channel-list/*[unique-id = 'channel-1']/workflow-list/*[unique-id = 'workflow-1']/service-collection/services//*[unique-id = 'service-no-match']]", e.getMessage());
     }
   }
 

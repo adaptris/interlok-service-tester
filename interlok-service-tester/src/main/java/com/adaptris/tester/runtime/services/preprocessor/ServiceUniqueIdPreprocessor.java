@@ -87,15 +87,21 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
   String generateXpath(){
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("/");
+    boolean extraSlash = false;
     if(getChannel() != null) {
       stringBuilder.append(String.format(CHANNEL_FORMAT, getChannel()));
+      extraSlash = true;
     }
     if(getWorkflow() != null) {
       stringBuilder.append(String.format(WORKFLOW_FORMAT, getWorkflow()));
+      extraSlash = true;
     }
     Iterator<String> services = getServices().iterator();
     while (services.hasNext()){
       String service = services.next();
+      if (extraSlash) {
+        stringBuilder.append("/");
+      }
       stringBuilder.append(String.format(SERVICES_FORMAT, service));
       if(services.hasNext()){
         stringBuilder.append(SERVICES);
