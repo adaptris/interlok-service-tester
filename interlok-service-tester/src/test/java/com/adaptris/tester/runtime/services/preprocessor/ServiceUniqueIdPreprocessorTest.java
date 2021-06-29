@@ -43,6 +43,10 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   private static final String SINGLE_SERVICE_XPATH = "//*[unique-id = 'service-1']";
   private static final String MULTI_SERVICE_XPATH = SINGLE_SERVICE_XPATH + "/services/*[unique-id = 'service-2']";
 
+  private static final String ADAPTER_XML_WITH_CONDITION = "<adapter><channel-list><channel><unique-id>channel</unique-id><workflow-list><standard-workflow><unique-id>workflow</unique-id><service-collection class=\"service-list\"><unique-id>serene-fermi</unique-id><services><switch><unique-id>switch</unique-id><case><condition class=\"metadata\"><operator class=\"metadata-ends-with-ignore-case\"><result-key>comparison-result-json</result-key><value>.json</value><ignore-case>true</ignore-case></operator><metadata-key>originalname</metadata-key></condition><service class=\"service-list\"><unique-id>json-case</unique-id><services><logging-service><unique-id>log-json</unique-id><log-level>DEBUG</log-level><text>Processing JSON file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-json</unique-id><metadata-element><key>action</key><value>json</value></metadata-element></add-metadata-service></services></service></case><case><condition class=\"metadata\"><operator class=\"metadata-ends-with-ignore-case\"><result-key>comparison-result-xml</result-key><value>.xml</value><ignore-case>true</ignore-case></operator><metadata-key>originalname</metadata-key></condition><service class=\"service-list\"><unique-id>xml-case</unique-id><services><logging-service><unique-id>log-xml</unique-id><log-level>DEBUG</log-level><text>Processing XML file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-xml</unique-id><metadata-element><key>action</key><value>xml</value></metadata-element></add-metadata-service></services></service></case><case><condition class=\"case-default\"/><service class=\"service-list\"><unique-id>default-case</unique-id><services><logging-service><unique-id>log-file</unique-id><log-level>DEBUG</log-level><text>Processing unknown file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-default</unique-id><metadata-element><key>action</key><value>default</value></metadata-element></add-metadata-service></services></service></case></switch></services></service-collection></standard-workflow></workflow-list></channel></channel-list></adapter>";
+  private static final String SERVICE_IN_CONDITION_1 = "<service class=\"service-list\"><unique-id>json-case</unique-id><services><logging-service><unique-id>log-json</unique-id><log-level>DEBUG</log-level><text>Processing JSON file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-json</unique-id><metadata-element><key>action</key><value>json</value></metadata-element></add-metadata-service></services></service>";
+  private static final String SERVICE_IN_CONDITION_2 = "<service class=\"service-list\"><unique-id>xml-case</unique-id><services><logging-service><unique-id>log-xml</unique-id><log-level>DEBUG</log-level><text>Processing XML file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-xml</unique-id><metadata-element><key>action</key><value>xml</value></metadata-element></add-metadata-service></services></service>";
+
   @Test
   public void testExecute() throws Exception{
     ServiceUniqueIdPreprocessor preprocessor;
@@ -78,6 +82,15 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
     //Shows it works and returns first
     preprocessor = new ServiceUniqueIdPreprocessor(Collections.singletonList("add-metadata"));
     assertEquals(EXPECTED_SINGLE_ADD, preprocessor.execute(ADAPTER_XML, new ServiceTestConfig()));
+  }
+
+  @Test
+  public void testServiceInCondition() throws Exception {
+    ServiceUniqueIdPreprocessor preprocessor = new ServiceUniqueIdPreprocessor("channel", "workflow", Collections.singletonList("json-case"));
+    assertEquals(SERVICE_IN_CONDITION_1, preprocessor.execute(ADAPTER_XML_WITH_CONDITION, new ServiceTestConfig()));
+
+    preprocessor = new ServiceUniqueIdPreprocessor(Collections.singletonList("xml-case"));
+    assertEquals(SERVICE_IN_CONDITION_2, preprocessor.execute(ADAPTER_XML_WITH_CONDITION, new ServiceTestConfig()));
   }
 
   @Test
