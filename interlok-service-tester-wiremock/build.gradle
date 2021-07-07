@@ -1,7 +1,7 @@
 ext {
   componentName='Interlok Service Tester/Wiremock'
   componentDesc="Wiremock boostrapper for service-tester"
-  jacksonVersion='2.12.3'
+  jacksonVersion='2.12.4'
 }
 
 dependencies {
