@@ -47,7 +47,7 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
   private static final String CHANNEL_FORMAT = "/channel-list/*[unique-id = '%s']";
   private static final String WORKFLOW_FORMAT = "/workflow-list/*[unique-id = '%s']/service-collection/services";
   private static final String SERVICES_FORMAT = "/*[unique-id = '%s']";
-  private static final String SERVICES = "/services";
+  private static final String SERVICES = "/*[self::services or self::case or self::then or self::otherwise]";
 
   private String channel;
   private String workflow;
@@ -87,21 +87,15 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
   String generateXpath(){
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("/");
-    boolean extraSlash = false;
     if(getChannel() != null) {
       stringBuilder.append(String.format(CHANNEL_FORMAT, getChannel()));
-      extraSlash = true;
     }
     if(getWorkflow() != null) {
       stringBuilder.append(String.format(WORKFLOW_FORMAT, getWorkflow()));
-      extraSlash = true;
     }
     Iterator<String> services = getServices().iterator();
     while (services.hasNext()){
       String service = services.next();
-      if (extraSlash) {
-        stringBuilder.append("/");
-      }
       stringBuilder.append(String.format(SERVICES_FORMAT, service));
       if(services.hasNext()){
         stringBuilder.append(SERVICES);
