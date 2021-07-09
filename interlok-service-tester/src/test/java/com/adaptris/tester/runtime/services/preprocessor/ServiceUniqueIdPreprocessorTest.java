@@ -12,15 +12,19 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.Collections;
+
 import org.junit.Test;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 
 /**
@@ -46,6 +50,10 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
   private static final String ADAPTER_XML_WITH_CONDITION = "<adapter><channel-list><channel><unique-id>channel</unique-id><workflow-list><standard-workflow><unique-id>workflow</unique-id><service-collection class=\"service-list\"><unique-id>serene-fermi</unique-id><services><switch><unique-id>switch</unique-id><case><condition class=\"metadata\"><operator class=\"metadata-ends-with-ignore-case\"><result-key>comparison-result-json</result-key><value>.json</value><ignore-case>true</ignore-case></operator><metadata-key>originalname</metadata-key></condition><service class=\"service-list\"><unique-id>json-case</unique-id><services><logging-service><unique-id>log-json</unique-id><log-level>DEBUG</log-level><text>Processing JSON file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-json</unique-id><metadata-element><key>action</key><value>json</value></metadata-element></add-metadata-service></services></service></case><case><condition class=\"metadata\"><operator class=\"metadata-ends-with-ignore-case\"><result-key>comparison-result-xml</result-key><value>.xml</value><ignore-case>true</ignore-case></operator><metadata-key>originalname</metadata-key></condition><service class=\"service-list\"><unique-id>xml-case</unique-id><services><logging-service><unique-id>log-xml</unique-id><log-level>DEBUG</log-level><text>Processing XML file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-xml</unique-id><metadata-element><key>action</key><value>xml</value></metadata-element></add-metadata-service></services></service></case><case><condition class=\"case-default\"/><service class=\"service-list\"><unique-id>default-case</unique-id><services><logging-service><unique-id>log-file</unique-id><log-level>DEBUG</log-level><text>Processing unknown file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-default</unique-id><metadata-element><key>action</key><value>default</value></metadata-element></add-metadata-service></services></service></case></switch></services></service-collection></standard-workflow></workflow-list></channel></channel-list></adapter>";
   private static final String SERVICE_IN_CONDITION_1 = "<service class=\"service-list\"><unique-id>json-case</unique-id><services><logging-service><unique-id>log-json</unique-id><log-level>DEBUG</log-level><text>Processing JSON file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-json</unique-id><metadata-element><key>action</key><value>json</value></metadata-element></add-metadata-service></services></service>";
   private static final String SERVICE_IN_CONDITION_2 = "<service class=\"service-list\"><unique-id>xml-case</unique-id><services><logging-service><unique-id>log-xml</unique-id><log-level>DEBUG</log-level><text>Processing XML file</text></logging-service><add-metadata-service><unique-id>set-metadata-action-xml</unique-id><metadata-element><key>action</key><value>xml</value></metadata-element></add-metadata-service></services></service>";
+
+  private static final String ADAPTER_XML_WITH_IF_THEN = "<adapter><channel-list><channel><unique-id>channel</unique-id><workflow-list><standard-workflow><unique-id>workflow</unique-id><service-collection class=\"service-list\"><unique-id>serene-fermi</unique-id><services><if-then-otherwise><unique-id>if-else</unique-id><condition class=\"expression\"><algorithm>%message{myKey} == 1</algorithm></condition><then><logging-service><unique-id>log-if</unique-id><log-level>DEBUG</log-level><text>value of keyKey is 1</text></logging-service></then><otherwise><logging-service><unique-id>log-else</unique-id><log-level>DEBUG</log-level><text>value of keyKey is not 1</text></logging-service></otherwise></if-then-otherwise></services></service-collection></standard-workflow></workflow-list></channel></channel-list></adapter>";
+  private static final String EXPECTED_SERVICE_IN_IF = "<logging-service><unique-id>log-if</unique-id><log-level>DEBUG</log-level><text>value of keyKey is 1</text></logging-service>";
+  private static final String EXPECTED_SERVICE_IN_ELSE = "<logging-service><unique-id>log-else</unique-id><log-level>DEBUG</log-level><text>value of keyKey is not 1</text></logging-service>";
 
   @Test
   public void testExecute() throws Exception{
@@ -91,6 +99,26 @@ public class ServiceUniqueIdPreprocessorTest extends PreprocessorCase {
 
     preprocessor = new ServiceUniqueIdPreprocessor(Arrays.asList("switch", "xml-case"));
     assertEquals(SERVICE_IN_CONDITION_2, preprocessor.execute(ADAPTER_XML_WITH_CONDITION, new ServiceTestConfig()));
+  }
+
+  @Test
+  public void testServiceInIfElse() throws Exception {
+    ServiceUniqueIdPreprocessor preprocessor = new ServiceUniqueIdPreprocessor("channel", "workflow", Arrays.asList("if-else", "log-if"));
+    assertEquals(EXPECTED_SERVICE_IN_IF, preprocessor.execute(ADAPTER_XML_WITH_IF_THEN, new ServiceTestConfig()));
+
+    preprocessor = new ServiceUniqueIdPreprocessor("channel", "workflow", Arrays.asList("if-else", "log-else"));
+    assertEquals(EXPECTED_SERVICE_IN_ELSE, preprocessor.execute(ADAPTER_XML_WITH_IF_THEN, new ServiceTestConfig()));
+  }
+
+  @Test
+  public void testServiceInIfElseCantFindService() throws Exception {
+    // The parent service is missing in the list, won't find anything
+    ServiceUniqueIdPreprocessor preprocessor = new ServiceUniqueIdPreprocessor("channel", "workflow", Arrays.asList("log-else"));
+    PreprocessorException exception = assertThrows(PreprocessorException.class,
+        () -> preprocessor.execute(ADAPTER_XML_WITH_IF_THEN, new ServiceTestConfig()));
+    assertEquals(
+        "Failed to find service: channel: [channel] workflow: [workflow] services: [[log-else]] xpath [//channel-list/*[unique-id = 'channel']/workflow-list/*[unique-id = 'workflow']/service-collection/services/*[unique-id = 'log-else']]",
+        exception.getMessage());
   }
 
   @Test
