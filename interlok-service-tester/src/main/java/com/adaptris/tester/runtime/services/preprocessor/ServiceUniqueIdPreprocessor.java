@@ -47,7 +47,7 @@ public class ServiceUniqueIdPreprocessor implements Preprocessor {
   private static final String CHANNEL_FORMAT = "/channel-list/*[unique-id = '%s']";
   private static final String WORKFLOW_FORMAT = "/workflow-list/*[unique-id = '%s']/service-collection/services";
   private static final String SERVICES_FORMAT = "/*[unique-id = '%s']";
-  private static final String SERVICES = "/services";
+  private static final String SERVICES = "/*[self::services or self::case or self::then or self::otherwise]";
 
   private String channel;
   private String workflow;
