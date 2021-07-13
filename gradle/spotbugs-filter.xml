@@ -11,4 +11,12 @@
     </Not>
   </Match>
 
+  <Match>
+	<Class name="com.adaptris.adaptergui.service.PortManager" />
+    <Not>
+      <!-- Ignore Random used only once bugs -->
+      <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE" />
+    </Not>
+  </Match>
+
 </FindBugsFilter>
