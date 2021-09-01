@@ -1,7 +1,7 @@
 ext {
   componentName='Interlok Service Tester/JSON'
   componentDesc="JSON Assertions for service-tester"
- jacksonVersion='2.12.4'
+ jacksonVersion='2.12.5'
 }
 
 dependencies {
