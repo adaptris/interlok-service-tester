@@ -16,11 +16,14 @@
 
 package com.adaptris.tester.runtime.messages;
 
+import com.adaptris.core.CoreConstants;
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.MetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.EmptyPayloadProvider;
+import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
+import com.adaptris.util.text.mime.MimeConstants;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -64,6 +67,10 @@ public class TestMessageProvider {
   public TestMessage createTestMessage(ServiceTestConfig config) throws MessageException {
     getMetadataProvider().init(config);
     getPayloadProvider().init(config);
-    return new TestMessage(getMetadataProvider().getMessageHeaders(), getPayloadProvider().getPayload());
+    TestMessage message = new TestMessage(getMetadataProvider().getMessageHeaders(), getPayloadProvider().getPayload());
+    if (getPayloadProvider() instanceof FilePayloadProvider) {
+      message.addMessageHeader(CoreConstants.SERIALIZED_MESSAGE_ENCODING, MimeConstants.ENCODING_BASE64);
+    }
+    return message;
   }
 }

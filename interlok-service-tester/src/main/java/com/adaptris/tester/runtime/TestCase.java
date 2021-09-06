@@ -118,8 +118,7 @@ public class TestCase implements UniqueIdAwareTestComponent {
     }
     long startTime = System.nanoTime();
     try {
-      TestMessage input;
-      input = getInputMessageProvider().createTestMessage(config);
+      TestMessage input = getInputMessageProvider().createTestMessage(config);
       TestMessage returnMessage = client.applyService(serviceToTest.getProcessedSource(config), input);
       if(getExpectedException() != null){
         //Exception should have been thrown

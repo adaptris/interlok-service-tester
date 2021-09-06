@@ -12,24 +12,18 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
 package com.adaptris.tester;
 
-import com.adaptris.core.ExampleConfigCase;
+import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 
-public abstract class STExampleConfigCase extends ExampleConfigCase {
+public abstract class STExampleConfigCase extends ExampleConfigGenerator {
 
   @Override
   protected String createExampleXml(Object object) throws Exception {
     String result = getExampleCommentHeader(object);
     result = result + configMarshaller.marshal(object);
     return result;
-  }
-
-
-  @Override
-  public boolean isAnnotatedForJunit4() {
-    return true;
   }
 
 }

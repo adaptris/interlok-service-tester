@@ -4,8 +4,8 @@ ext {
 }
 
 dependencies {
-  compile project(":interlok-service-tester")
-  compile ("xmlunit:xmlunit:1.6")
+  api project(":interlok-service-tester")
+  api ("xmlunit:xmlunit:1.6")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
@@ -84,6 +84,7 @@ javadoc {
     options.linksOffline(interlokCommonJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-common-$interlokCoreVersion-javadoc.jar")
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
+    options.addStringOption('Xdoclint:none', '-quiet')
     options.addBooleanOption "-no-module-directories", true
     options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
       group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
@@ -115,6 +116,7 @@ task umlJavadoc(type: Javadoc) {
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
     options.addBooleanOption "-no-module-directories", true
+    options.addStringOption('Xdoclint:none', '-quiet')
     exclude "com/adaptris/taglet/**"
     options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
     options.addStringOption "umlImageFormat", "SVG"
