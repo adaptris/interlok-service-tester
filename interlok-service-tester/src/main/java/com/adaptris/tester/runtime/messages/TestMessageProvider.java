@@ -26,6 +26,10 @@ import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
 import com.adaptris.util.text.mime.MimeConstants;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @service-test-config test-message-provider
@@ -67,10 +71,15 @@ public class TestMessageProvider {
   public TestMessage createTestMessage(ServiceTestConfig config) throws MessageException {
     getMetadataProvider().init(config);
     getPayloadProvider().init(config);
-    TestMessage message = new TestMessage(getMetadataProvider().getMessageHeaders(), getPayloadProvider().getPayload());
-    if (getPayloadProvider() instanceof FilePayloadProvider) {
-      message.addMessageHeader(CoreConstants.SERIALIZED_MESSAGE_ENCODING, MimeConstants.ENCODING_BASE64);
+    Map<String, String> headers = getMetadataProvider().getMessageHeaders();
+    if (getPayloadProvider() instanceof FilePayloadProvider)
+    { // The map seems to want to be unmodifiable, but we need to
+      // sneakily indicate that the message is binary data that's been
+      // base-64 encoded.
+      headers = new HashMap<>(headers);
+      headers.put(CoreConstants.SERIALIZED_MESSAGE_ENCODING, MimeConstants.ENCODING_BASE64);
+      headers = Collections.unmodifiableMap(headers);
     }
-    return message;
+    return new TestMessage(headers, getPayloadProvider().getPayload());
   }
 }
