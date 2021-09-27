@@ -15,7 +15,7 @@ dependencies {
   api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   api ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
   api ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-  implementation ("com.google.guava:guava:30.1.1-jre")
+  implementation ("com.google.guava:guava:31.0-jre")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 }
