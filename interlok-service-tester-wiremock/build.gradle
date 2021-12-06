@@ -1,12 +1,12 @@
 ext {
   componentName='Interlok Service Tester/Wiremock'
   componentDesc="Wiremock boostrapper for service-tester"
-  jacksonVersion='2.12.4'
+  jacksonVersion='2.13.0'
 }
 
 dependencies {
   api project(":interlok-service-tester")
-  api ("com.github.tomakehurst:wiremock-jre8:2.29.1") {
+  api ("com.github.tomakehurst:wiremock-jre8:2.31.0") {
     exclude group: 'com.google.guava', module: 'guava'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
@@ -15,7 +15,7 @@ dependencies {
   api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   api ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
   api ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-  implementation ("com.google.guava:guava:30.1.1-jre")
+  implementation ("com.google.guava:guava:31.0.1-jre")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 }
