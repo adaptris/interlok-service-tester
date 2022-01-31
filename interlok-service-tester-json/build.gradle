@@ -10,7 +10,7 @@ dependencies {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
   api ("org.json:json:20211205")
-  api ("com.jayway.jsonpath:json-path:2.6.0")
+  api ("com.jayway.jsonpath:json-path:2.7.0")
   api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   api ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
 
