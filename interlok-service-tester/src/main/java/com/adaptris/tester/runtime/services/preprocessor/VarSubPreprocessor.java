@@ -19,7 +19,6 @@ package com.adaptris.tester.runtime.services.preprocessor;
 import static com.adaptris.tester.runtime.ServiceTestConfig.SERVICE_TESTER_WORKING_DIRECTORY;
 import static com.adaptris.tester.runtime.services.preprocessor.Preprocessor.wrapException;
 
-import com.adaptris.core.CoreException;
 import com.adaptris.core.varsub.Constants;
 import com.adaptris.core.varsub.VariableSubstitutionPreProcessor;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -64,8 +63,8 @@ public class VarSubPreprocessor implements Preprocessor {
     try {
       VariableSubstitutionPreProcessor processor = new VariableSubstitutionPreProcessor(createPropertyFileSet(config));
       return processor.process(input);
-    } catch (CoreException e) {
-      throw Preprocessor.wrapException("Failed to substitute variables", e);
+    } catch (Exception e) {
+      throw wrapException("Failed to substitute variables", e);
     }
   }
 
@@ -76,27 +75,21 @@ public class VarSubPreprocessor implements Preprocessor {
   // Create a
   // service.tester.working.directory=XXXX property so we can refer to it
   // if it's not already been defined.
-  private File createServiceTesterWorkingDirProperty(ServiceTestConfig config) throws PreprocessorException {
-    File result;
-
-    try {
-      result =createTrackedFile(this);
-      Properties properties = new Properties();
-      properties.put(SERVICE_TESTER_WORKING_DIRECTORY, config.workingDirectory.getAbsolutePath());
-      try (FileOutputStream out = new FileOutputStream(result)) {
-        properties.store(out, "");
-      }
-    } catch (Exception e) {
-      throw Preprocessor.wrapException(e);
+  private File createServiceTesterWorkingDirProperty(ServiceTestConfig config) throws Exception {
+    File result =createTrackedFile(this);
+    Properties properties = new Properties();
+    properties.put(SERVICE_TESTER_WORKING_DIRECTORY, config.workingDirectory.getAbsolutePath());
+    try (FileOutputStream out = new FileOutputStream(result)) {
+      properties.store(out, "");
     }
     return result;
   }
 
   private KeyValuePairSet createPropertyFileSet(ServiceTestConfig config) throws PreprocessorException {
-    if (propertyFile.size() == 0) {
-      throw new PreprocessorException("At least one properties file must be set");
-    }
     try {
+      if (propertyFile.size() == 0) {
+        throw new PreprocessorException("At least one properties file must be set");
+      }
       KeyValuePairSet kvp = new KeyValuePairSet();
       kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + ".00",
           "file:///" + createServiceTesterWorkingDirProperty(config).getAbsolutePath()));
