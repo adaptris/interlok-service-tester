@@ -157,9 +157,9 @@ subprojects { subproject ->
 
     api ("com.adaptris:interlok-core:$interlokCoreVersion") {changing= true}
     api ("com.adaptris:interlok-common:$interlokCoreVersion") {changing= true}
-    api ("org.slf4j:slf4j-api:$slf4jVersion")
     api files("${System.getProperty('java.home')}/../lib/tools.jar")
 
+    implementation ("org.slf4j:slf4j-api:$slf4jVersion")
     annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
     testAnnotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
     testImplementation ('junit:junit:4.13.2')

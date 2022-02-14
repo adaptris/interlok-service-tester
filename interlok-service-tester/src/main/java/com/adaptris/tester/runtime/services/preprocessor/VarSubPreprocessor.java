@@ -16,6 +16,8 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import static com.adaptris.tester.runtime.ServiceTestConfig.SERVICE_TESTER_WORKING_DIRECTORY;
+import static com.adaptris.tester.runtime.services.preprocessor.Preprocessor.wrapException;
 
 import com.adaptris.core.CoreException;
 import com.adaptris.core.varsub.Constants;
@@ -26,12 +28,16 @@ import com.adaptris.util.KeyValuePair;
 import com.adaptris.util.KeyValuePairSet;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.io.FileCleaningTracker;
+import org.apache.commons.io.FileDeleteStrategy;
 
 /**
  *
@@ -39,12 +45,15 @@ import java.util.List;
  */
 @XStreamAlias("variable-substitution-preprocessor")
 public class VarSubPreprocessor implements Preprocessor {
+  private static transient final FileCleaningTracker cleaner = new FileCleaningTracker();
 
   @XStreamImplicit(itemFieldName = "property-file")
+  @Getter
+  @Setter
   private List<String> propertyFile;
 
   public VarSubPreprocessor(){
-    setPropertyFile(new ArrayList<String>());
+    setPropertyFile(new ArrayList<>());
   }
 
   /**
@@ -56,35 +65,61 @@ public class VarSubPreprocessor implements Preprocessor {
       VariableSubstitutionPreProcessor processor = new VariableSubstitutionPreProcessor(createPropertyFileSet(config));
       return processor.process(input);
     } catch (CoreException e) {
-      throw new PreprocessorException("Failed to substitute variables", e);
+      throw Preprocessor.wrapException("Failed to substitute variables", e);
     }
-  }
-
-  public void setPropertyFile(List<String> propertyFile) {
-    this.propertyFile = propertyFile;
-  }
-
-  public List<String> getPropertyFile() {
-    return propertyFile;
   }
 
   public void addPropertyFile(String propertyFile){
     this.propertyFile.add(propertyFile);
   }
 
-  private KeyValuePairSet createPropertyFileSet(ServiceTestConfig config) throws PreprocessorException{
-    if (propertyFile.size() == 0){
+  // Create a
+  // service.tester.working.directory=XXXX property so we can refer to it
+  // if it's not already been defined.
+  private File createServiceTesterWorkingDirProperty(ServiceTestConfig config) throws PreprocessorException {
+    File result;
+
+    try {
+      result =createTrackedFile(this);
+      Properties properties = new Properties();
+      properties.put(SERVICE_TESTER_WORKING_DIRECTORY, config.workingDirectory.getAbsolutePath());
+      try (FileOutputStream out = new FileOutputStream(result)) {
+        properties.store(out, "");
+      }
+    } catch (Exception e) {
+      throw Preprocessor.wrapException(e);
+    }
+    return result;
+  }
+
+  private KeyValuePairSet createPropertyFileSet(ServiceTestConfig config) throws PreprocessorException {
+    if (propertyFile.size() == 0) {
       throw new PreprocessorException("At least one properties file must be set");
     }
     try {
       KeyValuePairSet kvp = new KeyValuePairSet();
+      kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + ".00",
+          "file:///" + createServiceTesterWorkingDirProperty(config).getAbsolutePath()));
       for (int i = 0; i < propertyFile.size(); i++) {
         File file = FsHelper.createFile(propertyFile.get(i), config);
-        kvp.addKeyValuePair(new KeyValuePair(Constants.VARSUB_PROPERTIES_URL_KEY + "." + i, "file:///" + file.getAbsolutePath()));
+        // flip out the index to be 1-based because we already have .0
+        // Also are we going to have > 10 property files, well we might, but > 99 ?
+        String key = String.format("%s.%02d", Constants.VARSUB_PROPERTIES_URL_KEY, i+1);
+        kvp.addKeyValuePair(new KeyValuePair(key, "file:///" + file.getAbsolutePath()));
       }
       return kvp;
-    } catch (CoreException | IOException | URISyntaxException e) {
-      throw new PreprocessorException("Failed to create varsub path", e);
+    } catch (Exception e) {
+      throw wrapException("Failed to create varsub path", e);
     }
+  }
+
+  private static File createTrackedFile(Object tracker) throws IOException {
+    File f = File.createTempFile("VarSubPreprocessor", "", null);
+    return trackFile(f, tracker);
+  }
+
+  private static File trackFile(File f, Object tracker) {
+    cleaner.track(f, tracker, FileDeleteStrategy.FORCE);
+    return f;
   }
 }
