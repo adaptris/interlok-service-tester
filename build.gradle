@@ -5,6 +5,7 @@ plugins {
   id 'com.github.spotbugs' version '5.0.5' apply false
   id 'org.owasp.dependencycheck' version '6.5.3' apply false
   id 'nebula.optional-base' version '7.0.0' apply false
+  id "io.freefair.lombok" version "6.4.0" apply false
 }
 
 ext {
@@ -103,12 +104,14 @@ subprojects { subproject ->
   apply plugin: 'com.github.spotbugs'
   apply plugin: 'org.owasp.dependencycheck'
   apply plugin: 'nebula.optional-base'
+  apply plugin: "io.freefair.lombok"
 
   sourceCompatibility = JavaVersion.VERSION_11
   targetCompatibility = JavaVersion.VERSION_11
   group   = 'com.adaptris'
   version = releaseVersion
   def versionDir = "$buildDir/version"
+  lombok.disableConfig = true
 
   repositories {
     mavenCentral()
@@ -236,10 +239,6 @@ subprojects { subproject ->
     }
   }
 
-  task deleteGeneratedFiles(type: Delete) {
-    delete file(testResourcesDir() + "/unit-tests.properties"), file(testResourcesDir() + "/unit-tests.properties.resolved")
-  }
-
   spotbugsMain {
     effort = "max"
     reportLevel = "high"
@@ -280,6 +279,14 @@ subprojects { subproject ->
       }
   }
 
+  task lgtmCompile(type: JavaCompile, dependsOn: delombok) {
+    group 'Build'
+    description 'Compile for lgtm'
+
+    source = sourceSets.main.extensions.delombokTask
+    destinationDirectory= sourceSets.main.java.classesDirectory
+    classpath = project.sourceSets.main.compileClasspath
+  }
+
   check.dependsOn jacocoTestReport
-  clean.dependsOn deleteGeneratedFiles
 }
