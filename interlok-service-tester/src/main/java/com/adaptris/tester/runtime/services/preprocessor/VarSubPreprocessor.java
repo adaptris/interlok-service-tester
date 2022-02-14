@@ -114,7 +114,7 @@ public class VarSubPreprocessor implements Preprocessor {
   }
 
   private static File createTrackedFile(Object tracker) throws IOException {
-    File f = File.createTempFile("VarSubPreprocessor", "", null);
+    File f = File.createTempFile("interlok-stwd", "", null);
     return trackFile(f, tracker);
   }
 
