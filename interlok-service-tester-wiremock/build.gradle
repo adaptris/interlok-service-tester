@@ -1,6 +1,7 @@
 ext {
   componentName='Interlok Service Tester/Wiremock'
   componentDesc="Wiremock boostrapper for service-tester"
+  delombokTargetDir = new File("${project.projectDir}/src/main/generated")
   jacksonVersion='2.13.1'
 }
 
@@ -27,13 +28,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.main.allSource
+    from sourceSets.main.extensions.delombokTask
 }
 
-task examplesJar(type: Jar, dependsOn: test) {
-  classifier = 'examples'
-  from new File(buildDir, '/examples')
-}
 
 jar {
   manifest {
@@ -48,7 +45,6 @@ jar {
 artifacts {
   archives javadocJar
   archives sourcesJar
-  archives examplesJar
 }
 
 publishing {
@@ -58,7 +54,6 @@ publishing {
 
       artifact javadocJar { classifier "javadoc" }
       artifact sourcesJar { classifier "sources" }
-      artifact examplesJar { classifier "examples" }
 
       pom.withXml {
         asNode().appendNode("name", componentName)
@@ -112,7 +107,7 @@ task umlJavadoc(type: Javadoc) {
   onlyIf {
     hasGraphViz()
   }
-  source = sourceSets.main.allJava
+  source = sourceSets.main.extensions.delombokTask
   classpath = project.sourceSets.main.compileClasspath
   configure(options) {
     options.linksOffline(interlokJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-core-$interlokCoreVersion-javadoc.jar")
@@ -146,6 +141,15 @@ task umlJavadoc(type: Javadoc) {
     options.addStringOption "umlIncludeProtectedInnerClasses","false"
   }
 }
+task deleteGeneratedFiles(type: Delete) {
+  delete file(testResourcesDir() + "/unit-tests.properties"), file(testResourcesDir() + "/unit-tests.properties.resolved")
+  delete delombokTargetDir, "derby.log"
+}
 
+delombok {
+  target = delombokTargetDir
+}
+
+clean.dependsOn deleteGeneratedFiles
 javadoc.dependsOn offlinePackageList,umlJavadoc
 processTestResources.dependsOn copyUnitTestProperties
