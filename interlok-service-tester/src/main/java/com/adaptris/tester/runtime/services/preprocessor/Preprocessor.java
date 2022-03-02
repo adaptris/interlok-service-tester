@@ -28,4 +28,15 @@ public interface Preprocessor {
    * @throws PreprocessorException wraps any thrown Exception
    */
   String execute(String input, ServiceTestConfig config) throws PreprocessorException;
+
+  static PreprocessorException wrapException(Exception e) {
+    return wrapException(e.getMessage(), e);
+  }
+
+  static PreprocessorException wrapException(String msg, Exception e) {
+    if (e instanceof PreprocessorException) {
+      return (PreprocessorException) e;
+    }
+    return new PreprocessorException(msg, e);
+  }
 }

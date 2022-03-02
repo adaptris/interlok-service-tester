@@ -16,7 +16,10 @@
 
 package com.adaptris.tester.runtime.services.preprocessor;
 
+import static org.junit.Assert.assertEquals;
+
 import com.adaptris.tester.STExampleConfigCase;
+import org.junit.Test;
 
 public abstract class PreprocessorCase extends STExampleConfigCase {
 
@@ -30,6 +33,16 @@ public abstract class PreprocessorCase extends STExampleConfigCase {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }
+  }
+
+  @Test
+  public void testWrapException() {
+    Exception e1 = new Exception();
+    PreprocessorException wrapped = Preprocessor.wrapException(e1);
+    assertEquals(e1, wrapped.getCause());
+    PreprocessorException e2 = new PreprocessorException("XXX");
+    wrapped = Preprocessor.wrapException(e2);
+    assertEquals(e2, wrapped);
   }
 
   @Override
