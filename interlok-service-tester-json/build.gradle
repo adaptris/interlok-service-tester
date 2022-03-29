@@ -1,8 +1,8 @@
 ext {
-  componentName='Interlok Service Tester/JSON'
-  componentDesc="JSON Assertions for service-tester"
-  jacksonVersion='2.13.2'
+  componentName = 'Interlok Service Tester/JSON'
+  componentDesc = "JSON Assertions for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
+  jacksonVersion = '2.13.2.20220324'
 }
 
 dependencies {
@@ -12,8 +12,10 @@ dependencies {
   }
   api ("org.json:json:20220320")
   api ("com.jayway.jsonpath:json-path:2.7.0")
-  api ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-  api ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+  // Dependency to platform/BOM
+  api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
+  api ("com.fasterxml.jackson.core:jackson-databind")
+  api ("com.fasterxml.jackson.core:jackson-annotations")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")

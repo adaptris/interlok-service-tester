@@ -1,6 +1,6 @@
 ext {
-  componentName='Interlok Service Tester/gradle'
-  componentDesc="Experimental Gradle plugin for service-tester"
+  componentName = 'Interlok Service Tester/gradle'
+  componentDesc = "Experimental Gradle plugin for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
 }
 
