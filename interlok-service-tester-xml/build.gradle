@@ -1,6 +1,6 @@
 ext {
-  componentName='Interlok Service Tester/XML'
-  componentDesc="XML Assertions for service-tester using xmlunit"
+  componentName = 'Interlok Service Tester/XML'
+  componentDesc = "XML Assertions for service-tester using xmlunit"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
 }
 
