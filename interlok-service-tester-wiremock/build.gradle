@@ -9,7 +9,7 @@ ext {
 dependencies {
   api project(":interlok-service-tester")
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
-  api ("com.github.tomakehurst:wiremock-jre8:2.33.2") {
+  api ("com.github.tomakehurst:wiremock-jre8:2.34.0") {
     exclude group: 'com.google.guava', module: 'guava'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
