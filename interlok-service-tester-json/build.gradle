@@ -10,7 +10,7 @@ dependencies {
   api ("org.skyscreamer:jsonassert:1.5.1") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
-  api ("org.json:json:20220320")
+  api ("org.json:json:20220924")
   api ("com.jayway.jsonpath:json-path:2.7.0")
   // Dependency to platform/BOM
   api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
