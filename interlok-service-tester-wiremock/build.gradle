@@ -3,13 +3,13 @@ ext {
   componentDesc = "Wiremock boostrapper for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
   jettyVersion = '9.4.48.v20220622'
-  jacksonVersion = '2.13.4.20221013'
+  jacksonVersion = '2.14.1'
 }
 
 dependencies {
   api project(":interlok-service-tester")
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
-  api ("com.github.tomakehurst:wiremock-jre8:2.34.0") {
+  api ("com.github.tomakehurst:wiremock-jre8:2.35.0") {
     exclude group: 'com.google.guava', module: 'guava'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
     exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
