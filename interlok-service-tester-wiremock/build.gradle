@@ -3,17 +3,21 @@ ext {
   componentDesc = "Wiremock boostrapper for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
   jettyVersion = '9.4.48.v20220622'
-  jacksonVersion = '2.14.1'
+  jacksonVersion = '2.14.2'
 }
 
 dependencies {
   api project(":interlok-service-tester")
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
+  implementation ("commons-fileupload:commons-fileupload:1.5")
+  implementation ("com.jayway.jsonpath:json-path:2.8.0")
   api ("com.github.tomakehurst:wiremock-jre8:2.35.0") {
-    exclude group: 'com.google.guava', module: 'guava'
-    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
-    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
-    exclude group: 'com.fasterxml.jackson.core', module: 'jackson-annotations'
+    exclude group: "com.google.guava", module: "guava"
+    exclude group: "com.fasterxml.jackson.core", module: "jackson-databind"
+    exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
+    exclude group: "com.fasterxml.jackson.core", module: "jackson-annotations"
+    exclude group: "commons-fileupload", module: "commons-fileupload"
+    exclude group: "com.jayway.jsonpath", module: "json-path"
   }
   // Dependency to platform/BOM
   api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
