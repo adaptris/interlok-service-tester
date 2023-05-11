@@ -77,7 +77,6 @@ javadoc {
     options.linksOffline(interlokCommonJavadocs, offlineJavadocPackageDir.getCanonicalPath() + "/interlok-common-$interlokCoreVersion-javadoc.jar")
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", sourceSets.main.output.classesDirs.asPath + System.getProperty("path.separator") + configurations.javadoc.asPath
-    options.addBooleanOption "-no-module-directories", true
     options.addStringOption('Xdoclint:none', '-quiet')
     options.tags('apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:','implNote:a:Implementation Note:')
     options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
@@ -111,7 +110,6 @@ task umlJavadoc(type: Javadoc) {
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", sourceSets.main.output.classesDirs.asPath + System.getProperty("path.separator") + configurations.javadoc.asPath
     options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption "-no-module-directories", true
     exclude "com/adaptris/taglet/**"
     options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
     options.addStringOption "umlImageFormat", "SVG"

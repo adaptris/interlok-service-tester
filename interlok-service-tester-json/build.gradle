@@ -89,7 +89,6 @@ javadoc {
     options.tags('apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:','implNote:a:Implementation Note:')
     options.addStringOption "tagletpath", configurations.javadoc.asPath
     options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption "-no-module-directories", true
     options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
       group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
       group ("Service Tester - Runtime Configuration and Execution", ["com.adaptris.tester.runtime.*" , "com.adaptris.tester.runtime"]).
@@ -121,7 +120,6 @@ task umlJavadoc(type: Javadoc) {
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
     options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption "-no-module-directories", true
     exclude "com/adaptris/taglet/**"
     options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
     options.addStringOption "umlImageFormat", "SVG"
