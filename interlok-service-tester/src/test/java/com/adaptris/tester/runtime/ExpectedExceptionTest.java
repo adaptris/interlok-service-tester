@@ -16,9 +16,9 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.adaptris.core.ServiceException;
 import com.adaptris.tester.report.junit.JUnitReportTestIssue;
@@ -26,28 +26,28 @@ import com.adaptris.tester.report.junit.JUnitReportTestIssueTyped;
 
 public class ExpectedExceptionTest extends TCCase {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testDefaultConstructor() {
     ExpectedException e = new ExpectedException();
     assertEquals("com.adaptris.core.ServiceException", e.getClassName());
     assertNull(e.getMessage());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testConstructorClass() {
     ExpectedException e = new ExpectedException("com.adaptris.core.OtherException");
     assertEquals("com.adaptris.core.OtherException", e.getClassName());
     assertNull(e.getMessage());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testConstructor2Class() {
     ExpectedException e = new ExpectedException("com.adaptris.core.OtherException", "message");
     assertEquals("com.adaptris.core.OtherException", e.getClassName());
     assertEquals("message", e.getMessage());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetClassName() {
     ExpectedException e = new ExpectedException();
     e.setClassName("com.adaptris.core.OtherException");
@@ -55,7 +55,7 @@ public class ExpectedExceptionTest extends TCCase {
     assertNull(e.getMessage());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetMessage() {
     ExpectedException e = new ExpectedException();
     e.setMessage("message");
@@ -64,7 +64,7 @@ public class ExpectedExceptionTest extends TCCase {
   }
 
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testCheckExpected() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -72,7 +72,7 @@ public class ExpectedExceptionTest extends TCCase {
     assertNull(result);
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testCheckExpectedNoMessage() throws Exception {
     Exception exception = new ServiceException("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException");
@@ -80,7 +80,7 @@ public class ExpectedExceptionTest extends TCCase {
     assertNull(result);
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testCheckNotExpected() throws Exception {
     Exception exception = new Exception("required-metadata-not-present");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -89,7 +89,7 @@ public class ExpectedExceptionTest extends TCCase {
     assertEquals("failure", result.getType());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testCheckMessageNotExpected() throws Exception {
     Exception exception = new ServiceException("does not match");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.ServiceException", "required-metadata-not-present");
@@ -98,7 +98,7 @@ public class ExpectedExceptionTest extends TCCase {
     assertEquals("failure", result.getType());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testCheckMessageClassNotFound() throws Exception {
     Exception exception = new ServiceException("does not match");
     ExpectedException expectedException = new ExpectedException("com.adaptris.core.OtherException");

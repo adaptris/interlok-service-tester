@@ -15,13 +15,14 @@
  */
 
 package com.adaptris.tester.runtime.messages.assertion.xmlunit;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -32,6 +33,7 @@ import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
 
 public class AssertXmlPayloadEqualsTest extends ExampleConfigGenerator {
+
   public static final String BASE_DIR_KEY = "AssertionCase.baseDir";
 
   public AssertXmlPayloadEqualsTest() {
@@ -39,7 +41,6 @@ public class AssertXmlPayloadEqualsTest extends ExampleConfigGenerator {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }
   }
-
 
   @Override
   protected String createExampleXml(Object object) throws Exception {
@@ -58,28 +59,30 @@ public class AssertXmlPayloadEqualsTest extends ExampleConfigGenerator {
     String actual = "<xml />";
     PayloadAssertion matcher = new AssertPayloadEquals();
     matcher.setPayload("<xml />");
-    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
+    assertTrue(matcher.execute(new TestMessage(new HashMap<String, String>(), actual), new ServiceTestConfig()).isPassed());
     matcher.setPayload("<xml att=\"1\" />");
-    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(),actual), new ServiceTestConfig()).isPassed());
+    assertFalse(matcher.execute(new TestMessage(new HashMap<String, String>(), actual), new ServiceTestConfig()).isPassed());
   }
 
   @Test
-  public void testExpected(){
+  public void testExpected() {
     assertEquals("Payload: <xml />", createAssertion().expected());
   }
 
   @Test
-  public void testGetMessage() throws Exception{
-    AssertionResult result  = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml att=\"1\" />"), new ServiceTestConfig());
+  public void testGetMessage() throws Exception {
+    AssertionResult result = createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml att=\"1\" />"),
+        new ServiceTestConfig());
     assertTrue(result.getMessage().startsWith("Assertion Failure: [assert-xml-payload-equals]"));
   }
 
   @Test
-  public void testShowReturnedMessage(){
+  public void testShowReturnedMessage() {
     assertTrue(createAssertion().showReturnedMessage());
   }
 
   protected Assertion createAssertion() {
-    return new AssertXmlPayloadEquals( "<xml />");
+    return new AssertXmlPayloadEquals("<xml />");
   }
+
 }

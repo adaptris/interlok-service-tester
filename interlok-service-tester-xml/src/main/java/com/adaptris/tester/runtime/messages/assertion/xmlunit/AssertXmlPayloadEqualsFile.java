@@ -18,9 +18,11 @@ package com.adaptris.tester.runtime.messages.assertion.xmlunit;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.xml.sax.SAXException;
+
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
 import com.adaptris.tester.runtime.messages.assertion.AssertPayloadEqualsFile;
@@ -30,23 +32,24 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * Checks if {@link TestMessage#getPayload()} equals file contents.
  *
- * <p>Assertions are used to validate the returned message is expected.</p>
+ * <p>
+ * Assertions are used to validate the returned message is expected.
+ * </p>
  *
  * @service-test-config assert-xml-payload-equals-file
  */
 @XStreamAlias("assert-xml-payload-equals-file")
 public class AssertXmlPayloadEqualsFile extends AssertPayloadEqualsFile {
 
-
-  public AssertXmlPayloadEqualsFile(){
+  public AssertXmlPayloadEqualsFile() {
   }
 
-  public AssertXmlPayloadEqualsFile(String file){
+  public AssertXmlPayloadEqualsFile(String file) {
     setFile(file);
   }
 
   @Override
-  public AssertionResult checkResults(String actual, String expected) throws ServiceTestException{
+  public AssertionResult checkResults(String actual, String expected) throws ServiceTestException {
     try {
       XMLUnit.setIgnoreWhitespace(true);
       XMLUnit.setIgnoreAttributeOrder(true);
@@ -58,4 +61,5 @@ public class AssertXmlPayloadEqualsFile extends AssertPayloadEqualsFile {
       throw new ServiceTestException(e);
     }
   }
+
 }

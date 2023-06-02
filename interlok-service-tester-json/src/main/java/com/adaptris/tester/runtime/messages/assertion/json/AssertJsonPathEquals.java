@@ -1,6 +1,7 @@
 package com.adaptris.tester.runtime.messages.assertion.json;
 
 import java.util.EnumSet;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -16,7 +17,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Assert that a JSON Path resolves to some value.
- * 
+ *
  * @service-test-config assert-jsonpath-equals
  *
  */
@@ -30,9 +31,7 @@ public class AssertJsonPathEquals implements Assertion {
   private transient Configuration jsonConfig = new Configuration.ConfigurationBuilder().jsonProvider(new JsonSmartJsonProvider())
       .mappingProvider(new JacksonMappingProvider()).options(EnumSet.noneOf(Option.class)).build();
 
-
   public AssertJsonPathEquals() {
-
   }
 
   @Override
@@ -40,7 +39,8 @@ public class AssertJsonPathEquals implements Assertion {
     try {
       ReadContext context = JsonPath.parse(actual.getPayload(), jsonConfig);
       String xpathResult = context.read(getJsonPath());
-      String message = String.format("Assertion Failure: [%s] Expected [%s] Returned [%s]", ASSERT_JSONPATH_EQUALS, getValue(), xpathResult);
+      String message = String.format("Assertion Failure: [%s] Expected [%s] Returned [%s]", ASSERT_JSONPATH_EQUALS, getValue(),
+          xpathResult);
       return new AssertionResult(ASSERT_JSONPATH_EQUALS, getValue().equals(xpathResult), message);
     } catch (Exception e) {
       throw ServiceTestException.wrapException(e);

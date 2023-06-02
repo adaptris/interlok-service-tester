@@ -80,4 +80,5 @@ public class JUnitReportFailure extends JUnitReportTestIssueTyped {
   public String getText() {
     return text;
   }
+  
 }

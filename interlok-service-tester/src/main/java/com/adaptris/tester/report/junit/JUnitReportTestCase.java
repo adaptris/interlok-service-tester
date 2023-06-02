@@ -41,7 +41,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias("testcase")
 public class JUnitReportTestCase {
 
-
   @XStreamAsAttribute
   private final String name;
   @XStreamAsAttribute
@@ -140,4 +139,5 @@ public class JUnitReportTestCase {
   public String getClassname() {
     return classname;
   }
+  
 }

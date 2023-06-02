@@ -16,12 +16,13 @@
 
 package com.adaptris.tester.runtime.messages.assertion.json;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -46,7 +47,6 @@ public class AssertJsonPathEqualsTest extends ExampleConfigGenerator {
     return result;
   }
 
-
   @Override
   protected Object retrieveObjectForSampleConfig() {
     return createAssertion();
@@ -55,32 +55,32 @@ public class AssertJsonPathEqualsTest extends ExampleConfigGenerator {
   @Test
   public void testExecute() throws Exception {
     assertTrue(
-        createAssertion().execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig())
-        .isPassed());
+        createAssertion().execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig()).isPassed());
     assertFalse(createAssertion().withValue("blue")
         .execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig()).isPassed());
 
   }
 
-  @Test(expected = ServiceTestException.class)
+  @Test
   public void testExecute_NotJSON() throws Exception {
-    createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml/>"), new ServiceTestConfig());
+    assertThrows(ServiceTestException.class,
+        () -> createAssertion().execute(new TestMessage(new HashMap<String, String>(), "<xml/>"), new ServiceTestConfig()));
   }
 
   @Test
-  public void testExpected(){
+  public void testExpected() {
     assertTrue(createAssertion().expected().contains(JSON_PATH));
   }
 
   @Test
-  public void testGetMessage() throws Exception{
+  public void testGetMessage() throws Exception {
     AssertionResult result = createAssertion().withValue("blue")
         .execute(new TestMessage(new HashMap<String, String>(), sampleJsonContent()), new ServiceTestConfig());
     assertTrue(result.getMessage().contains("assert-jsonpath-equals"));
   }
 
   @Test
-  public void testShowReturnedMessage(){
+  public void testShowReturnedMessage() {
     assertTrue(createAssertion().showReturnedMessage());
   }
 
@@ -91,4 +91,5 @@ public class AssertJsonPathEqualsTest extends ExampleConfigGenerator {
   public static String sampleJsonContent() {
     return "{\"store\": {\"bicycle\": {\"color\": \"red\",\"price\": 19.95}}}";
   }
+
 }

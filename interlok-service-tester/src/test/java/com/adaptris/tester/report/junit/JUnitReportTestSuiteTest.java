@@ -16,11 +16,11 @@
 
 package com.adaptris.tester.report.junit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.net.InetAddress;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JUnitReportTestSuiteTest {
 

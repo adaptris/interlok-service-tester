@@ -57,4 +57,5 @@ public abstract class JUnitReportTestIssueTyped implements JUnitReportTestIssue 
   public String getMessage(){
     return message;
   }
+  
 }
