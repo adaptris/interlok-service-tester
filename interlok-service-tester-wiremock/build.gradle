@@ -30,13 +30,13 @@ dependencies {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+  classifier = 'javadoc'
+  from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.extensions.delombokTask
+  classifier = 'sources'
+  from sourceSets.main.extensions.delombokTask
 }
 
 
@@ -104,7 +104,6 @@ javadoc {
       group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
     exclude "com/adaptris/taglet/**"
   }
-
 }
 
 task umlJavadoc(type: Javadoc) {
@@ -147,6 +146,7 @@ task umlJavadoc(type: Javadoc) {
     options.addStringOption "umlIncludeProtectedInnerClasses","false"
   }
 }
+
 task deleteGeneratedFiles(type: Delete) {
   delete file(testResourcesDir() + "/unit-tests.properties"), file(testResourcesDir() + "/unit-tests.properties.resolved")
   delete delombokTargetDir, "derby.log"

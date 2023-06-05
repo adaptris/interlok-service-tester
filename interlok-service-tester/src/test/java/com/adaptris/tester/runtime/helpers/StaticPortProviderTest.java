@@ -16,15 +16,16 @@
 
 package com.adaptris.tester.runtime.helpers;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class StaticPortProviderTest extends PortProviderCase {
 
   private static final int PORT = 9999;
 
   @Test
-  public void testDefaultPort(){
+  public void testDefaultPort() {
     PortProvider pp = new StaticPortProvider();
     pp.initPort();
     assertEquals(8080, pp.getPort());
@@ -32,7 +33,7 @@ public class StaticPortProviderTest extends PortProviderCase {
   }
 
   @Test
-  public void testGetPort(){
+  public void testGetPort() {
     PortProvider pp = createPortProvider();
     pp.initPort();
     assertEquals(PORT, pp.getPort());
@@ -45,4 +46,5 @@ public class StaticPortProviderTest extends PortProviderCase {
     pp.setPort(PORT);
     return pp;
   }
+
 }

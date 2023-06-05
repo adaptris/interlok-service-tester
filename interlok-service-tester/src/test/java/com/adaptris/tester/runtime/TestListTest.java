@@ -19,18 +19,18 @@ package com.adaptris.tester.runtime;
 import com.adaptris.tester.report.junit.JUnitReportTestSuites;
 import com.adaptris.tester.stubs.StubClient;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestListTest {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetUniqueId() throws Exception {
     TestList tl = new TestList();
     tl.setUniqueId("id");
     assertEquals("id", tl.getUniqueId());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testAddTestCase() throws Exception {
     TestList tl = new TestList();
     tl.addTest(new Test());
@@ -39,7 +39,7 @@ public class TestListTest {
     assertTrue(tl.iterator().hasNext());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecute() throws Exception {
     TestList tl = new TestList();
     tl.setUniqueId("id");

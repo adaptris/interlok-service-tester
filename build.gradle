@@ -23,7 +23,7 @@ ext {
 
   organizationName = "Adaptris Ltd"
   organizationUrl = "http://interlok.adaptris.net"
-  slf4jVersion='2.0.3'
+  slf4jVersion='2.0.7'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -106,8 +106,8 @@ subprojects { subproject ->
   apply plugin: 'nebula.optional-base'
   apply plugin: "io.freefair.lombok"
 
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
   group   = 'com.adaptris'
   version = releaseVersion
   def versionDir = "$buildDir/version"
@@ -154,18 +154,17 @@ subprojects { subproject ->
 
   // In this section you declare the dependencies for your production and test code
   dependencies {
-
     api ("com.adaptris:interlok-core:$interlokCoreVersion") {changing= true}
     api ("com.adaptris:interlok-common:$interlokCoreVersion") {changing= true}
-    api files("${System.getProperty('java.home')}/../lib/tools.jar")
+    //api files("${System.getProperty('java.home')}/../lib/tools.jar")
 
     implementation ("org.slf4j:slf4j-api:$slf4jVersion")
     annotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
+    
     testAnnotationProcessor ("com.adaptris:interlok-core-apt:$interlokCoreVersion") {changing= true}
-    testImplementation ('junit:junit:4.13.2')
+    testImplementation ("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation ("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation ("com.adaptris:interlok-stubs:$interlokCoreVersion") { changing= true }
-
 
     umlDoclet("nl.talsmasoftware:umldoclet:1.1.4")
 
@@ -270,14 +269,11 @@ subprojects { subproject ->
     }
   }
 
-  // disable spotbugsTests which checks our test code..
-  spotbugsTest.enabled = false
-
   jacocoTestReport {
-      reports {
-        xml.required= true
-        html.required= true
-      }
+    reports {
+      xml.required= true
+      html.required= true
+    }
   }
 
   task lgtmCompile(type: JavaCompile, dependsOn: delombok) {
@@ -288,6 +284,13 @@ subprojects { subproject ->
     destinationDirectory= sourceSets.main.java.classesDirectory
     classpath = project.sourceSets.main.compileClasspath
   }
+  
+  test {
+    useJUnitPlatform()
+  }
+
+  // disable spotbugsTests which checks our test code..
+  spotbugsTest.enabled = false
 
   check.dependsOn jacocoTestReport
 }

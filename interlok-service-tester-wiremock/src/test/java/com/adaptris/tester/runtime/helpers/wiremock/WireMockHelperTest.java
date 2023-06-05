@@ -16,9 +16,9 @@
 
 package com.adaptris.tester.runtime.helpers.wiremock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -26,7 +26,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.adaptris.interlok.junit.scaffolding.ExampleConfigGenerator;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -35,6 +35,7 @@ import com.adaptris.tester.runtime.helpers.DynamicPortProvider;
 import com.adaptris.tester.runtime.helpers.Helper;
 
 public class WireMockHelperTest extends ExampleConfigGenerator {
+
   public static final String BASE_DIR_KEY = "HelperCase.baseDir";
 
   public WireMockHelperTest() {
@@ -56,7 +57,7 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
   }
 
   @Test
-  public void testGet() throws Exception{
+  public void testGet() throws Exception {
     final String serviceFile = "http_stubs";
     URL testFile = this.getClass().getClassLoader().getResource(serviceFile).toURI().toURL();
 
@@ -66,18 +67,16 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
     wireMockHelper.setFileSource(testFile.toString());
     wireMockHelper.init(new ServiceTestConfig());
 
-    URL url = new URL("http://localhost:" + portProvider.getPort() + "/hello" );
+    URL url = new URL("http://localhost:" + portProvider.getPort() + "/hello");
     URLConnection urlConnection = url.openConnection();
-    BufferedReader in = new BufferedReader(
-        new InputStreamReader(
-            urlConnection.getInputStream()));
+    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
     String inputLine;
 
     StringBuilder response = new StringBuilder();
     while ((inputLine = in.readLine()) != null) {
       response.append(inputLine);
     }
-    assertEquals("{\"hello\": \"world\"}",response.toString());
+    assertEquals("{\"hello\": \"world\"}", response.toString());
     assertTrue(wireMockHelper.getHelperProperties().containsKey("wire.mock.helper.port"));
     assertTrue(8080 <= Integer.parseInt(wireMockHelper.getHelperProperties().get("wire.mock.helper.port")));
     in.close();
@@ -92,8 +91,7 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
     wireMockHelper.setPortProvider(portProvider);
     wireMockHelper.setFileSource("invalid://uri^");
 
-    ServiceTestException exception = assertThrows(ServiceTestException.class,
-        () -> wireMockHelper.init(new ServiceTestConfig()));
+    ServiceTestException exception = assertThrows(ServiceTestException.class, () -> wireMockHelper.init(new ServiceTestConfig()));
     assertTrue(exception.getCause() instanceof URISyntaxException);
   }
 

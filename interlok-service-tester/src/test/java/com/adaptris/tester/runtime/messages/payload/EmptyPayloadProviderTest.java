@@ -16,8 +16,8 @@
 
 package com.adaptris.tester.runtime.messages.payload;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import com.adaptris.tester.runtime.messages.MessagesCase;
 
 public class EmptyPayloadProviderTest extends MessagesCase {

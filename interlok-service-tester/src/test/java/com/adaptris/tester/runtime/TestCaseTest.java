@@ -16,11 +16,11 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.adaptris.interlok.junit.scaffolding.BaseCase;
 import com.adaptris.tester.report.junit.JUnitReportError;
@@ -36,35 +36,35 @@ import com.adaptris.tester.stubs.StubClient;
 
 public class TestCaseTest extends BaseCase {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetUniqueId() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("id");
     assertEquals("id", tc.getUniqueId());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetInputMessageProvider() throws Exception {
     TestCase tc = new TestCase();
     tc.setInputMessageProvider(new TestMessageProvider());
     assertNotNull(tc.getInputMessageProvider());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetAssertions() throws Exception {
     TestCase tc = new TestCase();
     tc.setAssertions(new Assertions());
     assertNotNull(tc.getAssertions());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetExpectedException() throws Exception {
     TestCase tc = new TestCase();
     tc.setExpectedException(new ExpectedException());
     assertNotNull(tc.getExpectedException());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetGlobFilter() throws Exception {
     TestCase tc = new TestCase();
     tc.setGlobFilter("filter");
@@ -72,7 +72,7 @@ public class TestCaseTest extends BaseCase {
     assertEquals("filter", tc.getGlobFilter());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteSkipTest() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -85,7 +85,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecute() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -96,7 +96,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteFailed() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -109,7 +109,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteExpectedExceptionButNone() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -124,7 +124,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteExpectedExceptionThrown() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -136,7 +136,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteExpectedExceptionThrownButNotExpected() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -151,7 +151,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteExceptionThrownButNotExpected() throws Exception {
     TestCase tc = new TestCase();
     tc.setUniqueId("testcase");
@@ -165,7 +165,7 @@ public class TestCaseTest extends BaseCase {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testIsTestToBeExecuted() throws Exception {
     System.setProperty("test.glob.filter", "testlist.test.testcase");
     TestCase tc = new TestCase();

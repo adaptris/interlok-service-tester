@@ -35,14 +35,18 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * Helper which starts a WireMock server.
  *
- * <p>WireMock (<a href="http://wiremock.org/">http://wiremock.org/</a>):</p>
+ * <p>
+ * WireMock (<a href="http://wiremock.org/">http://wiremock.org/</a>):
+ * </p>
  * <blockquote cite="http://wiremock.org/">
- * <p>WireMock is a simulator for HTTP-based APIs. Some might consider it a service virtualization tool
- * or a mock server.</p>
+ * <p>
+ * WireMock is a simulator for HTTP-based APIs. Some might consider it a service virtualization tool or a mock server.
+ * </p>
  *
- * <p>It enables you to stay productive when an API you depend on doesn't exist or isn't complete. It supports testing
- * of edge cases and failure modes that the real API won't reliably produce. And because it's fast it can reduce your
- * build time from hours down to minutes.</p>
+ * <p>
+ * It enables you to stay productive when an API you depend on doesn't exist or isn't complete. It supports testing of edge cases and
+ * failure modes that the real API won't reliably produce. And because it's fast it can reduce your build time from hours down to minutes.
+ * </p>
  * </blockquote>
  *
  * @service-test-config wire-mock-helper
@@ -61,27 +65,25 @@ public class WireMockHelper extends Helper {
 
   private PortProvider portProvider;
 
-
-  public WireMockHelper(){
+  public WireMockHelper() {
     setPortProvider(new StaticPortProvider());
   }
 
   /**
-   * Initialises WireMock server with port set as value from {@link #getPortProvider()} which also added as a helper
-   * property to {@value #WIRE_MOCK_HELPER_PORT_PROPERTY_NAME}.
-   * @param config The service tester config
-   * @throws ServiceTestException wrapping any thrown exception
+   * Initialises WireMock server with port set as value from {@link #getPortProvider()} which also added as a helper property to
+   * {@value #WIRE_MOCK_HELPER_PORT_PROPERTY_NAME}.
+   *
+   * @param config
+   *          The service tester config
+   * @throws ServiceTestException
+   *           wrapping any thrown exception
    */
   @Override
   public void init(ServiceTestConfig config) throws ServiceTestException {
     getPortProvider().initPort();
     addHelperProperty(WIRE_MOCK_HELPER_PORT_PROPERTY_NAME, String.valueOf(getPortProvider().getPort()));
-    wireMockServer = new WireMockServer(
-        WireMockConfiguration.options()
-        .port(getPortProvider().getPort())
-        .fileSource(new SingleRootFileSource(getFileFromFileSource(config)))
-        .enableBrowserProxying(false)
-        .jettyStopTimeout(10000L));
+    wireMockServer = new WireMockServer(WireMockConfiguration.options().port(getPortProvider().getPort())
+        .fileSource(new SingleRootFileSource(getFileFromFileSource(config))).enableBrowserProxying(false).jettyStopTimeout(10000L));
     wireMockServer.start();
   }
 
@@ -95,6 +97,7 @@ public class WireMockHelper extends Helper {
 
   /**
    * Closes WireMock server and release port from {@link #getPortProvider()}.
+   *
    * @throws IOException
    */
   @Override
@@ -103,9 +106,9 @@ public class WireMockHelper extends Helper {
     getPortProvider().releasePort();
   }
 
-
   /**
    * Returns the path of WireMock configuration.
+   *
    * @return Path of WireMock configuration.
    */
   public String getFileSource() {
@@ -114,7 +117,9 @@ public class WireMockHelper extends Helper {
 
   /**
    * Sets the path of WireMock configuration.
-   * @param fileSource Path of WireMock configuration.
+   *
+   * @param fileSource
+   *          Path of WireMock configuration.
    */
   public void setFileSource(String fileSource) {
     this.fileSource = fileSource;
@@ -122,6 +127,7 @@ public class WireMockHelper extends Helper {
 
   /**
    * Returns the {@link PortProvider}
+   *
    * @return The port provider
    */
   public PortProvider getPortProvider() {
@@ -130,9 +136,12 @@ public class WireMockHelper extends Helper {
 
   /**
    * Sets the {@link PortProvider}
-   * @param portProvider The port provider
+   *
+   * @param portProvider
+   *          The port provider
    */
   public void setPortProvider(PortProvider portProvider) {
     this.portProvider = portProvider;
   }
+
 }

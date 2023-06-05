@@ -54,4 +54,5 @@ public class JUnitReportProperty {
   public String getValue() {
     return value;
   }
+  
 }

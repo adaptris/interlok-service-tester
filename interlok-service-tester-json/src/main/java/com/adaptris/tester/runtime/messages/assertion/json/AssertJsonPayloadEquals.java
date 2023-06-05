@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONCompare;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.JSONCompareResult;
+
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
@@ -28,18 +29,19 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getPayload()}
  *
- * <p>Assertions are used to validate the returned message is expected.</p>
+ * <p>
+ * Assertions are used to validate the returned message is expected.
+ * </p>
  *
  * @service-test-config assert-json-payload-equals
  */
 @XStreamAlias("assert-json-payload-equals")
 public class AssertJsonPayloadEquals extends PayloadAssertion {
 
-  public AssertJsonPayloadEquals(){
-    super();
+  public AssertJsonPayloadEquals() {
   }
 
-  public AssertJsonPayloadEquals(String payload){
+  public AssertJsonPayloadEquals(String payload) {
     super(payload);
   }
 
@@ -53,4 +55,5 @@ public class AssertJsonPayloadEquals extends PayloadAssertion {
       throw new ServiceTestException(e);
     }
   }
+
 }

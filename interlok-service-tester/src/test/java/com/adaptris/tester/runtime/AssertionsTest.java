@@ -16,10 +16,10 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 
 public class AssertionsTest extends TCCase {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testGetAssertions() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion(new AssertionResult("type", true), "message"));
@@ -44,7 +44,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("message", a.getAssertions().get(0).expected());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecutePassed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion(new AssertionResult("type", true), "message"));
@@ -54,7 +54,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("message", a.getAssertions().get(0).expected());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteFailed() throws Exception {
     Assertions a = new Assertions();
     a.addAssertion(new StubAssertion(new AssertionResult("type", false), "message-1234"));
@@ -67,7 +67,7 @@ public class AssertionsTest extends TCCase {
     assertEquals("message-1234", a.getAssertions().get(0).expected());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecutePassedFailed() throws Exception {
     Assertions a = new Assertions();
     a.setAssertions(Arrays.asList(
