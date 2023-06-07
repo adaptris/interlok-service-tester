@@ -1,10 +1,12 @@
 package com.adaptris.tester.runtime.messages.assertion;
 
-import java.io.IOException;
 import java.io.StringReader;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.io.IOUtils;
+
 import com.adaptris.tester.runtime.ServiceTestConfig;
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.TestMessage;
@@ -14,7 +16,9 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getExpectedLines()}
  *
- * <p>Assertions are used to validate the returned message is expected.</p>
+ * <p>
+ * Assertions are used to validate the returned message is expected.
+ * </p>
  *
  * @service-test-config assert-line-payload-equals
  */
@@ -24,11 +28,11 @@ public class AssertLinePayloadEquals implements Assertion {
   @XStreamImplicit(itemFieldName = "line")
   private List<String> expectedLines;
 
-  public AssertLinePayloadEquals(){
+  public AssertLinePayloadEquals() {
     this(new ArrayList<>());
   }
 
-  public AssertLinePayloadEquals(List<String> expectedLines){
+  public AssertLinePayloadEquals(List<String> expectedLines) {
     setExpectedLines(expectedLines);
   }
 
@@ -37,7 +41,7 @@ public class AssertLinePayloadEquals implements Assertion {
     try {
       List<String> actualLines = IOUtils.readLines(new StringReader(actual.getPayload()));
       return new AssertionResult("assert-lines-payload-equals", expectedLines.equals(actualLines));
-    } catch (IOException e) {
+    } catch (UncheckedIOException e) {
       throw new ServiceTestException(e);
     }
   }
@@ -53,7 +57,7 @@ public class AssertLinePayloadEquals implements Assertion {
   @Override
   public String expected() {
     StringBuilder expected = new StringBuilder();
-    for(String lines : getExpectedLines()){
+    for (String lines : getExpectedLines()) {
       expected.append(lines).append(System.lineSeparator());
     }
     return expected.toString();
