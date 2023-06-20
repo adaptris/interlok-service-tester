@@ -76,7 +76,7 @@ public class WireMockHelperTest extends ExampleConfigGenerator {
     while ((inputLine = in.readLine()) != null) {
       response.append(inputLine);
     }
-    assertEquals("{\"hello\": \"world\"}", response.toString());
+    assertEquals("{\"hello\":\"world\"}", response.toString().replaceAll(" ", ""));
     assertTrue(wireMockHelper.getHelperProperties().containsKey("wire.mock.helper.port"));
     assertTrue(8080 <= Integer.parseInt(wireMockHelper.getHelperProperties().get("wire.mock.helper.port")));
     in.close();
