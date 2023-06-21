@@ -19,6 +19,15 @@ package com.adaptris.tester.runtime.helpers.wiremock;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
+import org.mockserver.client.MockServerClient;
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpTemplate;
+import org.mockserver.model.JsonBody;
 
 import com.adaptris.core.CoreException;
 import com.adaptris.tester.runtime.ServiceTestConfig;
@@ -27,10 +36,12 @@ import com.adaptris.tester.runtime.helpers.Helper;
 import com.adaptris.tester.runtime.helpers.PortProvider;
 import com.adaptris.tester.runtime.helpers.StaticPortProvider;
 import com.adaptris.tester.utils.FsHelper;
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.common.SingleRootFileSource;
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Helper which starts a WireMock server.
@@ -52,17 +63,38 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @service-test-config wire-mock-helper
  */
 @XStreamAlias("wire-mock-helper")
+@Slf4j
 public class WireMockHelper extends Helper {
+
+  private static final String HTTP_REQUEST = "httpRequest";
+  private static final String HTTP_RESPONSE = "httpResponse";
+  private static final String PATH = "path";
+  private static final String METHOD = "method";
+
+  private static final String MAPPINGS_PATH = "mappings";
 
   /**
    * Key for helper property ({@value}).
    */
   public static final String WIRE_MOCK_HELPER_PORT_PROPERTY_NAME = "wire.mock.helper.port";
 
-  private transient WireMockServer wireMockServer;
+  private transient MockServerClient mockServer;
 
+  /**
+   * Sets the path of the mock configuration.
+   *
+   * @param fileSource
+   *          Path of the mock configuration.
+   */
+  @Getter
+  @Setter
   private String fileSource;
 
+  /**
+   * The {@link PortProvider} for the mock server
+   */
+  @Getter
+  @Setter
   private PortProvider portProvider;
 
   public WireMockHelper() {
@@ -70,7 +102,7 @@ public class WireMockHelper extends Helper {
   }
 
   /**
-   * Initialises WireMock server with port set as value from {@link #getPortProvider()} which also added as a helper property to
+   * Initialises Mock server with port set as value from {@link #getPortProvider()} which also added as a helper property to
    * {@value #WIRE_MOCK_HELPER_PORT_PROPERTY_NAME}.
    *
    * @param config
@@ -82,9 +114,30 @@ public class WireMockHelper extends Helper {
   public void init(ServiceTestConfig config) throws ServiceTestException {
     getPortProvider().initPort();
     addHelperProperty(WIRE_MOCK_HELPER_PORT_PROPERTY_NAME, String.valueOf(getPortProvider().getPort()));
-    wireMockServer = new WireMockServer(WireMockConfiguration.options().port(getPortProvider().getPort())
-        .fileSource(new SingleRootFileSource(getFileFromFileSource(config))).enableBrowserProxying(false).jettyStopTimeout(10000L));
-    wireMockServer.start();
+    File fileFromFileSource = getFileFromFileSource(config);
+    mockServer = ClientAndServer.startClientAndServer(getPortProvider().getPort());
+
+    mappings(fileFromFileSource).forEach(p -> addMapping(p));
+  }
+
+  private void addMapping(Path path) {
+    try {
+      JsonBody json = JsonBody.json(Files.readString(path));
+      JsonNode httpRequest = json.get(HTTP_REQUEST);
+      JsonNode httpResponse = json.get(HTTP_RESPONSE);
+      mockServer.when(HttpRequest.request().withPath(httpRequest.get(PATH).textValue()).withMethod(httpRequest.get(METHOD).textValue()))
+          .respond(HttpTemplate.template(HttpTemplate.TemplateType.MUSTACHE, httpResponse.toString()));
+    } catch (IOException ioe) {
+      log.error("Could not add server mock mapping for file {}", path, ioe);
+    }
+  }
+
+  private Stream<Path> mappings(File sourceFile) throws ServiceTestException {
+    try {
+      return Files.list(new File(sourceFile, MAPPINGS_PATH).toPath()).filter(f -> Files.isRegularFile(f));
+    } catch (IOException e) {
+      throw new ServiceTestException(e);
+    }
   }
 
   private File getFileFromFileSource(ServiceTestConfig config) throws ServiceTestException {
@@ -102,46 +155,8 @@ public class WireMockHelper extends Helper {
    */
   @Override
   public void close() throws IOException {
-    wireMockServer.stop();
+    mockServer.stop();
     getPortProvider().releasePort();
-  }
-
-  /**
-   * Returns the path of WireMock configuration.
-   *
-   * @return Path of WireMock configuration.
-   */
-  public String getFileSource() {
-    return fileSource;
-  }
-
-  /**
-   * Sets the path of WireMock configuration.
-   *
-   * @param fileSource
-   *          Path of WireMock configuration.
-   */
-  public void setFileSource(String fileSource) {
-    this.fileSource = fileSource;
-  }
-
-  /**
-   * Returns the {@link PortProvider}
-   *
-   * @return The port provider
-   */
-  public PortProvider getPortProvider() {
-    return portProvider;
-  }
-
-  /**
-   * Sets the {@link PortProvider}
-   *
-   * @param portProvider
-   *          The port provider
-   */
-  public void setPortProvider(PortProvider portProvider) {
-    this.portProvider = portProvider;
   }
 
 }
