@@ -1,14 +1,15 @@
 package com.adaptris.tester.plugin;
 
-import com.adaptris.core.stubs.TempFileUtils;
-import com.adaptris.util.GuidGenerator;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
+
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.adaptris.core.stubs.TempFileUtils;
+import com.adaptris.util.GuidGenerator;
 
 public class ServiceTesterReportTaskTest {
 
@@ -23,11 +24,12 @@ public class ServiceTesterReportTaskTest {
     tester.setServiceTest(testFile);
     tester.setServiceTestOutput(tempDir);
     tester.serviceTester();
-    ServiceTesterReportTask task = project.getTasks().create("interlokServiceTesterReporter",ServiceTesterReportTask.class);
+    ServiceTesterReportTask task = project.getTasks().create("interlokServiceTesterReporter", ServiceTesterReportTask.class);
     task.setServiceTestOutput(tempDir);
     task.setServiceTestReportOutput(new File(tempDir, "html"));
     task.report();
     File expectedFile = new File(tempDir, "html");
     assertTrue(expectedFile.exists());
   }
+
 }
