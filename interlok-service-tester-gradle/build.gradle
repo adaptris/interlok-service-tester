@@ -10,7 +10,7 @@ dependencies {
   implementation gradleApi()
   implementation localGroovy()
   api project(":interlok-service-tester")
-  api ("org.apache.ant:ant-junit:1.10.13")
+  api ("org.apache.ant:ant-junit:1.10.14")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
