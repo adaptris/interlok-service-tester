@@ -1,8 +1,9 @@
 ext {
-  componentName = 'Interlok Service Tester/JSON'
+  componentName = "Interlok Service Tester/JSON"
   componentDesc = "JSON Assertions for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
-  jacksonVersion = '2.15.3'
+  jacksonVersion = "2.15.3"
+  jsonOrgVersion = "20231013"
 }
 
 dependencies {
@@ -10,7 +11,7 @@ dependencies {
   api ("org.skyscreamer:jsonassert:1.5.1") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
-  api ("org.json:json:20231013")
+  api ("org.json:json:$jsonOrgVersion")
   api ("com.jayway.jsonpath:json-path:2.8.0")
   // Dependency to platform/BOM
   api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
