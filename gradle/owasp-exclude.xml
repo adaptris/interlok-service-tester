@@ -25,4 +25,12 @@
     <packageUrl regex="true">^pkg:maven/org\.mock\-server/mockserver\-.*@.*$</packageUrl>
     <cve>CVE-2021-32827</cve>
   </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: swagger-parser-safe-url-resolver-2.1.16.jar
+	This CVE applies to parse-url and not swagger-parser-safe-url-resolver
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/io\.swagger\.parser\.v3/swagger\-parser\-safe\-url\-resolver@.*$</packageUrl>
+    <cpe>cpe:/a:parse-url_project:parse-url</cpe>
+  </suppress>
 </suppressions>
