@@ -14,7 +14,7 @@ dependencies {
   implementation ("com.jayway.jsonpath:json-path:2.8.0")
   implementation ("org.mozilla:rhino:1.7.14")
   implementation ("org.yaml:snakeyaml:2.2")
-  implementation ("io.swagger.parser.v3:swagger-parser:2.1.16")
+  implementation ("io.swagger.parser.v3:swagger-parser:2.1.18")
   api ("org.mock-server:mockserver-netty:5.15.0") {
     exclude group: "com.google.guava", module: "guava"
     exclude group: "com.fasterxml.jackson.core", module: "jackson-databind"
