@@ -13,4 +13,5 @@ public class ServiceTesterPlugin implements Plugin<Project> {
     tester.finalizedBy(reporter);
     reporter.onlyIf(task -> tester.getDidWork());
   }
+
 }

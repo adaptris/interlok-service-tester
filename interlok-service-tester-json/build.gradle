@@ -1,8 +1,9 @@
 ext {
-  componentName = 'Interlok Service Tester/JSON'
+  componentName = "Interlok Service Tester/JSON"
   componentDesc = "JSON Assertions for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
-  jacksonVersion = '2.14.2'
+  jacksonVersion = "2.15.3"
+  jsonOrgVersion = "20231013"
 }
 
 dependencies {
@@ -10,7 +11,7 @@ dependencies {
   api ("org.skyscreamer:jsonassert:1.5.1") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
-  api ("org.json:json:20230227")
+  api ("org.json:json:$jsonOrgVersion")
   api ("com.jayway.jsonpath:json-path:2.8.0")
   // Dependency to platform/BOM
   api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
@@ -22,13 +23,13 @@ dependencies {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+  classifier = 'javadoc'
+  from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.extensions.delombokTask
+  classifier = 'sources'
+  from sourceSets.main.extensions.delombokTask
 }
 
 jar {
@@ -88,8 +89,7 @@ javadoc {
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.tags('apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:','implNote:a:Implementation Note:')
     options.addStringOption "tagletpath", configurations.javadoc.asPath
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption "-no-module-directories", true
+    options.addStringOption "Xdoclint:none", "-quiet"
     options.group ("Service Tester - Entry Point", ["com.adaptris.tester.runners.*" , "com.adaptris.tester.runners"]).
       group ("Service Tester - Report Configuration and Creation", ["com.adaptris.tester.report.junit.*" , "com.adaptris.tester.report.junit"]).
       group ("Service Tester - Runtime Configuration and Execution", ["com.adaptris.tester.runtime.*" , "com.adaptris.tester.runtime"]).
@@ -120,26 +120,18 @@ task umlJavadoc(type: Javadoc) {
       group ("Service Tester - Utilities", ["com.adaptris.tester.utils.*" , "com.adaptris.tester.utils"])
     taglets = ["com.adaptris.taglet.ConfigTaglet", "com.adaptris.taglet.LicenseTaglet", "com.adaptris.taglet.JUnitTaglet", "com.adaptris.taglet.ServiceTestTaglet"]
     options.addStringOption "tagletpath", configurations.javadoc.asPath
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption "-no-module-directories", true
+    options.addStringOption "Xdoclint:none", "-quiet"
     exclude "com/adaptris/taglet/**"
-    options.addStringOption "umlBasePath", destinationDir.getCanonicalPath()
+    // Create class & package use pages
+    options.addStringOption "use"    
     options.addStringOption "umlImageFormat", "SVG"
-    options.addStringOption "umlExcludedReferences", "java.lang.Exception,java.lang.Object,java.lang.Enum"
-    options.addStringOption "umlIncludePrivateClasses","false"
-    options.addStringOption "umlIncludePackagePrivateClasses","false"
-    options.addStringOption "umlIncludeProtectedClasses","false"
-    options.addStringOption "umlIncludeAbstractSuperclassMethods","false"
-    options.addStringOption "umlIncludeConstructors","false"
-    options.addStringOption "umlIncludePublicFields","false"
-    options.addStringOption "umlIncludePackagePrivateFields","false"
-    options.addStringOption "umlIncludeProtectedFields", "false"
-    options.addStringOption "umlIncludeDeprecatedClasses", "false"
-    options.addStringOption "umlIncludePrivateInnerClasses", "false"
-    options.addStringOption "umlIncludePackagePrivateInnerClasses", "false"
-    options.addStringOption "umlIncludeProtectedInnerClasses","false"
+    options.addStringOption "umlExcludedTypeReferences", "java.lang.Exception,java.lang.Object,java.lang.Enum,java.lang.annotation.Annotation"
+    options.addStringOption "umlJavaBeanPropertiesAsFields"
+    options.addBooleanOption "failOnCyclicPackageDependencies", false
+    title= componentName
   }
 }
+
 task deleteGeneratedFiles(type: Delete) {
   delete file(testResourcesDir() + "/unit-tests.properties"), file(testResourcesDir() + "/unit-tests.properties.resolved")
   delete delombokTargetDir, "derby.log"

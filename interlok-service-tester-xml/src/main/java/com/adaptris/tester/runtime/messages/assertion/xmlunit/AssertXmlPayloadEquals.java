@@ -18,9 +18,11 @@ package com.adaptris.tester.runtime.messages.assertion.xmlunit;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.xml.sax.SAXException;
+
 import com.adaptris.tester.runtime.ServiceTestException;
 import com.adaptris.tester.runtime.messages.assertion.AssertionResult;
 import com.adaptris.tester.runtime.messages.assertion.PayloadAssertion;
@@ -29,18 +31,19 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * Checks if {@link com.adaptris.tester.runtime.messages.TestMessage#getPayload()} equals {@link #getPayload()}
  *
- * <p>Assertions are used to validate the returned message is expected.</p>
+ * <p>
+ * Assertions are used to validate the returned message is expected.
+ * </p>
  *
  * @service-test-config assert-xml-payload-equals
  */
 @XStreamAlias("assert-xml-payload-equals")
 public class AssertXmlPayloadEquals extends PayloadAssertion {
 
-  public AssertXmlPayloadEquals(){
-    super();
+  public AssertXmlPayloadEquals() {
   }
 
-  public AssertXmlPayloadEquals(String payload){
+  public AssertXmlPayloadEquals(String payload) {
     super(payload);
   }
 
@@ -57,4 +60,5 @@ public class AssertXmlPayloadEquals extends PayloadAssertion {
       throw new ServiceTestException(e);
     }
   }
+
 }

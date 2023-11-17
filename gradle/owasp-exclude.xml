@@ -16,4 +16,21 @@
     <packageUrl regex="true">^pkg:javascript/jquery@.*$</packageUrl>
     <vulnerabilityName>Regex in its jQuery.htmlPrefilter  sometimes may introduce XSS</vulnerabilityName>
   </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: mockserver-client-java-5.15.0.jar, mockserver-core-5.15.0.jar, mockserver-netty-5.15.0.jar
+	This CVE applies to versions 5.13.0 and older and only when using velocity or javascript templates which interlok-service-tester-wiremock doesn't.
+	Also the mock server is usually ran locally, automatically just a few second for service testing and is not used by users.
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/org\.mock\-server/mockserver\-.*@.*$</packageUrl>
+    <cve>CVE-2021-32827</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+    file name: swagger-parser-safe-url-resolver-2.1.16.jar
+	This CVE applies to parse-url and not swagger-parser-safe-url-resolver
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/io\.swagger\.parser\.v3/swagger\-parser\-safe\-url\-resolver@.*$</packageUrl>
+    <cpe>cpe:/a:parse-url_project:parse-url</cpe>
+  </suppress>
 </suppressions>

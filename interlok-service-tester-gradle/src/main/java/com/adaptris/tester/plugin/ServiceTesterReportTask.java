@@ -2,6 +2,7 @@ package com.adaptris.tester.plugin;
 
 import java.io.File;
 
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.XSLTProcess;
 import org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer;
 import org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator;
@@ -23,22 +24,22 @@ public class ServiceTesterReportTask extends DefaultTask {
   @Optional
   private File antStyleDir;
 
-  public ServiceTesterReportTask(){
+  public ServiceTesterReportTask() {
     setServiceTestOutput(new File(getProject().getBuildDir(), "test-results"));
     setServiceTestReportOutput(new File(getServiceTestOutput(), "html"));
   }
 
   @TaskAction
-  public void report(){
+  public void report() {
     XMLResultAggregator aggregator = new XMLResultAggregator();
-    aggregator.setProject(getAnt().getProject());
+    aggregator.setProject(getAntProject());
     aggregator.setTodir(getServiceTestOutput());
     FileSet fileSet = new FileSet();
     fileSet.setDir(getServiceTestOutput());
     fileSet.setIncludes("TEST-*.xml");
     aggregator.addFileSet(fileSet);
     AggregateTransformer transformer = aggregator.createReport();
-    if(getAntStyleDir() != null){
+    if (getAntStyleDir() != null) {
       transformer.setStyledir(getAntStyleDir());
     }
     XSLTProcess.Factory factory = transformer.createFactory();
@@ -73,4 +74,11 @@ public class ServiceTesterReportTask extends DefaultTask {
   public File getAntStyleDir() {
     return antStyleDir;
   }
+
+  private Project getAntProject() {
+    Project project = new Project();
+    project.init();
+    return project;
+  }
+
 }

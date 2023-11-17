@@ -16,22 +16,23 @@
 
 package com.adaptris.tester.runners;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.catchSystemExit;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.File;
+
+import org.junit.jupiter.api.Test;
+
 import com.adaptris.core.AdaptrisMarshaller;
 import com.adaptris.core.config.PreProcessingXStreamMarshaller;
 import com.adaptris.core.stubs.TempFileUtils;
 import com.adaptris.util.GuidGenerator;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
-import java.io.File;
-
-import static org.junit.Assert.*;
-
-public class TestExecutorTest  {
-
-  @Rule
-  public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+public class TestExecutorTest {
 
   @Test
   public void setPreProcessors() throws Exception {
@@ -63,69 +64,72 @@ public class TestExecutorTest  {
     AdaptrisMarshaller a = e.createMarshaller();
     assertNotNull(a);
     assertTrue(a instanceof PreProcessingXStreamMarshaller);
-    assertEquals("xinclude",((PreProcessingXStreamMarshaller)a).getPreProcessors());
+    assertEquals("xinclude", ((PreProcessingXStreamMarshaller) a).getPreProcessors());
   }
 
   @Test
-  public void execute() throws Exception{
+  public void execute() throws Exception {
     final String serviceFile = "simple_sample.xml";
     File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
     GuidGenerator o = new GuidGenerator();
     File tempDir = TempFileUtils.createTrackedDir(o);
-    TestExecutor.main(new String[]{"-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath()});
+    TestExecutor.main(new String[] { "-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath() });
     File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
     assertTrue(expectedFile.exists());
   }
 
   @Test
-  public void executeFailedTest() throws Exception{
-    exit.expectSystemExitWithStatus(1);
-    final String serviceFile = "simple_sample_fail.xml";
-    File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
-    GuidGenerator o = new GuidGenerator();
-    File tempDir = TempFileUtils.createTrackedDir(o);
-    TestExecutor.main(new String[]{"-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath()});
-    File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
-    assertTrue(expectedFile.exists());
+  public void executeFailedTest() throws Exception {
+    int exitCode = catchSystemExit(() -> {
+      final String serviceFile = "simple_sample_fail.xml";
+      File testFile = new File(this.getClass().getClassLoader().getResource(serviceFile).getFile());
+      GuidGenerator o = new GuidGenerator();
+      File tempDir = TempFileUtils.createTrackedDir(o);
+      TestExecutor.main(new String[] { "-serviceTest", testFile.getAbsolutePath(), "-serviceTestOutput", tempDir.getAbsolutePath() });
+      File expectedFile = new File(tempDir, "TEST-TestList.Test1.xml");
+      assertTrue(expectedFile.exists());
+    });
+    assertEquals(1, exitCode);
   }
-
 
   @Test
   public void testCheckAndSetArguments() throws Exception {
     TestExecutor e = new TestExecutor();
     try {
-      e.checkAndSetArguments(new String[]{});
+      e.checkAndSetArguments(new String[] {});
       fail();
-    } catch (IllegalArgumentException ex){
+    } catch (IllegalArgumentException ex) {
       assertEquals("Missing argument required [-serviceTest]", ex.getMessage());
     }
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"-serviceTest", "input"});
+    e.checkAndSetArguments(new String[] { "-serviceTest", "input" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("test-results", e.getOutputFilePath());
     assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"--serviceTest", "input"});
+    e.checkAndSetArguments(new String[] { "--serviceTest", "input" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("test-results", e.getOutputFilePath());
     assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"-serviceTest", "input", "-serviceTestOutput", "output"});
+    e.checkAndSetArguments(new String[] { "-serviceTest", "input", "-serviceTestOutput", "output" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"--serviceTest", "input", "--serviceTestOutput", "output"});
+    e.checkAndSetArguments(new String[] { "--serviceTest", "input", "--serviceTestOutput", "output" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertNull(e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"-serviceTest", "input", "-serviceTestOutput", "output", "-serviceTestPreProcessors", "xinclude"});
+    e.checkAndSetArguments(
+        new String[] { "-serviceTest", "input", "-serviceTestOutput", "output", "-serviceTestPreProcessors", "xinclude" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertEquals("xinclude", e.getPreProcessors());
     e = new TestExecutor();
-    e.checkAndSetArguments(new String[]{"--serviceTest", "input", "--serviceTestOutput", "output", "--serviceTestPreProcessors", "xinclude"});
+    e.checkAndSetArguments(
+        new String[] { "--serviceTest", "input", "--serviceTestOutput", "output", "--serviceTestPreProcessors", "xinclude" });
     assertEquals("input", e.getInputFilePath());
     assertEquals("output", e.getOutputFilePath());
     assertEquals("xinclude", e.getPreProcessors());

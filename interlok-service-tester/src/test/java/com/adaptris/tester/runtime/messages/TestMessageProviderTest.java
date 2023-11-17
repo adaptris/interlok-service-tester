@@ -16,28 +16,26 @@
 
 package com.adaptris.tester.runtime.messages;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import com.adaptris.core.CoreConstants;
-import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
-import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
-import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
-import com.adaptris.util.text.mime.MimeConstants;
-import org.junit.Test;
 import com.adaptris.tester.runtime.ServiceTestConfig;
+import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.InlineMetadataProvider;
+import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.InlinePayloadProvider;
 import com.adaptris.util.KeyValuePairSet;
-
-import java.net.URL;
+import com.adaptris.util.text.mime.MimeConstants;
 
 public class TestMessageProviderTest extends MessagesCase {
 
   private static final String BASE64_ENCODED = "SlVMSUVUICBBeSBtZSEKUk9NRU8gICBTaGUgc3BlYWtzOgogICAgICAgIE8sIHNwZWFrIGFnYWluLCBicmlnaHQgYW5nZWwhIGZvciB0aG91IGFydAogICAgICAgIEFzIGdsb3Jpb3VzIHRvIHRoaXMgbmlnaHQsIGJlaW5nIG8nZXIgbXkgaGVhZAogICAgICAgIEFzIGlzIGEgd2luZ2VkIG1lc3NlbmdlciBvZiBoZWF2ZW4KICAgICAgICBVbnRvIHRoZSB3aGl0ZS11cHR1cm5lZCB3b25kZXJpbmcgZXllcwogICAgICAgIE9mIG1vcnRhbHMgdGhhdCBmYWxsIGJhY2sgdG8gZ2F6ZSBvbiBoaW0KICAgICAgICBXaGVuIGhlIGJlc3RyaWRlcyB0aGUgbGF6eS1wYWNpbmcgY2xvdWRzCiAgICAgICAgQW5kIHNhaWxzIHVwb24gdGhlIGJvc29tIG9mIHRoZSBhaXIuCkpVTElFVCAgTyBSb21lbywgUm9tZW8hIHdoZXJlZm9yZSBhcnQgdGhvdSBSb21lbz8KICAgICAgICBEZW55IHRoeSBmYXRoZXIgYW5kIHJlZnVzZSB0aHkgbmFtZTsKICAgICAgICBPciwgaWYgdGhvdSB3aWx0IG5vdCwgYmUgYnV0IHN3b3JuIG15IGxvdmUsCiAgICAgICAgQW5kIEknbGwgbm8gbG9uZ2VyIGJlIGEgQ2FwdWxldC4KICAtLSBXaWxsaWFtIFNoYWtlc3BlYXJlLCBSb21lbyBhbmQgSnVsaWV0LCBBY3QgSUksIFNjZW5lIElJCg==";
 
   @Test
-  public void testEmptyConstructor() throws Exception{
+  public void testEmptyConstructor() throws Exception {
     TestMessageProvider p = new TestMessageProvider();
     TestMessage m = p.createTestMessage(new ServiceTestConfig());
     assertEquals("", m.getPayload());
@@ -45,8 +43,9 @@ public class TestMessageProviderTest extends MessagesCase {
   }
 
   @Test
-  public void testConstructor() throws Exception{
-    TestMessageProvider p = new TestMessageProvider(new InlineMetadataProvider(new KeyValuePairSet(metadata)), new InlinePayloadProvider(PAYLOAD));
+  public void testConstructor() throws Exception {
+    TestMessageProvider p = new TestMessageProvider(new InlineMetadataProvider(new KeyValuePairSet(metadata)),
+        new InlinePayloadProvider(PAYLOAD));
     TestMessage m = p.createTestMessage(new ServiceTestConfig());
     assertEquals(1, m.getMessageHeaders().size());
     assertTrue(m.getMessageHeaders().containsKey(METADATA_KEY));

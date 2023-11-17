@@ -18,7 +18,9 @@ package com.adaptris.tester.runtime.messages;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
+
 import com.adaptris.tester.STExampleConfigCase;
 
 public abstract class MessagesCase extends STExampleConfigCase {
@@ -33,12 +35,12 @@ public abstract class MessagesCase extends STExampleConfigCase {
     if (PROPERTIES.getProperty(BASE_DIR_KEY) != null) {
       setBaseDir(PROPERTIES.getProperty(BASE_DIR_KEY));
     }
-
   }
 
-  @Before
-  public  void setUp() throws Exception {
+  @BeforeEach
+  public void setUp() throws Exception {
     metadata = new HashMap<>();
     metadata.put(METADATA_KEY, METADATA_VALUE);
   }
+
 }

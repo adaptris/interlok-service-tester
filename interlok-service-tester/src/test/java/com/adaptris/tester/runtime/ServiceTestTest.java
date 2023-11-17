@@ -16,8 +16,8 @@
 
 package com.adaptris.tester.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -37,7 +37,7 @@ import com.adaptris.tester.runtime.services.sources.InlineSource;
  */
 public class ServiceTestTest extends STExampleConfigCase {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void serviceTestSource() throws Exception {
     ServiceTest serviceTest = new ServiceTest();
     FileSource source = new FileSource();
@@ -45,7 +45,7 @@ public class ServiceTestTest extends STExampleConfigCase {
     assertEquals(source, serviceTest.getSource());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void serviceTestHelpers() throws Exception{
     ServiceTest serviceTest = new ServiceTest();
     serviceTest.setHelpers(Collections.singletonList(new StubHelper()));

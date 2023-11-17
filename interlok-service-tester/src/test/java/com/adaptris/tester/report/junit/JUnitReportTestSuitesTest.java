@@ -18,11 +18,11 @@ package com.adaptris.tester.report.junit;
 
 import com.adaptris.core.stubs.TempFileUtils;
 import com.adaptris.util.GuidGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JUnitReportTestSuitesTest {
 

@@ -25,25 +25,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTest {
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetUniqueId() throws Exception {
     Test t = new Test();
     t.setUniqueId("id");
     assertEquals("id", t.getUniqueId());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetServiceToTest() throws Exception {
     Test t = new Test();
     t.setServiceToTest(new ServiceToTest());
     assertNotNull(t.getServiceToTest());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testSetTestCases() throws Exception {
     Test t = new Test();
     t.setTestCases(Arrays.asList(new TestCase()));
@@ -51,7 +51,7 @@ public class TestTest {
     assertEquals(1, t.getTestCases().size());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testAddTestCase() throws Exception {
     Test t = new Test();
     t.addTestCase(new TestCase());
@@ -59,7 +59,7 @@ public class TestTest {
     assertEquals(1, t.getTestCases().size());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecute() throws Exception {
     Test t = new Test();
     t.addTestCase(new TestCase());
@@ -69,7 +69,7 @@ public class TestTest {
     assertNotNull(result.getTime());
   }
 
-  @org.junit.Test
+  @org.junit.jupiter.api.Test
   public void testExecuteHelperProperties() throws Exception {
     Test t = new Test();
     t.setUniqueId("id");

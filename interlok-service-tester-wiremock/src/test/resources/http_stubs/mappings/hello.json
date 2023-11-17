@@ -1,14 +1,17 @@
 {
-  "request" : {
-    "url" : "/hello",
-    "method" : "GET"
+  "httpRequest": {
+    "path": "/hello",
+    "method": "GET"
   },
-  "response": {
-    "status": 200,
-    "bodyFileName": "hello.json",
+  "httpResponse": {
+    "statusCode": 200,
     "headers": {
-        "Content-Type": "application/json",
-        "Content-Length": "18"
+      "content-type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "hello": "world"
     }
   }
 }

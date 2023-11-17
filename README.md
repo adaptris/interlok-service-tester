@@ -1,5 +1,12 @@
 # interlok-service-tester
-[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-service-tester.svg)](https://github.com/adaptris/interlok-service-tester/tags) ![license](https://img.shields.io/github/license/adaptris/interlok-service-tester.svg) [![codecov](https://codecov.io/gh/adaptris/interlok-service-tester/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-service-tester) [![Known Vulnerabilities](https://snyk.io/test/github/adaptris/interlok-service-tester/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/adaptris/interlok-service-tester?targetFile=build.gradle) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=adaptris/interlok-service-tester)](https://dependabot.com)
+
+[![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-service-tester.svg)](https://github.com/adaptris/interlok-service-tester/tags)
+[![license](https://img.shields.io/github/license/adaptris/interlok-service-tester.svg)](https://github.com/adaptris/interlok-service-tester/blob/develop/LICENSE)
+[![Actions Status](https://github.com/adaptris/interlok-service-tester/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/adaptris/interlok-service-tester/actions)
+[![codecov](https://codecov.io/gh/adaptris/interlok-service-tester/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-service-tester)
+[![CodeQL](https://github.com/adaptris/interlok-service-tester/workflows/CodeQL/badge.svg)](https://github.com/adaptris/interlok-service-tester/security/code-scanning)
+[![Known Vulnerabilities](https://snyk.io/test/github/adaptris/interlok-service-tester/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/adaptris/interlok-service-tester?targetFile=build.gradle)
+[![Closed PRs](https://img.shields.io/github/issues-pr-closed/adaptris/interlok-service-tester)](https://github.com/adaptris/interlok-service-tester/pulls?q=is%3Apr+is%3Aclosed)
 
 Interlok service tester is a testing framework that allows you to unit test Interlok configurations.
 

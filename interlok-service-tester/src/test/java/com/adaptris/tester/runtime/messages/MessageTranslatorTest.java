@@ -16,15 +16,16 @@
 
 package com.adaptris.tester.runtime.messages;
 
-import com.adaptris.core.SerializableAdaptrisMessage;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.adaptris.core.SerializableAdaptrisMessage;
 
 public class MessageTranslatorTest {
 
@@ -34,7 +35,7 @@ public class MessageTranslatorTest {
   private static final String NEXT_SERVICE_ID = "nextServiceId";
   protected Map<String, String> metadata;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     metadata = new HashMap<>();
     metadata.put(METADATA_KEY, METADATA_VALUE);
