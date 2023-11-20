@@ -2,7 +2,7 @@ ext {
   componentName = "Interlok Service Tester/JSON"
   componentDesc = "JSON Assertions for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
-  jacksonVersion = "2.15.3"
+  jacksonVersion = "2.16.0"
   jsonOrgVersion = "20231013"
 }
 
