@@ -2,7 +2,7 @@ ext {
   componentName = "Interlok Service Tester/Wiremock"
   componentDesc = "Wiremock boostrapper for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
-  jettyVersion = "10.0.18"
+  jettyVersion = "10.0.19"
   jacksonVersion = "2.16.1"
 }
 
