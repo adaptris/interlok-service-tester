@@ -11,7 +11,7 @@ dependencies {
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
   implementation (platform("io.netty:netty-bom:4.1.106.Final"))
   implementation ("commons-fileupload:commons-fileupload:1.5")
-  implementation ("com.jayway.jsonpath:json-path:2.8.0")
+  implementation ("com.jayway.jsonpath:json-path:2.9.0")
   implementation ("org.mozilla:rhino:1.7.14")
   implementation ("org.yaml:snakeyaml:2.2")
   implementation ("io.swagger.parser.v3:swagger-parser:2.1.19")
