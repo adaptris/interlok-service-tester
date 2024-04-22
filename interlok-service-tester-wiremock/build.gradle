@@ -9,7 +9,7 @@ ext {
 dependencies {
   api project(":interlok-service-tester")
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
-  implementation (platform("io.netty:netty-bom:4.1.108.Final"))
+  implementation (platform("io.netty:netty-bom:4.1.109.Final"))
   implementation ("commons-fileupload:commons-fileupload:1.5")
   implementation ("com.jayway.jsonpath:json-path:2.9.0")
   implementation ("org.mozilla:rhino:1.7.14")
