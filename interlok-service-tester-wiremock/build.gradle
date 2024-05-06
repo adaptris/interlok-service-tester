@@ -12,7 +12,7 @@ dependencies {
   implementation (platform("io.netty:netty-bom:4.1.109.Final"))
   implementation ("commons-fileupload:commons-fileupload:1.5")
   implementation ("com.jayway.jsonpath:json-path:2.9.0")
-  implementation ("org.mozilla:rhino:1.7.14")
+  implementation ("org.mozilla:rhino:1.7.15")
   implementation ("org.yaml:snakeyaml:2.2")
   implementation ("io.swagger.parser.v3:swagger-parser:2.1.22")
   implementation ("com.nimbusds:nimbus-jose-jwt:9.37.3")
