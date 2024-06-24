@@ -8,7 +8,7 @@ ext {
 
 dependencies {
   api project(":interlok-service-tester")
-  api ("org.skyscreamer:jsonassert:1.5.1") {
+  api ("org.skyscreamer:jsonassert:1.5.2") {
     exclude group: 'com.vaadin.external.google', module: 'android-json'
   }
   api ("org.json:json:$jsonOrgVersion")
