@@ -21,15 +21,18 @@ dependencies {
     exclude group: "com.fasterxml.jackson.core", module: "jackson-databind"
     exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
     exclude group: "com.fasterxml.jackson.core", module: "jackson-annotations"
-	exclude group: "io.swagger.parser.v3", module: "swagger-parser"
-	exclude group: "com.nimbusds", module: "nimbus-jose-jwt"
+    exclude group: "io.swagger.parser.v3", module: "swagger-parser"
+    exclude group: "com.nimbusds", module: "nimbus-jose-jwt"
+    exclude group: "org.xmlunit", module: "xmlunit-core
+    exclude group: "org.xmlunit", module: "xmlunit-placeholders"
   }
   // Dependency to platform/BOM
   api (platform("com.fasterxml.jackson:jackson-bom:$jacksonVersion"))
   api ("com.fasterxml.jackson.core:jackson-databind")
   api ("com.fasterxml.jackson.core:jackson-core")
   api ("com.fasterxml.jackson.core:jackson-annotations")
-  implementation ("com.google.guava:guava:33.2.1-jre")
+  api ("com.fasterxml.jackson.core:jackson-annotations")
+  implementation ("org.xmlunit:xmlunit-placeholders:2.10.0")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
 }
