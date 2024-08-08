@@ -23,7 +23,7 @@ dependencies {
     exclude group: "com.fasterxml.jackson.core", module: "jackson-annotations"
     exclude group: "io.swagger.parser.v3", module: "swagger-parser"
     exclude group: "com.nimbusds", module: "nimbus-jose-jwt"
-    exclude group: "org.xmlunit", module: "xmlunit-core
+    exclude group: "org.xmlunit", module: "xmlunit-core"
     exclude group: "org.xmlunit", module: "xmlunit-placeholders"
   }
   // Dependency to platform/BOM
