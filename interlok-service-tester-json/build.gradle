@@ -3,7 +3,7 @@ ext {
   componentDesc = "JSON Assertions for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
   jacksonVersion = "2.18.2"
-  jsonOrgVersion = "20241224"
+  jsonOrgVersion = "20250107"
 }
 
 dependencies {
