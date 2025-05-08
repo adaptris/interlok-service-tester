@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.adaptris.interlok.types.SerializableMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,7 +60,7 @@ public class MessageTranslatorTest {
   @Test
   public void testTranslateTestMessage() throws Exception {
     MessageTranslator t = new MessageTranslator();
-    SerializableAdaptrisMessage sm = t.translate(new TestMessage(metadata, PAYLOAD));
+    SerializableMessage sm = t.translate(new TestMessage(metadata, PAYLOAD));
     assertEquals(PAYLOAD, sm.getContent());
     assertEquals(1, sm.getMessageHeaders().size());
     assertTrue(sm.getMessageHeaders().containsKey(METADATA_KEY));

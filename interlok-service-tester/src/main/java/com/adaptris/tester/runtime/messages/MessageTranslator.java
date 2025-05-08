@@ -16,22 +16,54 @@
 
 package com.adaptris.tester.runtime.messages;
 
+import com.adaptris.core.MultiPayloadAdaptrisMessage;
+import com.adaptris.core.MultiPayloadAdaptrisMessageImp;
+import com.adaptris.core.MultiPayloadMessageFactory;
 import com.adaptris.core.SerializableAdaptrisMessage;
+import com.adaptris.interlok.types.InterlokMessage;
+import com.adaptris.interlok.types.SerializableInterlokMessageAdapter;
 import com.adaptris.interlok.types.SerializableMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MessageTranslator {
+  private final MultiPayloadMessageFactory multiPayloadMessageFactory = new MultiPayloadMessageFactory();
 
   public TestMessage translate(SerializableMessage message){
-    TestMessage tm = new TestMessage(message.getMessageHeaders(), message.getContent());
+    TestMessage tm = null;
+    if (message instanceof SerializableInterlokMessageAdapter adapter) {
+      InterlokMessage actual = adapter.getMessage();
+      if (actual instanceof MultiPayloadAdaptrisMessage multi) {
+        Map<String, MultiPayloadAdaptrisMessageImp.Payload> payloads = new HashMap<>();
+        multi.getPayloadIDs().forEach(pid -> {
+          byte[] payload = multi.getPayload(pid);
+          payloads.put(pid, new MultiPayloadAdaptrisMessageImp.Payload(multi.getContentEncoding(pid), payload));
+        });
+        tm = new TestMessage(message.getMessageHeaders(), payloads);
+      }
+    }
+    if (tm == null) {
+      tm = new TestMessage(message.getMessageHeaders(), message.getContent());
+    }
     tm.setNextServiceId(message.getNextServiceId());
     return tm;
   }
 
-  public SerializableAdaptrisMessage translate(TestMessage input) {
-    SerializableAdaptrisMessage message = new SerializableAdaptrisMessage();
-    message.setContent(input.getPayload());
+  public SerializableMessage translate(TestMessage input) {
+    SerializableMessage message;
+    if (input.getMultiPayload()) {
+      MultiPayloadAdaptrisMessage multiPayloadMessage = (MultiPayloadAdaptrisMessage) multiPayloadMessageFactory.newMessage();
+      input.getPayloads().forEach( (payloadId, payload) -> {
+        multiPayloadMessage.addPayload(payloadId, payload.getData());
+      });
+      message = new SerializableInterlokMessageAdapter(multiPayloadMessage);
+    } else {
+      message = new SerializableAdaptrisMessage();
+      message.setContent(input.getPayload());
+    }
     message.setMessageHeaders(input.getMessageHeaders());
-    message.setNextServiceId(null);
+    message.setNextServiceId("");
     return message;
   }
 }

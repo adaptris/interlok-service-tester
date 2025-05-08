@@ -22,6 +22,7 @@ import com.adaptris.tester.runtime.messages.metadata.EmptyMetadataProvider;
 import com.adaptris.tester.runtime.messages.metadata.MetadataProvider;
 import com.adaptris.tester.runtime.messages.payload.EmptyPayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.FilePayloadProvider;
+import com.adaptris.tester.runtime.messages.payload.MultiPayloadProvider;
 import com.adaptris.tester.runtime.messages.payload.PayloadProvider;
 import com.adaptris.util.text.mime.MimeConstants;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -79,6 +80,10 @@ public class TestMessageProvider {
       headers = new HashMap<>(headers);
       headers.put(CoreConstants.SERIALIZED_MESSAGE_ENCODING, MimeConstants.ENCODING_BASE64);
       headers = Collections.unmodifiableMap(headers);
+    }
+
+    if (getPayloadProvider() instanceof MultiPayloadProvider mpp) {
+      return new TestMessage(headers, mpp.getMultiPayload());
     }
     return new TestMessage(headers, getPayloadProvider().getPayload());
   }
