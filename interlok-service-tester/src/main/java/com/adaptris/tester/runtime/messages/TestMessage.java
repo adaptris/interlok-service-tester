@@ -16,8 +16,11 @@
 
 package com.adaptris.tester.runtime.messages;
 
+import com.adaptris.core.MultiPayloadAdaptrisMessage;
+import com.adaptris.core.MultiPayloadAdaptrisMessageImp;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +29,15 @@ public class TestMessage{
   @XStreamOmitField
   private Map<String, String> messageHeaders;
   @XStreamOmitField
-  private String payload;
+  private Map<String, MultiPayloadAdaptrisMessageImp.Payload> payloads;
   @XStreamOmitField
   private String nextServiceId;
 
+  private Boolean isMultiPayload = false;
+
   public TestMessage(){
     setMessageHeaders(new HashMap<String, String>());
+    payloads = new HashMap<>();
     setPayload("");
     setNextServiceId("");
   }
@@ -39,6 +45,13 @@ public class TestMessage{
   public TestMessage(Map<String, String> messageHeaders, String payload){
     setMessageHeaders(messageHeaders);
     setPayload(payload);
+    setNextServiceId("");
+  }
+
+  public TestMessage(Map<String, String> messageHeaders, Map<String, MultiPayloadAdaptrisMessageImp.Payload> payloads){
+    setMessageHeaders(messageHeaders);
+    this.payloads = payloads;
+    setMultiPayload(true);
     setNextServiceId("");
   }
 
@@ -55,11 +68,16 @@ public class TestMessage{
   }
 
   public String getPayload() {
-    return payload;
+    return payloads.get(MultiPayloadAdaptrisMessage.DEFAULT_PAYLOAD_ID).getPayloadAsString();
   }
 
   public void setPayload(String payload) {
-    this.payload = payload;
+    if (this.payloads == null) this.payloads = new HashMap<>();
+    this.payloads.put(MultiPayloadAdaptrisMessage.DEFAULT_PAYLOAD_ID, new MultiPayloadAdaptrisMessageImp.Payload(Charset.defaultCharset().name(), payload.getBytes()));
+  }
+
+  public Map<String, MultiPayloadAdaptrisMessageImp.Payload> getPayloads() {
+    return payloads;
   }
 
   public String getNextServiceId() {
@@ -68,6 +86,14 @@ public class TestMessage{
 
   public void setNextServiceId(String nextServiceId) {
     this.nextServiceId = nextServiceId;
+  }
+
+  public Boolean getMultiPayload() {
+    return Boolean.TRUE.equals(isMultiPayload);
+  }
+
+  public void setMultiPayload(Boolean multiPayload) {
+    isMultiPayload = multiPayload;
   }
 
   @Override
