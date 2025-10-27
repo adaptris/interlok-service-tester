@@ -32,7 +32,7 @@ dependencies {
   api ("com.fasterxml.jackson.core:jackson-core")
   api ("com.fasterxml.jackson.core:jackson-annotations")
   api ("com.fasterxml.jackson.core:jackson-annotations")
-  implementation ("org.xmlunit:xmlunit-placeholders:2.10.0")
+  implementation ("org.xmlunit:xmlunit-placeholders:2.11.0")
   api ("commons-beanutils:commons-beanutils:1.11.0")
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
