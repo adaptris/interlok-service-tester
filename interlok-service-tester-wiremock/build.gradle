@@ -16,7 +16,7 @@ dependencies {
   implementation ("org.yaml:snakeyaml:2.4")
   implementation ("io.swagger.parser.v3:swagger-parser:2.1.34")
   implementation ("com.nimbusds:nimbus-jose-jwt:10.0.1")
-  api ("org.mock-server:mockserver-netty:5.15.0") {
+  api ("org.mock-server:mockserver-netty:7.2.0") {
     exclude group: "com.google.guava", module: "guava"
     exclude group: "com.fasterxml.jackson.core", module: "jackson-databind"
     exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
