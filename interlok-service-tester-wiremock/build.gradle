@@ -3,13 +3,13 @@ ext {
   componentDesc = "Wiremock boostrapper for service-tester"
   delombokTargetDir = new File("${project.projectDir}/src/main/generated")
   jettyVersion = "10.0.26"
-  jacksonVersion = "2.21.3"
+  jacksonVersion = "2.22.1"
 }
 
 dependencies {
   api project(":interlok-service-tester")
   api (platform("org.eclipse.jetty:jetty-bom:$jettyVersion"))
-  implementation (platform("io.netty:netty-bom:4.2.13.Final"))
+  implementation (platform("io.netty:netty-bom:4.2.17.Final"))
   implementation ("commons-fileupload:commons-fileupload:1.6.0")
   implementation ("com.jayway.jsonpath:json-path:2.10.0")
   implementation ("org.mozilla:rhino:1.8.1")
