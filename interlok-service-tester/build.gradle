@@ -5,10 +5,10 @@ ext {
 }
 
 dependencies {
-  api ("com.adaptris:interlok-varsub:$interlokCoreVersion") { changing= true}
-  api ("com.adaptris:interlok-xinclude:$interlokCoreVersion"){ changing= true}
-  implementation ("commons-io:commons-io:2.19.0")
-  testImplementation ("com.github.stefanbirkner:system-lambda:1.2.1")
+  api ("com.adaptris:interlok-varsub") { changing= true}
+  api ("com.adaptris:interlok-xinclude"){ changing= true}
+  implementation ("commons-io:commons-io")
+  testImplementation ("com.github.stefanbirkner:system-lambda")
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

@@ -33,18 +33,6 @@
     <packageUrl regex="true">^pkg:maven/io\.swagger\.parser\.v3/swagger\-parser\-safe\-url\-resolver@.*$</packageUrl>
     <cpe>cpe:/a:parse-url_project:parse-url</cpe>
   </suppress>
-    <suppress>
-        <notes><![CDATA[
-    This vulnerability is inherited via com.jayway.jsonpath:json-path:2.9.0 however that is currently the most up-to-date version.
-    ]]></notes>
-        <cve>CVE-2024-57699</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-    This vulnerability Apache Commons IO: from 2.0 before 2.14.0; interlok-core uses 2.19.0
-    ]]></notes>
-        <cve>CVE-2024-47554</cve>
-    </suppress>
   <suppress>
     <notes><![CDATA[
       org.mock-server:mockserver-netty:5.15.0 is the latest release published to Maven Central.
@@ -73,5 +61,54 @@
     ]]></notes>
     <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty(\.http2|\.websocket)?/.+@10\.0\.26$</packageUrl>
     <cve>CVE-2026-2332</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+      json-patch 1.0 through 1.13 is affected; 1.13 is still the newest published release.
+      No stable same-major patch/minor fix is available:
+      https://repo.maven.apache.org/maven2/com/github/java-json-tools/json-patch/maven-metadata.xml
+      https://www.cve.org/CVERecord?id=CVE-2026-86318
+      https://www.cve.org/CVERecord?id=CVE-2026-86319
+      https://www.cve.org/CVERecord?id=CVE-2026-86512
+      This is a transitive MockServer dependency. Crafted JSON merge/patch documents can cause
+      stack exhaustion or excessive resource consumption; copy/move operations can also bypass
+      application-level patch access controls. These remain accepted risks, not remediated issues.
+    ]]></notes>
+    <packageUrl>pkg:maven/com.github.java-json-tools/json-patch@1.13</packageUrl>
+    <cve>CVE-2026-86318</cve>
+    <cve>CVE-2026-86319</cve>
+    <cve>CVE-2026-86512</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+      jackson-coreutils 2.0 is affected and is still the newest published release.
+      No stable same-major patch/minor fix is available:
+      https://repo.maven.apache.org/maven2/com/github/java-json-tools/jackson-coreutils/maven-metadata.xml
+      https://www.cve.org/CVERecord?id=CVE-2026-86321
+      https://www.cve.org/CVERecord?id=CVE-2026-86511
+      https://www.cve.org/CVERecord?id=CVE-2026-86513
+      This is a transitive MockServer dependency. Untrusted URLs can cause server-side request
+      forgery, while crafted numbers and JSON pointers can exhaust resources. These remain
+      accepted risks, not remediated issues; restrict mock servers to trusted test inputs.
+    ]]></notes>
+    <packageUrl>pkg:maven/com.github.java-json-tools/jackson-coreutils@2.0</packageUrl>
+    <cve>CVE-2026-86321</cve>
+    <cve>CVE-2026-86511</cve>
+    <cve>CVE-2026-86513</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[
+      JAXB RI core 4.0.1 is reported for CVE-2026-92877; upstream confirms incomplete XML
+      factory hardening, including in 4.0.4 and 4.0.9. The fix is merged but the newest
+      published 4.x release is 4.0.9 and does not include it. No stable permitted fix exists.
+      https://www.cve.org/CVERecord?id=CVE-2026-92877
+      https://github.com/eclipse-ee4j/jaxb-ri/pull/2013
+      https://repo.maven.apache.org/maven2/com/sun/xml/bind/jaxb-core/maven-metadata.xml
+      This is a transitive MockServer dependency. Unmarshalling untrusted XML on affected
+      JAXP implementations can still expose local files through external entities.
+      This remains an accepted risk, not a remediated vulnerability.
+    ]]></notes>
+    <packageUrl>pkg:maven/com.sun.xml.bind/jaxb-core@4.0.1</packageUrl>
+    <cve>CVE-2026-92877</cve>
   </suppress>
 </suppressions>
