@@ -6,7 +6,7 @@ ext {
 
 dependencies {
   api project(":interlok-service-tester")
-  api ("xmlunit:xmlunit:1.6")
+  api ("xmlunit:xmlunit")
 
   // Custom service-tester taglets
   javadoc project(":interlok-service-tester")
